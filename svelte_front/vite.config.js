@@ -7,8 +7,8 @@ import path from 'path';
 export default defineConfig({
 	//base: `dist/`,
 	build: {
-		outDir: 'dist',
-		assetsDir: 'assets'
+		outDir: 'dist/blog',
+		assetsDir: 'blog/assets'
 	},
 	plugins: [svelte({ configFile: 'svelte.config.js' })],
 	resolve: {
