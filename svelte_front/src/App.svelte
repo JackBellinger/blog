@@ -66,10 +66,10 @@
 	const router = Navaid(baseUrl)
 		.on('/', () => setPage(pages[0]));
 	for (let page of pages.slice(1)) {
-		//console.log("on ", page.name, " route to ", page)
-		router.on(page.name, obj => setPage(page));
+		//console.log("on ", baseUrl + page.name, " route to ", page)
+		router.on(baseUrl + page.name, obj => setPage(page));
 		if(page.routeParam) {
-			let srt = page.name + "/:" + page.routeParam
+			let srt = baseUrl + page.name + "/:" + page.routeParam
 			//console.log("on ", srt, " route to ", page, " + ")
 			router.on(srt, obj => setPage(page, obj))
 		}

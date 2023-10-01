@@ -24,7 +24,7 @@
 				tags={post.tags}
 				readingTime={post.readingTime}
 				showImage={false}
-				href_prefix={"/blog/" + title}
+				href_prefix={"/blog/" + title.toLowerCase()}
 			/>
 		{/each}
 	</div>
