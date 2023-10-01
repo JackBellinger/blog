@@ -27,7 +27,7 @@ tags:
 - [x] enable forward/back history navigation between pages
 - [ ] add images for remaining articles
 - [x] host on github.io
-- [ ] fix routing on github
+- [x] fix routing on github
 
 ### Backend Todo
 - [x] setup basic axum server
