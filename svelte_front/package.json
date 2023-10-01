@@ -1,0 +1,37 @@
+{
+	"name": "blog",
+	"description": "svelte blog front end with axum backend",
+	"author": "Jackson Bellinger",
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"bundle": "vite build && ./bundle-for-axum.sh",
+		"preview": "vite preview",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^2.4.2",
+		"@types/node": "*",
+		"dateformat": "^5.0.3",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte": "^2.33.2",
+		"mdsvex": "^0.11.0",
+		"navaid": "^1.2.0",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.8.1",
+		"reading-time": "^1.5.0",
+		"striptags": "^3.2.0",
+		"sass": "^1.66.1",
+		"svelte": "^4.2.0",
+		"svelte-preprocess": "*",
+		"typescript": "^5.2.2",
+		"vite": "^4.4.5"
+	},
+	"dependencies": {
+		"@fontsource/mononoki": "^5.0.7"
+	}
+}

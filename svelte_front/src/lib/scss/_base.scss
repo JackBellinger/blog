@@ -1,0 +1,26 @@
+// Styles that are used everywhere
+
+.container {
+	@include padded-container;
+}
+
+.center-container {
+	@include center-div;
+}
+
+ul,
+ol {
+	//margin: 10px 0 10px 40px;
+	padding: 0px;
+
+	li {
+		margin: 0px 0;
+		padding: 0.5em;
+		&::marker {
+			color: var(--color--primary);
+		}
+	}
+}
+ul {
+	list-style: outside;
+}

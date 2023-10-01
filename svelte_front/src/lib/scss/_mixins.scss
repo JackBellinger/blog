@@ -1,0 +1,59 @@
+//@import './_breakpoints.scss';
+@import './_functions.scss';
+
+@mixin padded-container {
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-top: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+
+	//@include for-iphone-se {
+	//	padding-left: 0;
+	//	padding-right: 0;
+	//}
+
+	//@include for-tablet-portrait-up {
+	//	padding-right: 20px;
+	//	padding-left: 20px;
+	//}
+
+	//@include for-tablet-landscape-up {
+	//	padding-right: 00px;
+	//	padding-left: 00px;
+	//}
+
+	//@include for-desktop-up {
+	//	max-width: 100%;
+	//}
+}
+
+@mixin center-div {
+	@include padded-container;
+	max-width: 60%;
+	//@include for-desktop-up {
+	//	max-width: 60%;
+	//}
+	margin-right: auto;
+	margin-left: auto;
+}
+
+// Defines a bunch of CSS variables for a given color
+// In HEX, HSL and RGB formats
+// Plus a contrast option for text
+@mixin define-color($title, $color) {
+	--color--#{$title}: #{$color};
+
+	--color--#{$title}-h: #{hue($color)};
+	--color--#{$title}-l: #{lightness($color)};
+	--color--#{$title}-s: #{saturation($color)};
+	--color--#{$title}-a: #{alpha($color)};
+
+	--color--#{$title}-rgb: #{red($color)}, #{green($color)}, #{blue($color)};
+
+	--color--#{$title}-contrast: #{if(
+			brightness($color) > 186,
+			var(--color--text),
+			var(--color--text-inverse)
+		)};
+}

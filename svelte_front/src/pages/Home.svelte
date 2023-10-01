@@ -1,0 +1,68 @@
+<svelte:options accessors />
+
+<script context="module" lang="ts">
+	export const pageNumber = 0;
+	export const subRoutes = [];
+	export const routeParams = undefined;
+</script>
+
+<script lang="ts">
+	import Waves from '@lib/components/organisms/Waves.svelte';
+	import Hero from '@lib/components/organisms/Hero.svelte';
+	import About from '@lib/components/organisms/About.svelte';
+	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
+	import { postStore } from '@lib/utils/store';
+	import { projectStore } from '@lib/utils/store';
+
+	import Footer from '@lib/components/organisms/Footer.svelte';
+	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
+
+
+	let howManyRecent = 4;
+</script>
+
+<svelte:head>
+	<link rel="canonical" href={siteBaseUrl} />
+	<meta name="keywords" content={keywords.join(', ')} />
+
+	<meta name="description" content={description} />
+	<meta property="og:description" content={description} />
+	<meta name="twitter:description" content={description} />
+
+	<title>{title}</title>
+	<meta property="og:title" content={title} />
+	<meta name="twitter:title" content={title} />
+
+	<meta property="og:image" content={image} />
+	<meta name="twitter:image" content={image} />
+
+	<meta name="twitter:card" content="summary_large_image" />
+</svelte:head>
+<div class="container">
+
+	<main class="center-container">
+		<Hero />
+		<About />
+		{#await postStore.init}
+			<p>...parsing markdown</p>
+		{:then posts}
+			<a href="/blog/articles">
+				<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
+			</a>
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+
+		{#await projectStore.init}
+			<p>...parsing projects</p>
+		{:then projects}
+			<a href="/blog/projects">
+				<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
+			</a>
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+	</main>
+
+	<Footer />
+</div>
