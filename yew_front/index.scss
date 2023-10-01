@@ -1,0 +1,28 @@
+$bg-color: blue;
+$red-bg-color: red;
+$font-size: 14px;
+$font-color: white;
+.box {
+  width: 200px;
+  height: 200px;
+  background: $bg-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.red {
+    background: $red-bg-color;
+    .text {
+      color: black;
+      span {
+        font-weight: 600;
+        color: $font-color;
+      }
+    }
+  }
+  .text {
+    font-size: $font-size;
+    padding: 10px;
+    text-align: center;
+    color: $font-color;
+  }
+}

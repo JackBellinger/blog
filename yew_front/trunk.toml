@@ -1,0 +1,17 @@
+#https://github.com/thedodd/trunk/blob/master/Trunk.toml
+[[proxy]]
+backend = "http://[::1]:8081/api/"
+
+[build]
+# The index HTML file to drive the bundling process.
+target = "index.html"
+# Build in release mode.
+release = true
+# The output dir for all final assets.
+dist = "yew"
+# The public URL from which assets are to be served.
+public_url = "/yew"
+# Whether to include hash values in the output file names.
+filehash = true
+# Whether to inject scripts (and module preloads) into the finalized output.
+inject_scripts = true

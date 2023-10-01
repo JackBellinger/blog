@@ -1,0 +1,1 @@
+.box{width:200px;height:200px;background:blue;display:flex;justify-content:center;align-items:center}.box.red{background:red}.box.red .text{color:#000}.box.red .text span{font-weight:600;color:#fff}.box .text{font-size:14px;padding:10px;text-align:center;color:#fff}

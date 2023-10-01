@@ -1,0 +1,20 @@
+[package]
+name = "yew_front"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+strum = "0.25"
+strum_macros = "0.25"
+serde = "1"
+serde_derive = "1"
+yew = { path = "/home/user/code/yew/packages/yew", features = ["csr"] }
+gloo = "0.10"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+	"HtmlInputElement",
+]
