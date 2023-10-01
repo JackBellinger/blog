@@ -6,5 +6,5 @@ set -euo pipefail
 #rm -rf ./dist/blog
 #mkdir -p ./dist/blog
 #mv ./dist/assets ./dist/blog
-#cp -r ./assets/* ./dist/blog/assets
+cp -r ./assets/* ./dist/assets
 cp ./index.html ./dist/404.html
