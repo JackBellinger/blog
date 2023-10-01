@@ -7,4 +7,4 @@ set -euo pipefail
 #mkdir -p ./dist/blog
 #mv ./dist/assets ./dist/blog
 cp -r ./assets/* ./dist/assets
-cp ./index.html ./dist/404.html
+cp ./404.html ./dist/404.html

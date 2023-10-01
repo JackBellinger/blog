@@ -43,7 +43,7 @@
 		<li>&gt;cd</li>
 		{#each menuItems.filter((page) => page.id != 0) as page}
 			<li>
-				<a href="{page.name}">{page.name}</a>
+				<a href="/blog/{page.name}">{page.name}</a>
 			</li>
 		{/each}
 	</ul>
