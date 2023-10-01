@@ -43,7 +43,7 @@
 	let currentPage = pages[0].module.default;
 	let propParams = {}, active;
 	let uri = location.pathname;
-	let baseUrl = "/";//"/blog/";
+	let baseUrl = "/blog/";
 	$: active = uri.split('/')[1] || 'home';
 	$: logoText = 'Menu';
 

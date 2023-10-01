@@ -26,7 +26,8 @@ tags:
 - [x] expand blog cards into the blogs page to display content
 - [x] enable forward/back history navigation between pages
 - [ ] add images for remaining articles
-- [ ] host on github.io
+- [x] host on github.io
+- [ ] fix routing on github
 
 ### Backend Todo
 - [x] setup basic axum server
@@ -68,3 +69,6 @@ https://sveltekit-static-blog-template.vercel.app/
 variables exported from the script section are only available to bind, need to export from the module script to access from an instance
 flexbox flexing does not re-calculate the element size after the initial load, scaleX() just changes the display, not the element size, need to set the width of the element to actually move adjacent dom elements
 had to make vite and yew bundle into dist/svelte & dist/yew and then copy the files out to get the routing to work, since the route serves the file directory from root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie svelte.blog.com and yew.blog.com, which might make more sense in the future once I figure out what I'm going to use each for, but I'm glad I figured out how to do it this way in case
+
+axum server doesn't accept nested routes with wildcards, so idk how to send all the spa routes to be handled by the index
+github routing also does not work right
