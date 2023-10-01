@@ -17,7 +17,7 @@
 		"@types/node": "*",
 		"dateformat": "^5.0.3",
 		"eslint": "^8.28.0",
-		"eslint-config-prettier": "^8.5.0",
+		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.33.2",
 		"mdsvex": "^0.11.0",
 		"navaid": "^1.2.0",
