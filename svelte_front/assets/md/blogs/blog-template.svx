@@ -9,6 +9,12 @@ tags:
   - templates
 ---
 
+<script>
+  import Callout from "@lib/components/molecules/Callout.svelte";
+  import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
+  import Image from "@lib/components/atoms/Image.svelte";
+</script>
+
 ## Header
 All posts are Markdown files, which means you can use the [Markdown syntax](https://www.markdownguide.org/basic-syntax) in them, and it will work out of the box. However, since this projects uses [MDsveX](https://mdsvex.pngwn.io/) to parse Markdown, you can also use Svelte components inside them! This means that the components used in other pages can also be used in blog posts.
 
@@ -16,7 +22,22 @@ All posts are Markdown files, which means you can use the [Markdown syntax](http
   This is a Svelte component inside a Markdown file!
 </Callout>
 
-<Image src="/assets/images/Boulder.avif" alt="A boulder" />
+<CodeBlock lang="markdown">
+
+<Image src="https://picsum.photos/200" />
+
+```md
+---
+slug: my-new-blog-post
+title: My New Blog Post
+date: 2023-04-22T20:45:25.350Z
+excerpt: A short description of the post
+coverImage: /images/posts/cover-image.jpg
+tags:
+  - Example
+---
+```
+</CodeBlock>
 
 # Markdown Guide
 
