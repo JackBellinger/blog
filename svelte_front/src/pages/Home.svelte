@@ -46,7 +46,7 @@
 		{#await postStore.init}
 			<p>...parsing markdown</p>
 		{:then posts}
-			<a href="/blog/articles">
+			<a href="articles">
 				<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
 			</a>
 		{:catch error}
@@ -56,7 +56,7 @@
 		{#await projectStore.init}
 			<p>...parsing projects</p>
 		{:then projects}
-			<a href="/blog/projects">
+			<a href="projects">
 				<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
 			</a>
 		{:catch error}

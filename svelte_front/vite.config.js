@@ -5,7 +5,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-	base: `blog/`,
+	//base: `blog/`,
 	build: {
 		outDir: 'dist',
 		assetsDir: 'assets'

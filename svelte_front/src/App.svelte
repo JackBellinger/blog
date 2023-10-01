@@ -43,12 +43,12 @@
 	let currentPage = pages[0].module.default;
 	let propParams = {}, active;
 	let uri = location.pathname;
-	let baseUrl = "/blog/";
+	let baseUrl = "/";//"/blog/";
 	$: active = uri.split('/')[1] || 'home';
 	$: logoText = 'Menu';
 
 	function setPage(page: Page, params = {}) {
-		console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
+		//console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
 		currentPage = page.module.default;
 		propParams = params
 		window.scrollTo(0, 0);
@@ -66,11 +66,11 @@
 	const router = Navaid(baseUrl)
 		.on('/', () => setPage(pages[0]));
 	for (let page of pages.slice(1)) {
-		console.log("on ",  page.name, " route to ", page)
+		console.log("on ", page.name, " route to ", page)
 		router.on(page.name, obj => setPage(page));
 		if(page.routeParam) {
 			let srt = page.name + "/:" + page.routeParam
-			//console.log("on ", srt, " route to ", page, " + ")
+			console.log("on ", srt, " route to ", page, " + ")
 			router.on(srt, obj => setPage(page, obj))
 		}
 		//for(let routeParam of page.routeParams) {

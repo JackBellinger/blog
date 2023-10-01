@@ -35,7 +35,7 @@
 <div class="nav_menu">
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<a class="dropdown" href="/blog">
+	<a class="dropdown" href="/">
 		<Logo {logoText} />
 	</a>
 
@@ -43,7 +43,7 @@
 		<li>&gt;cd</li>
 		{#each menuItems.filter((page) => page.id != 0) as page}
 			<li>
-				<a href="/blog/{page.name}">{page.name}</a>
+				<a href="{page.name}">{page.name}</a>
 			</li>
 		{/each}
 	</ul>
