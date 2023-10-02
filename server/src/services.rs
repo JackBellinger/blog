@@ -38,15 +38,19 @@ pub(crate) fn two_serve_dirs() -> Router {
 
     let mut svelte_dir = get_project_root().unwrap();
     svelte_dir.push(FRONT_SVELTE_PUBLIC);
-    tracing::info!("{:?}", &svelte_dir.clone().into_os_string());
-    let serve_dir_from_svelte = ServeDir::new(svelte_dir).append_index_html_on_directories(true);
+    let mut svelte_404_path = svelte_dir.clone();
+    svelte_404_path.push("404.html");
+    tracing::info!("serveDir: {:?}, 404 path: {:?}", &svelte_dir.clone().into_os_string(), svelte_404_path);
+    let serve_dir_from_svelte = ServeDir::new(svelte_dir)
+                                    .append_index_html_on_directories(true)
+                                    .not_found_service(ServeFile::new(svelte_404_path));
     let mut yew_dir = get_project_root().unwrap();
     yew_dir.push(FRONT_YEW_PUBLIC);
     let serve_dir_from_yew = ServeDir::new(yew_dir).append_index_html_on_directories(true);
 
     Router::new()
     .nest_service("/yew", serve_dir_from_yew)
-    .nest_service("/blog/*", serve_dir_from_svelte)
+    .nest_service("/blog", serve_dir_from_svelte)
     .layer(
         TraceLayer::new_for_http()
             .make_span_with(DefaultMakeSpan::new().include_headers(true))
