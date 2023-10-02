@@ -1,7 +1,7 @@
 ---
 slug: lofi-gen
 title: Lofi Generation
-coverImage: /assets/images/projects/Lofi.avif
+coverImage: /blog/assets/images/projects/Lofi.avif
 date: 2023-09-26T02:32:00.000Z
 excerpt: Converting a Python lofi music generator to Rust and adapting the webpack frontend to svelte.
 tags:

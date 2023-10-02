@@ -25,7 +25,7 @@
 		<MastodonIcon />
 	</a>-->
 	<a
-		href="https://www.github.com/jacksonbellinger"
+		href="https://www.github.com/jackbellinger"
 		target="_blank"
 		rel="noopener noreferrer"
 		title="See my GitHub profile"

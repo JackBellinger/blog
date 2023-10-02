@@ -2,7 +2,7 @@
 // So they can be added as suffixes on different pages
 // Via <svelte:head>
 
-export const siteBaseUrl = 'https://jacksonbellinger.github.io/';
+export const siteBaseUrl = 'https://jackbellinger.github.io/blog';
 
 export const keywords = ['Svelte', 'SvelteKit', 'tech', 'Blog', 'Static Site'];
 

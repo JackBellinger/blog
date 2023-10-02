@@ -1,7 +1,7 @@
 {
 	"name": "blog",
 	"description": "svelte blog front end with axum backend",
-	"author": "Jackson Bellinger",
+	"author": "Jack Bellinger",
 	"version": "0.1.0",
 	"type": "module",
 	"scripts": {

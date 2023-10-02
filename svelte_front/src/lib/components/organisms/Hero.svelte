@@ -9,14 +9,14 @@
 </script>
 
 <section id="hero">
-	<h1 class="hello">Hello, I'm Jackson Bellinger</h1>
+	<h1 class="hello">Hello, I'm Jack Bellinger</h1>
 	<p class="intro">
 		<span class="left">I'm a backend engineer.</span>
 		<span class="right">Here's some of my work!</span>
 	</p>
 	<div class="ctas">
 		<Sparkles>
-			<Button href="https://github.com/jacksonbellinger/blog">
+			<Button href="https://github.com/jackbellinger/blog">
 				<GitHubIcon slot="icon" />
 				Blog Source
 			</Button>
