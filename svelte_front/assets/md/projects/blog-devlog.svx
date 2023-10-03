@@ -54,7 +54,6 @@ tags:
 - [ ] refine head metadata Frontend
 - [ ] comments Frontend
 - [ ] online editing of markdown? CRDT? Frontend
-- [ ] make a tuari app for
 
 ### Mobile
 - [ ] images don't work on mobile?
@@ -79,9 +78,24 @@ tags:
 
 ### Bugs
 - [x] related posts have wrong link
-- [ ] theme toggle resets on page load
-- [ ] footer waves are clipped
+- [x] theme toggle resets on page load
+- [x] footer waves are clipped
 
+### Projects
+- [ ] compile fft project to webassembly : web / sound / signal processing
+- [ ] lofi music gen : web / ml / sound / useful
+- [ ] twitch chat excitement sentiment based auto clip suggestions: web / ml / integrations / useful
+- [ ] speaker detection + subtitle positioning (avoid covering stuff): ml / video
+- [ ] in depth exploration comparing numerical eigenvalue algorithms for PCA: ml / math
+- [ ] collaborative filtering: ml / math / data science
+- [ ] video game: graphics / nim or golang / networks
+- [ ] guide map: web / gis / business / useful
+- [ ] wifi sensing automated roomba or lawn mower: signal processing / wifi / useful
+- [ ] security camera no cloud anomaly alerting: video / ml / clientside / useful
+- [ ] home network dashboard: networks / useful
+- [ ] live stream p2p caching: web / video / distributed / p2p / networks
+- [ ] contribute to ipfs kademlia: web / distributed / p2p / networks
+- [ ] code scanning + fix suggestions ML trained on issues + fixes scraped from public github
 
 ### General idea
 Make a blog that I can use for a portfolio and a place to hosts projects in development

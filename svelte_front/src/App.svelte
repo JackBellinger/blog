@@ -39,6 +39,20 @@
 	import type { Page } from '@lib/utils/types';
 	import Waves from '@lib/components/organisms/Waves.svelte';
 
+	import { theme } from '@lib/utils/store';
+	let savestore = false
+	$: if (savestore && $theme) {
+		window.sessionStorage.setItem("store", JSON.stringify($theme))
+	}
+	onMount(async () => {
+		let ses = window.sessionStorage.getItem("store")
+		if (ses) {
+			console.log("sob-- ~ loading ses", ses)
+			$theme = JSON.parse(ses)
+		}
+		savestore = true
+	})
+
 	const pages = pageStore.init;
 	let currentPage = pages[0].module.default;
 	let propParams = {}, active;
