@@ -7,6 +7,7 @@ excerpt: Blog Template
 hidden: true
 tags:
   - templates
+  - Blog
 ---
 
 <script>

@@ -6,6 +6,7 @@ excerpt: How code and structure are organized.
 coverImage: /blog/assets/images/blogs/project_structure.avif
 tags:
   - Documentation
+  - Blog
 ---
 
 <script>
