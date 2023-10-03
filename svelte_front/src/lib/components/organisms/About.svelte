@@ -5,18 +5,20 @@
 
 <section id="about">
 	<div class="info">
-		<h2>
-			Background
-		</h2>
+		<h2>Background</h2>
 		<p>
-			I'm a backend engineer with 3 years of experience, mainly in Java, Python, & Rust. I am
-			skilled in parallel and asynchronous programming in microservice clusters. I also utilize
-			devops and reduce tech debt to implement continuous testing and deployment. I also strive to
-			develop a deep understanding of my codebases and share that knowledge through well organized
-			documentation. My code is enjoyable to read and refactor, and I ensure my team's change
-			requests are similarly eloquent through collaborative and meticulous code reviews. In my
-			previous roles at Amazon and Redjack, I was responsible for the design, development, and
-			deployment of backend services that served thousands of users and petabytes of data.
+			I am a skilled and experienced backend engineer with 3 years of experience. I am proficient in
+			Java, Python, Rust, and C++, and I have experience working on parallel and asynchronous code
+			in microservice clusters. I always implement automated testing, CI/CD pipelines for my
+			services, and take pride in detailed documentation. I strive to develop a deep understanding
+			of my codebases and share that knowledge through well organized documentation. My code is
+			enjoyable to read and refactor, and I ensure my team's change requests are similarly eloquent
+			through collaborative and meticulous code reviews. I have honed my communication skills to be
+			straightforward, eloquent, and friendly. I am a highly collaborative team player and I am
+			always willing to go the extra mile. In my previous roles at Amazon and Redjack, I designed,
+			developed, and deployed backend services that served thousands of users and petabytes of data.
+			I have designed Java APIs in collaboration with partner teams and I have created Rust
+			libraries to enable new growth.
 		</p>
 	</div>
 </section>
