@@ -7,7 +7,6 @@
 	<div class="info">
 		<h2>
 			Background
-			<SparklingHighlight color="secondary">Rapid Recap</SparklingHighlight>
 		</h2>
 		<p>
 			I'm a backend engineer with 3 years of experience, mainly in Java, Python, & Rust. I am
@@ -58,11 +57,6 @@
 			@include for-phone-only {
 				gap: 20px;
 			}
-		}
-
-		.image {
-			width: 220px;
-			height: 220px;
 		}
 	}
 </style>

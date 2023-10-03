@@ -25,7 +25,7 @@ tags:
 - [x] url routing, enable sharing a link to a specific blog / subpage
 - [x] expand blog cards into the blogs page to display content
 - [x] enable forward/back history navigation between pages
-- [ ] add images for remaining articles
+- [x] add images for remaining articles
 - [x] host on github.io
 - [x] fix routing on github
 
@@ -54,6 +54,13 @@ tags:
 - [ ] refine head metadata Frontend
 - [ ] comments Frontend
 - [ ] online editing of markdown? CRDT? Frontend
+- [ ] make a tuari app for
+
+### Mobile
+- [ ] images don't work on mobile?
+- [ ] on mobile, navbar menu click counts as hover so can't go to main
+- [ ] navbar doesn't fully hide on mobile
+- [ ] content is too narrow on mobile
 
 
 ### Backend
@@ -69,6 +76,11 @@ tags:
 - [ ] deployment pipeline: github actions? Devops
 - [ ] logging + dashboard Devops
 - [ ] fuzzing, static / active code scanner Devops
+
+### Bugs
+- [x] related posts have wrong link
+- [ ] theme toggle resets on page load
+- [ ] footer waves are clipped
 
 
 ### General idea

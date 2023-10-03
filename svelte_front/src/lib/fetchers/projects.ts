@@ -47,7 +47,7 @@ export const filterProjects = (projects: BlogPost[]) => {
 const getRelatedPosts = (projects: BlogPost[], project: BlogPost) => {
 	// Get the first 3 posts that have the highest number of tags in common
 	const relatedPosts = projects
-		.filter((p) => p.slug !== project.slug && !project.hidden)
+		.filter((p) => p.slug !== project.slug && !p.hidden)
 		.sort((a, b) => {
 			const aTags = a.tags?.filter((t) => project.tags?.includes(t));
 			const bTags = b.tags?.filter((t) => project.tags?.includes(t));

@@ -3,6 +3,7 @@
 	import BlogPostCard from '@lib/components/molecules/BlogPostCard.svelte';
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
 
+	export let title: string;
 	export let posts: BlogPost[];
 </script>
 
@@ -16,6 +17,7 @@
 				tags={post.tags}
 				readingTime={post.readingTime}
 				showImage={false}
+				href_prefix={"/blog/" + title.toLowerCase()}
 			/>
 		{/each}
 	</div>

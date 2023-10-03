@@ -35,7 +35,7 @@
 <div class="nav_menu">
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<a class="dropdown" href="/blog/index.html">
+	<a class="dropdown" href="/blog">
 		<Logo {logoText} />
 	</a>
 

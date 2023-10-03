@@ -9,6 +9,7 @@
 	import type { BlogPost } from '@lib/utils/types';
 	import RelatedPosts from '@lib/components/organisms/RelatedPosts.svelte';
 	import Image from '@lib/components/atoms/Image.svelte';
+	import BlogPostCard from '../molecules/BlogPostCard.svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
@@ -78,7 +79,7 @@
 
 		{#if post.relatedPosts && post.relatedPosts.length > 0}
 			<div class="container">
-				<RelatedPosts posts={post.relatedPosts} />
+				<RelatedPosts posts={post.relatedPosts} title={window.location.href.split("/").splice(-2)[0]}/>
 			</div>
 		{/if}
 	</main>
