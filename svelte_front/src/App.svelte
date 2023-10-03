@@ -40,6 +40,7 @@
 	import Waves from '@lib/components/organisms/Waves.svelte';
 
 	import { theme } from '@lib/utils/store';
+	import Toast from '@lib/components/molecules/Toast.svelte';
 	let savestore = false
 	$: if (savestore && $theme) {
 		window.sessionStorage.setItem("store", JSON.stringify($theme))
@@ -47,7 +48,7 @@
 	onMount(async () => {
 		let ses = window.sessionStorage.getItem("store")
 		if (ses) {
-			console.log("sob-- ~ loading ses", ses)
+			console.log("loading session", ses)
 			$theme = JSON.parse(ses)
 		}
 		savestore = true
@@ -96,6 +97,7 @@
 </script>
 <Waves />
 <Header {logoText} />
+<Toast />
 <div class="scroll-container">
 	<svelte:component this={currentPage} {...propParams} />
 </div>
