@@ -41,8 +41,6 @@ Inside the `+page.md` file, you must start with the front matter, which is a YAM
 
 <CodeBlock lang="markdown">
 
-<Image src="/images/posts/frontmatter-preview-dashboard.png" alt="Screenshot of the Front Matter VS Code extension, showing the dashboard with all posts" />
-
 ```md
 ---
 slug: my-new-blog-post
