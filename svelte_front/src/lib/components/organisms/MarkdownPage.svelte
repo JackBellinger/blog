@@ -75,7 +75,6 @@
 
 		{#if post.relatedPosts && post.relatedPosts.length > 0}
 			<div class="container">
-				{console.log("post: ", post)}
 				<RecentPosts posts={post.relatedPosts} numToShow={4} title={"Related " + window.location.href.split("/").splice(-2)[0]}/>
 			</div>
 		{/if}

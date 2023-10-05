@@ -13,7 +13,7 @@
 	import { projectStore } from '@lib/utils/store';
 	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
-	import GithubKanban from '@lib/components/organisms/GithubKanban.svelte';
+	//import GithubKanban from '@lib/components/organisms/GithubKanban.svelte';
 
 	export let projectid: string;
 </script>
