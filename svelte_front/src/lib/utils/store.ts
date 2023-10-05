@@ -1,9 +1,9 @@
 import { writable } from 'svelte/store';
+import type { BlogPost, GithubIssue, Page } from '@lib/utils/types';
 import { importPosts } from '@lib/fetchers/posts';
-import type { BlogPost } from './types';
-import { type Page } from '@lib/utils/types';
 import { importPages } from '../fetchers/pages';
 import { importProjects } from '../fetchers/projects';
+//import { importIssuesAndBacklogTickets } from '@lib/fetchers/github';
 
 function createTheme() {
 	let currentTheme;
@@ -97,9 +97,23 @@ function createPages() {
 	};
 }
 
+//function createGithub() {
+//	let issues: GithubIssue[];
+//	const { subscribe, set } = writable<GithubIssue[]>(issues);
+
+//	return {
+//		subscribe,
+//		init: importIssuesAndBacklogTickets("jackbellinger", "blog"),
+//		set: (value: GithubIssue[]) => {
+//			set(value);
+//		}
+//	};
+//}
+
 export const theme = createTheme();
 export const user = writable('');
 
 export const postStore = createPosts();
 export const pageStore = createPages();
 export const projectStore = createProjects();
+//export const githubStore = createGithub();

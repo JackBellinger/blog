@@ -51,3 +51,13 @@ export type BlogPost = {
 	relatedPosts: BlogPost[];
 	coverImage: string | undefined;
 };
+
+export type GithubIssue = {
+	id: string;
+	number: number;
+	state: string;
+	assignees: string[];
+	labels: string[];
+	created_at: string;
+	updated_at: string;
+}
