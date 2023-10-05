@@ -1,15 +1,11 @@
 <script lang="ts">
-	import Header from '@lib/components/organisms/Header.svelte';
-	import Footer from '@lib/components/organisms/Footer.svelte';
 	import Tag from '@lib/components/atoms/Tag.svelte';
 	import dateformat from 'dateformat';
-	import type { SvelteComponentTyped } from "svelte";
 
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
 	import type { BlogPost } from '@lib/utils/types';
-	import RelatedPosts from '@lib/components/organisms/RelatedPosts.svelte';
 	import Image from '@lib/components/atoms/Image.svelte';
-	import BlogPostCard from '../molecules/BlogPostCard.svelte';
+	import RecentPosts from './RecentPosts.svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
@@ -79,7 +75,8 @@
 
 		{#if post.relatedPosts && post.relatedPosts.length > 0}
 			<div class="container">
-				<RelatedPosts posts={post.relatedPosts} title={window.location.href.split("/").splice(-2)[0]}/>
+				{console.log("post: ", post)}
+				<RecentPosts posts={post.relatedPosts} numToShow={4} title={"Related " + window.location.href.split("/").splice(-2)[0]}/>
 			</div>
 		{/if}
 	</main>

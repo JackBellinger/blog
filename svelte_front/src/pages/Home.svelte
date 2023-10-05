@@ -47,9 +47,7 @@
 		{#await postStore.init}
 			<p>...parsing markdown</p>
 		{:then posts}
-			<a href="articles">
-				<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
-			</a>
+			<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
@@ -57,9 +55,7 @@
 		{#await projectStore.init}
 			<p>...parsing projects</p>
 		{:then projects}
-			<a href="projects">
-				<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
-			</a>
+			<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
