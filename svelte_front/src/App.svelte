@@ -48,7 +48,7 @@
 	onMount(async () => {
 		let ses = window.sessionStorage.getItem("store")
 		if (ses) {
-			console.log("loading session", ses)
+			//console.log("loading session", ses)
 			$theme = JSON.parse(ses)
 		}
 		savestore = true
@@ -81,11 +81,11 @@
 	const router = Navaid(baseUrl)
 		.on('/', () => setPage(pages[0]));
 	for (let page of pages.slice(1)) {
-		console.log("on ", page.name, " route to ", page)
+		//console.log("on ", page.name, " route to ", page)
 		router.on(page.name, obj => setPage(page));
 		if(page.routeParam) {
 			let srt = page.name + "/:" + page.routeParam
-			console.log("on ", srt, " route to ", page, " + ")
+			//console.log("on ", srt, " route to ", page, " + ")
 			router.on(srt, obj => setPage(page, obj))
 		}
 		//for(let routeParam of page.routeParams) {

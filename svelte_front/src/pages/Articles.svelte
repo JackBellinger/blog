@@ -37,7 +37,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 <div class="container">
-	<main class="center-container">
+	<main><!-- class="center-container">-->
 		{#await postStore.init}
 			<p>...parsing markdown</p>
 		{:then posts}
@@ -57,11 +57,11 @@
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';
 
-	.grid {
-		width: 100%;
-		display: grid;
-		grid-template-columns: auto;
-		grid-gap: 20px;
+	//.grid {
+	//	width: 100%;
+	//	display: grid;
+	//	grid-template-columns: auto;
+	//	grid-gap: 20px;
 
 		//@include for-tablet-portrait-down {
 		//	grid-template-columns: 1fr;
@@ -91,5 +91,5 @@
 		//		grid-column: span 2;
 		//	}
 		//}
-	}
+	//}
 </style>

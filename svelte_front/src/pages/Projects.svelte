@@ -13,6 +13,7 @@
 	import { projectStore } from '@lib/utils/store';
 	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
+	import GithubKanban from '@lib/components/organisms/GithubKanban.svelte';
 
 	export let projectid: string;
 </script>
@@ -34,23 +35,30 @@
 
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
+<div class="container">
+	<main><!--</main> class="center-container">-->
+			{#await projectStore.init}
+				<p>...parsing markdown</p>
+			{:then projects}
+					{#if !(projectid??"").length}
+						<svelte:component this={RecentPosts} title={"Projects"} posts={projects}/>
+					{:else}
+						<svelte:component this={MarkdownPage} post={projects.find(post => post.slug == projectid)}/>
+					{/if}
+			{:catch error}
+				<p style="color: red">{error.message}</p>
+			{/await}
 
-<main class="center-container">
-	<div class="three-group-grid">
-		{#await projectStore.init}
+		<!--{#await githubStore.init}
 			<p>...parsing markdown</p>
-		{:then projects}
-				{#if !(projectid??"").length}
-					<svelte:component this={RecentPosts} title={"Projects"} posts={projects}/>
-				{:else}
-					<svelte:component this={MarkdownPage} post={projects.find(post => post.slug == projectid)}/>
-				{/if}
+		{:then github}
+				Blog Kanban
+				<svelte:component this={GithubKanban} data={github}/>
 		{:catch error}
 			<p style="color: red">{error.message}</p>
-		{/await}
-	</div>
-</main>
-
+		{/await}-->
+	</main>
+</div>
 <Footer />
 
 <style lang="scss">

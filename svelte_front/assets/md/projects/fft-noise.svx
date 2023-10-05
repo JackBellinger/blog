@@ -1,0 +1,30 @@
+---
+slug: fft-noise
+title: FFT Noise Filtering
+coverImage: /blog/assets/images/projects/fft-noise.avif
+date: 2023-10-04T20:34:02.0400Z
+excerpt: Building an application to filter white noise from sound files.
+hidden: false
+tags:
+  - Signal Processing
+  - WebAssembly
+  - Sound
+---
+
+<script>
+  import Image from "@lib/components/atoms/Image.svelte";
+</script>
+
+### What is the FFT?
+FFT is an algorithm for transforming signals in the time domain into the frequency domain.
+It can be used in so many different applications,
+
+#### Links, inspiration, etc
+
+### Learnings
+
+### Todo
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media

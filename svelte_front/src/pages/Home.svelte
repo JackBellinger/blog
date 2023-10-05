@@ -40,9 +40,10 @@
 </svelte:head>
 <div class="container">
 
-	<main class="center-container">
+	<main><div class="center-container">
 		<Hero />
 		<About />
+		</div>
 		{#await postStore.init}
 			<p>...parsing markdown</p>
 		{:then posts}

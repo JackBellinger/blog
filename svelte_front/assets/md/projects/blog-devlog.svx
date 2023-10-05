@@ -14,6 +14,38 @@ tags:
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
+### What is this?
+For a long time, I've just used Github as my portfolio. In school, I created repos for all of my classes and projects, so that I could easily work on them on my machine and in the labs. Also, it was great for group projects, and prepared me well for learning git in more depth at work. That was good enough for a while, but now that I'm applying to mid level software jobs, I need a place to show my work running.
+Thus, a blog... well, it's just a blog for now. I only have blog content on here at the moment, and the layout is built around the blog (and based on a blog template), but after I get the basics up to snuff I'll be adding pages for other projects.
+
+### How did I make it?
+As always, I started with a bit of research first. I knew I wanted to use a Rust backend, but I tried a few different frontends before settling on svelte. Initially, I thought of building the frontend in Rust as well, since WebAssmenbly support has been improving and I've heard some good things about the Rust frameworks. I tried Yew and Leptos, and I actually have a Yew todo example in this repo that I'm going to try out on the most compute intensive projects. I think they are great for building high perfomance code, but a blog doesn't really fit that use case.
+I have worked with various JS frameworks before, but I tried Svelte and immediately knew I liked it. I haven't dug into the internals extensively yet, but the development experience has been really smooth.
+
+### Why Svelte?
+
+### Blog template
+I searched around for a bit and found a good looking, simply organized template [0](https://github.com/matfantinel/sveltekit-static-blog-template)
+
+### Why not SvelteKit?
+I chose not to use SvelteKit
+
+#### Links, inspiration, etc
+\[0\]: https://github.com/matfantinel/sveltekit-static-blog-template
+\[1\]: https://sveltekit-static-blog-template.vercel.app/
+\[2\]: https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/
+
+### Questions:
+How will the backend scale? If I build something and want more capacity, when will I add seperate infrastructure for that project instead of hosting it on the blog?
+
+### Learnings
+variables exported from the script section are only available to bind, need to export from the module script to access from an instance
+flexbox flexing does not re-calculate the element size after the initial load, scaleX() just changes the display, not the element size, need to set the width of the element to actually move adjacent dom elements
+had to make vite and yew bundle into dist/svelte & dist/yew and then copy the files out to get the routing to work, since the route serves the file directory from root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie svelte.blog.com and yew.blog.com, which might make more sense in the future once I figure out what I'm going to use each for, but I'm glad I figured out how to do it this way in case
+
+axum server doesn't accept nested routes with wildcards, so idk how to send all the spa routes to be handled by the index
+github routing also does not work right
+
 ## Release 0.1.0
 
 ### Frontend Todo
@@ -63,7 +95,7 @@ tags:
 
 
 ### Backend
-- [ ] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum? Backend
+- [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum? Backend
 - [ ] host backend somewhere Backend
 - [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc Backend
 - [ ] flowlogging Backend
@@ -96,19 +128,3 @@ tags:
 - [ ] live stream p2p caching: web / video / distributed / p2p / networks
 - [ ] contribute to ipfs kademlia: web / distributed / p2p / networks
 - [ ] code scanning + fix suggestions ML trained on issues + fixes scraped from public github
-
-### General idea
-Make a blog that I can use for a portfolio and a place to hosts projects in development
-
-#### Links, inspiration, etc
-https://github.com/matfantinel/sveltekit-static-blog-template
-https://sveltekit-static-blog-template.vercel.app/
-https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/
-
-### Learnings
-variables exported from the script section are only available to bind, need to export from the module script to access from an instance
-flexbox flexing does not re-calculate the element size after the initial load, scaleX() just changes the display, not the element size, need to set the width of the element to actually move adjacent dom elements
-had to make vite and yew bundle into dist/svelte & dist/yew and then copy the files out to get the routing to work, since the route serves the file directory from root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie svelte.blog.com and yew.blog.com, which might make more sense in the future once I figure out what I'm going to use each for, but I'm glad I figured out how to do it this way in case
-
-axum server doesn't accept nested routes with wildcards, so idk how to send all the spa routes to be handled by the index
-github routing also does not work right
