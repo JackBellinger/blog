@@ -10,13 +10,12 @@
 	import Waves from '@lib/components/organisms/Waves.svelte';
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import About from '@lib/components/organisms/About.svelte';
-	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
+	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStore } from '@lib/utils/store';
 	import { projectStore } from '@lib/utils/store';
 
 	import Footer from '@lib/components/organisms/Footer.svelte';
 	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
-
 
 	let howManyRecent = 4;
 </script>
@@ -39,15 +38,15 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 <div class="container">
-
-	<main><div class="center-container">
-		<Hero />
-		<About />
+	<main>
+		<div class="center-container">
+			<Hero />
+			<About />
 		</div>
 		{#await postStore.init}
 			<p>...parsing markdown</p>
 		{:then posts}
-			<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
+			<BlogCardGrid {posts} title={'Articles'} numToShow={4} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
@@ -55,7 +54,7 @@
 		{#await projectStore.init}
 			<p>...parsing projects</p>
 		{:then projects}
-			<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
+			<BlogCardGrid posts={projects} title={'Projects'} numToShow={4} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}

@@ -6,11 +6,12 @@
 
 	export let posts: BlogPost[];
 	export let title: string;
-	let title_Lower = title.toLocaleLowerCase()
+	let title_Lower = title.toLocaleLowerCase();
 	export let numToShow: number = undefined;
+	export let showImages = true;
 
-	let locations = ["articles", "projects"]
-	let location = ""
+	let locations = ['articles', 'projects'];
+	let location = '';
 	let i = Number.MAX_SAFE_INTEGER;
 	// find which of the possible locations appears first in the title
 	for (let loc of locations) {
@@ -20,20 +21,20 @@
 			i = index;
 			break; //for now there should only be one of the locations in the title
 		}
-	};
-	let isRelated = title_Lower.startsWith("related")
-	let makeButton = !isRelated;
+	}
+	//let onHomePage = title_Lower.startsWith("related")
+	let onHomePage = window.location.href.split('/').splice(-1)[0] == 'blog';
 </script>
 
 <ContentSection
-	id={title_Lower.replaceAll(" ", "-")}
-	title={title}
+	id={title_Lower.replaceAll(' ', '-')}
+	{title}
 	description="The {numToShow ? numToShow + ' most recent ' : ''}{title_Lower} I've posted"
-	align= {isRelated? "top" : "left"}
+	align={onHomePage ? 'left' : 'top'}
 >
 	<svelte:fragment slot="button">
-		{#if makeButton}
-			<Button href={"/blog/"+location}>View More</Button>
+		{#if onHomePage}
+			<Button href={'/blog/' + location}>View More</Button>
 		{/if}
 	</svelte:fragment>
 	<div class="grid">
@@ -44,12 +45,14 @@
 				excerpt={post.excerpt}
 				tags={post.tags}
 				readingTime={post.readingTime}
-				showImage={true}
-				href_prefix={"/blog/" + location}
+				coverImage={post.coverImage}
+				showImage={showImages}
+				href_prefix={'/blog/' + location}
 			/>
 		{/each}
 	</div>
 </ContentSection>
+
 <style lang="scss">
 	@import '../../scss/breakpoints.scss';
 

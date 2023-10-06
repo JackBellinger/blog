@@ -5,7 +5,7 @@
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
 	import type { BlogPost } from '@lib/utils/types';
 	import Image from '@lib/components/atoms/Image.svelte';
-	import RecentPosts from './RecentPosts.svelte';
+	import BlogCardGrid from './BlogCardGrid.svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
@@ -13,7 +13,7 @@
 
 	$: {
 		if (post?.tags?.length) {
-			metaKeywords = post.tags.map(tag => tag.label).concat(metaKeywords);
+			metaKeywords = post.tags.map((tag) => tag.label).concat(metaKeywords);
 		}
 		if (post?.keywords?.length) {
 			metaKeywords = post.keywords.concat(metaKeywords);
@@ -69,17 +69,21 @@
 				</div>
 			{/if}
 			<div class="content">
-				<svelte:component this={post.module.default}/>
+				<svelte:component this={post.module.default} />
 			</div>
 		</article>
 
 		{#if post.relatedPosts && post.relatedPosts.length > 0}
 			<div class="container">
-				<RecentPosts posts={post.relatedPosts} numToShow={4} title={"Related " + window.location.href.split("/").splice(-2)[0]}/>
+				<BlogCardGrid
+					posts={post.relatedPosts}
+					numToShow={4}
+					showImages={false}
+					title={'Related ' + window.location.href.split('/').splice(-2)[0]}
+				/>
 			</div>
 		{/if}
 	</main>
-
 </div>
 
 <style lang="scss">

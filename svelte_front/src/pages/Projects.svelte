@@ -11,8 +11,9 @@
 	import Footer from '@lib/components/organisms/Footer.svelte';
 	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
 	import { projectStore } from '@lib/utils/store';
-	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
+	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
+	import BlogCardScroller from '@lib/components/organisms/BlogCardScroller.svelte';
 	//import GithubKanban from '@lib/components/organisms/GithubKanban.svelte';
 
 	export let projectid: string;
@@ -36,18 +37,22 @@
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 <div class="container">
-	<main><!--</main> class="center-container">-->
-			{#await projectStore.init}
-				<p>...parsing markdown</p>
-			{:then projects}
-					{#if !(projectid??"").length}
-						<svelte:component this={RecentPosts} title={"Projects"} posts={projects}/>
-					{:else}
-						<svelte:component this={MarkdownPage} post={projects.find(post => post.slug == projectid)}/>
-					{/if}
-			{:catch error}
-				<p style="color: red">{error.message}</p>
-			{/await}
+	<main>
+		<!--</main> class="center-container">-->
+		{#await projectStore.init}
+			<p>...parsing markdown</p>
+		{:then projects}
+			{#if !(projectid ?? '').length}
+				<svelte:component this={BlogCardScroller} posts={projects} />
+			{:else}
+				<svelte:component
+					this={MarkdownPage}
+					post={projects.find((post) => post.slug == projectid)}
+				/>
+			{/if}
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
 
 		<!--{#await githubStore.init}
 			<p>...parsing markdown</p>
