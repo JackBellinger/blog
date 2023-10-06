@@ -13,7 +13,7 @@
 
 	$: {
 		if (post?.tags?.length) {
-			metaKeywords = post.tags.map((tag) => tag.label).concat(metaKeywords);
+			metaKeywords = post.tags.concat(metaKeywords);
 		}
 		if (post?.keywords?.length) {
 			metaKeywords = post.keywords.concat(metaKeywords);
@@ -56,8 +56,8 @@
 					{/if}
 					{#if post.tags?.length}
 						<div class="tags">
-							{#each post.tags as tag}
-								<Tag color={tag.color}>{tag.label}</Tag>
+							{#each post.tags as tag, i}
+							<Tag color={ i==0 ? "primary" : "secondary"}>{tag}</Tag>
 							{/each}
 						</div>
 					{/if}
