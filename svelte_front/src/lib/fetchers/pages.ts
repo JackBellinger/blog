@@ -18,8 +18,8 @@ export function importPages(render = true) {
 				name: filename.toLowerCase(),
 				id: pageNumber,
 				module: pageModule,
-				subpages: pageModule.subpages?? [],
-				routeParam: pageModule.routeParam?? "",
+				subpages: pageModule.subpages ?? [],
+				routeParam: pageModule.routeParam ?? ''
 			} as Page);
 		}
 	}

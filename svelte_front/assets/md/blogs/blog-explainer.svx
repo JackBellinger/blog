@@ -27,7 +27,7 @@ All posts are Markdown files, which means you can use the [Markdown syntax](http
 
 ## Processing
 
-Besides the blog post page itself, the blog posts can be displayed in other places, such as the `/blog` page, which lists all blog posts, and the `<RecentPosts>` component, used in the home page.
+Besides the blog post page itself, the blog posts can be displayed in other places, such as the `/blog` page, which lists all blog posts, and the `<BlogCardGrid>` component, used in the home page.
 
 To be able to do that, posts are processed in the `src/lib/data/blog-posts/index.ts` file. That file imports the blog post files and processes them, so we're able to use some of the post's metadata to list them. For example, we get the post's title, cover image, and calculate the reading time based on its content, so that information is displayed in the blog post cards in the `/blog` page.
 

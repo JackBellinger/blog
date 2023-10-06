@@ -81,7 +81,7 @@ github routing also does not work right
 
 ### Frontend
 - [ ] refactor the navbar (too nested)
-- [ ] re-style RecentPosts to show cards vertically in the articles/projects pages Frontend
+- [ ] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
 - [ ] fix the srcset generation on `<Image>` Frontend
 - [ ] refine head metadata Frontend
 - [ ] comments Frontend

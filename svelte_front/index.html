@@ -11,15 +11,14 @@
 		<title>My svelte app with axum backend</title>
 
 		<script>
-			(function(){
+			(function () {
 				var redirect = sessionStorage.redirect;
 				delete sessionStorage.redirect;
 				if (redirect && redirect != location.href) {
 					history.replaceState(null, null, redirect);
 				}
 			})();
-		  </script>
-
+		</script>
 	</head>
 
 	<body>

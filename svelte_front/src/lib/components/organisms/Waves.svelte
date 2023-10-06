@@ -44,7 +44,7 @@
 		position: absolute;
 		width: 100%;
 		height: min(65vh, 500px);
-
+		z-index: -1;
 		//@include for-phone-only {
 		//	height: min(75vh, 400px);
 		//}

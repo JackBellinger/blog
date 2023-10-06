@@ -21,7 +21,7 @@ export async function importPosts(render = true) {
 	}
 	console.log('imported posts: ', posts);
 	return filterPosts(posts);
-};
+}
 
 export const filterPosts = (posts: BlogPost[]) => {
 	return posts

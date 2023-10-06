@@ -1,24 +1,22 @@
 export function clickToCopy(node, target) {
 	async function copyText() {
-		let text = target
-		  ? document.querySelector(target).innerText
-		  : node.innerText;
+		let text = target ? document.querySelector(target).innerText : node.innerText;
 
 		try {
 			await navigator.clipboard.writeText(text);
 
 			node.dispatchEvent(
-        new CustomEvent('copysuccess', {
+				new CustomEvent('copysuccess', {
 					bubbles: true
 				})
-      );
-		} catch(error) {
+			);
+		} catch (error) {
 			node.dispatchEvent(
-        new CustomEvent('copyerror', {
+				new CustomEvent('copyerror', {
 					bubbles: true,
 					detail: error
 				})
-      );
+			);
 		}
 	}
 
@@ -28,5 +26,5 @@ export function clickToCopy(node, target) {
 		destroy() {
 			node.removeEventListener('click', copyText);
 		}
-	}
+	};
 }

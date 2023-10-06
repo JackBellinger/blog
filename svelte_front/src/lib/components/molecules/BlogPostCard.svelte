@@ -16,9 +16,9 @@
 </script>
 
 <Card
-	href={href_prefix + "/" + slug}
+	href={href_prefix + '/' + slug}
 	target="_self"
-	additionalClass="blog-post-card {!showImage || !coverImage ? 'no-image' : ''}"
+	additionalClass="blog-post-card {showImage && coverImage ? '' : 'no-image'}"
 >
 	<div class="image" slot="image">
 		{#if coverImage}

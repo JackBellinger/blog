@@ -4,18 +4,25 @@
 	import { GET_RSS } from '@lib/utils/rssGen';
 	import { postStore } from '@lib/utils/store';
 </script>
+
 {#await postStore.init}
-			<p>...parsing markdown</p>
-		{:then posts}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<a on:click={() => notifications.warning("Not implemented!", 1000)} target="_blank" rel="noopener noreferrer" title="Subscribe to my RSS Feed">
-				<RssIcon />
-			</a>
+	<p>...parsing markdown</p>
+{:then posts}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-missing-attribute -->
+	<a
+		on:click={() => notifications.warning('Not implemented!', 1000)}
+		target="_blank"
+		rel="noopener noreferrer"
+		title="Subscribe to my RSS Feed"
+	>
+		<RssIcon />
+	</a>
 {:catch error}
-			<p style="color: red">{error.message}</p>
-		{/await}
+	<p style="color: red">{error.message}</p>
+{/await}
+
 <!--<a href="/rss.xml" target="_blank" rel="noopener noreferrer" title="Subscribe to my RSS Feed">
 	<RssIcon />
 </a>-->
