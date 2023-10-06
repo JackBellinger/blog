@@ -64,17 +64,6 @@
 <style lang="scss">
 	@import '../../scss/breakpoints.scss';
 
-	.grid {
-		width: 100%;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 20px;
-
-		@include for-phone-only {
-			grid-template-columns: 1fr;
-		}
-	}
-
 	ul {
 		/* We need to limit the height and show a scrollbar */
 		width: 80%;
