@@ -10,9 +10,7 @@ export async function importProjects(render = true) {
 		if (project) {
 			projects.push({
 				...project.metadata,
-				tags: project.metadata.tags.map((tag, index) => {
-					return { label: tag, color: index == 0 ? 'primary' : 'secondary' };
-				}),
+				tags: project.metadata.tags,
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
 				module: project
 			});

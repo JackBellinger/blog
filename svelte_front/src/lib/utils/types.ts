@@ -37,7 +37,7 @@ export type SocialLink = {};
 //}
 
 export type BlogPost = {
-	tags: TagType[];
+	tags: string[];
 	keywords: string[];
 	hidden: boolean;
 	slug: string;

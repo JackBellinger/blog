@@ -11,9 +11,7 @@ export async function importPosts(render = true) {
 			//console.log("Parsing: ", post, post.default.current)
 			posts.push({
 				...post.metadata,
-				tags: post.metadata.tags.map((tag, index) => {
-					return { label: tag, color: index == 0 ? 'primary' : 'secondary' };
-				}),
+				tags: post.metadata.tags,
 				//html: render ? post.default.render()?.html : undefined,
 				module: post
 			});

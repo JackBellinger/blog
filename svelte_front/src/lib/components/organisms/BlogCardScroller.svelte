@@ -2,7 +2,9 @@
 	import BlogPostCard from '@lib/components/molecules/BlogPostCard.svelte';
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
 	import type { BlogPost } from '@lib/utils/types';
-	import Button from '../atoms/Button.svelte';
+	import Button from '@lib/components/atoms/Button.svelte';
+	import SearchBar from '@lib/components/molecules/SearchTerm.svelte';
+	import BlogCardSearchBar from './BlogCardSearchBar.svelte';
 
 	let listElement;
 	export let posts: BlogPost[];
@@ -20,6 +22,11 @@
 		}
 	}
 	let onHomePage = location == 'home';
+	let filteredPosts = posts;
+	function update() {
+		console.log("update, ", filteredPosts)
+		filteredPosts = [...filteredPosts]
+	}
 
 	function loadMore() {
 		//TODO: subscribe to postsStore and request another x posts
@@ -31,6 +38,7 @@
 			loadMore();
 		}
 	}
+
 </script>
 
 <ContentSection
@@ -44,8 +52,9 @@
 			<Button href={'/blog/' + location}>View More</Button>
 		{/if}
 	</svelte:fragment>
+	<svelte:component this={BlogCardSearchBar} posts={posts} bind:filteredPosts  on:change={update}/>
 	<ul bind:this={listElement} on:scroll={checkScroll}>
-		{#each posts as post}
+		{#each filteredPosts as post}
 			<li>
 				<BlogPostCard
 					slug={post.slug}
