@@ -43,18 +43,19 @@
 			<Hero />
 			<About />
 		</div>
-		{#await postStore.init}
-			<p>...parsing markdown</p>
-		{:then posts}
-			<BlogCardGrid {posts} title={'Articles'} numToShow={4} />
-		{:catch error}
-			<p style="color: red">{error.message}</p>
-		{/await}
 
 		{#await projectStore.init}
 			<p>...parsing projects</p>
 		{:then projects}
-			<BlogCardGrid posts={projects} title={'Projects'} numToShow={4} />
+			<BlogCardGrid posts={projects} title={'Projects'} numToShow={howManyRecent} />
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+
+		{#await postStore.init}
+			<p>...parsing markdown</p>
+		{:then posts}
+			<BlogCardGrid {posts} title={'Articles'} numToShow={howManyRecent} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}

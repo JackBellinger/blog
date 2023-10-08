@@ -30,7 +30,7 @@
 	id={title_Lower.replaceAll(' ', '-')}
 	{title}
 	description="The {numToShow ? numToShow + ' most recent ' : ''}{title_Lower} I've posted"
-	align={onHomePage ? 'left' : 'top'}
+	align={'top'}
 >
 	<svelte:fragment slot="button">
 		{#if onHomePage}

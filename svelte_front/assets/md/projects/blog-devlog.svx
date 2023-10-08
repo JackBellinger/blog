@@ -1,7 +1,7 @@
 ---
 slug: blog-devlog
 title: Blog Development Log
-coverImage: /blog/assets/images/projects/AppArchitectures.avif
+coverImage: /blog/assets/images/projects/app-architectures.avif
 date: 2023-09-26T02:32:00.000Z
 excerpt: How I created this blog
 tags:
@@ -71,17 +71,17 @@ github routing also does not work right
 
 
 ### Content
-- [ ] add textual descriptions, comments, etc to the articles
+- [x] add textual descriptions, comments, etc to the articles
 - [ ] add a resume component with skills, experience, references, and contact info
 - [ ] write a blog about working at Amazon
 - [ ] write a blog about working at Redjack
 - [x] use github tickets
-- [ ] make a svelte component that can display github tickets / project kanban boards
+- [ ] add a kanban board
 - [ ] write a blog about some outdoor stuff
 
 ### Frontend
 - [ ] refactor the navbar (too nested)
-- [ ] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
+- [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
 - [ ] fix the srcset generation on `<Image>` Frontend
 - [ ] refine head metadata Frontend
 - [ ] comments Frontend
