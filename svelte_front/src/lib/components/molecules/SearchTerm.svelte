@@ -14,6 +14,7 @@
 <style>
 	#search-input-cont {
 		width: 40%;
+		min-width: 8em;
 		display: flex;
 		align-items: center;
 		margin: 0 0 0 10px;

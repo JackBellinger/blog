@@ -41,6 +41,7 @@
 
 	import { theme } from '@lib/utils/store';
 	import Toast from '@lib/components/molecules/Toast.svelte';
+	import Footer from '@lib/components/organisms/Footer.svelte';
 	let savestore = false;
 	$: if (savestore && $theme) {
 		window.sessionStorage.setItem('store', JSON.stringify($theme));
@@ -55,6 +56,7 @@
 	});
 
 	const pages = pageStore.init;
+	let showBackground = true;
 	let currentPage = pages[0].module.default;
 	let propParams = {},
 		active;
@@ -65,9 +67,13 @@
 
 	function setPage(page: Page, params = {}) {
 		//console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
+		showBackground = !page.hidden
 		currentPage = page.module.default;
 		propParams = params;
 		window.scrollTo(0, 0);
+	}
+	function setHiddenPage(page: Page, params = {}) {
+
 	}
 
 	//function track(obj) {
@@ -80,6 +86,7 @@
 	//addEventListener('popstate', track);
 
 	const router = Navaid(baseUrl).on('/', () => setPage(pages[0]));
+	//router.on("rss", (obj) => setPage(page))
 	for (let page of pages.slice(1)) {
 		//console.log("on ", page.name, " route to ", page)
 		router.on(page.name, (obj) => setPage(page));
@@ -96,12 +103,16 @@
 	onDestroy(router.unlisten);
 </script>
 
-<Waves />
-<Header {logoText} />
-<Toast />
-<div class="scroll-container">
-	<svelte:component this={currentPage} {...propParams} />
-</div>
+{#if showBackground}
+	<Waves />
+	<Header {logoText} />
+	<Toast />
+{/if}
 
+<svelte:component this={currentPage} {...propParams} />
+
+{#if showBackground}
+	<Footer />
+{/if}
 <style>
 </style>

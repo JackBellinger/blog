@@ -73,7 +73,7 @@
 		justify-content: space-between;
 		gap: 10px;
 		padding: 20px 20px;
-		flex: 1 0 50%;
+		flex: 1 0 40%;
 
 		.content {
 			display: flex;

@@ -5,6 +5,7 @@ import type { SvelteComponent } from 'svelte';
 export type Page = {
 	name: string;
 	id?: number;
+	hidden: boolean;
 	module: SvelteComponent;
 	subpages: string[];
 	routeParam: string;

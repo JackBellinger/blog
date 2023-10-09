@@ -30,7 +30,8 @@
 
 @mixin center-div {
 	@include padded-container;
-	max-width: 60%;
+	//max-width: 60%;
+	padding: 0em 5em 0em 5em;
 	//@include for-desktop-up {
 	//	max-width: 60%;
 	//}

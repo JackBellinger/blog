@@ -33,7 +33,7 @@
 		<GitHubIcon />
 	</a>
 	<a
-		href="https://www.linkedin.com/in/jack-bellinger-54b28987/"
+		href="https://www.linkedin.com/in/jack-b-54b28987/"
 		target="_blank"
 		rel="noopener noreferrer"
 		title="Connect on LinkedIn"

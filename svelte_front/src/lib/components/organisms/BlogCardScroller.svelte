@@ -47,27 +47,26 @@
 	description=""
 	align={'top'}
 >
-	<svelte:fragment slot="button">
-		{#if onHomePage}
-			<Button href={'/blog/' + location}>View More</Button>
-		{/if}
-	</svelte:fragment>
-	<svelte:component this={BlogCardSearchBar} posts={posts} bind:filteredPosts  on:change={update}/>
-	<ul bind:this={listElement} on:scroll={checkScroll}>
-		{#each filteredPosts as post}
-			<li>
-				<BlogPostCard
-					slug={post.slug}
-					title={post.title}
-					excerpt={post.excerpt}
-					tags={post.tags}
-					readingTime={post.readingTime}
-					coverImage={post.coverImage}
-					href_prefix={'/blog/' + location}
-				/>
-			</li>
-		{/each}
-	</ul>
+	<section id="search-bar">
+		<svelte:component this={BlogCardSearchBar} posts={posts} bind:filteredPosts  on:change={update}/>
+	</section>
+	<section id="blog-posts">
+		<ul bind:this={listElement} on:scroll={checkScroll}>
+			{#each filteredPosts as post}
+				<li>
+					<BlogPostCard
+						slug={post.slug}
+						title={post.title}
+						excerpt={post.excerpt}
+						tags={post.tags}
+						readingTime={post.readingTime}
+						coverImage={post.coverImage}
+						href_prefix={'/blog/' + location}
+					/>
+				</li>
+			{/each}
+		</ul>
+	</section>
 </ContentSection>
 
 <style lang="scss">
@@ -75,7 +74,7 @@
 
 	ul {
 		/* We need to limit the height and show a scrollbar */
-		width: 80%;
+		//width: 80%;
 		height: 100%;
 		overflow: auto;
 		//z-index: 10;

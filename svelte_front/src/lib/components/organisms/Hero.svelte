@@ -9,31 +9,7 @@
 </script>
 
 <section id="hero">
-	<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-	<p class="intro">
-		<span class="left">I'm a backend engineer.</span>
-		<span class="right">Here's some of my work!</span>
-	</p>
-	<div class="ctas">
-		<Sparkles>
-			<Button href="https://github.com/jackbellinger/blog">
-				<GitHubIcon slot="icon" />
-				Blog Source
-			</Button>
-		</Sparkles>
-		<Button
-			color="primary"
-			href="https://docs.google.com/document/d/1NU1iY8QP6OpdYCopQ8BjioCYXc-_vgpK/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true"
-		>
-			<Doc slot="icon" />
-			Resume
-		</Button>
-	</div>
-
-	<div class="socials">
-		<span>Socials:</span>
-		<Socials />
-	</div>
+	<slot/>
 </section>
 
 <style lang="scss">
@@ -56,25 +32,6 @@
 			text-align: center;
 		}
 
-		.intro {
-			font-weight: 500;
-			font-size: 1.4rem;
-			width: min(100%, 440px);
-			display: flex;
-			flex-direction: column;
-
-			.left {
-				text-align: left;
-			}
-			.right {
-				text-align: right;
-			}
-
-			//@include for-phone-only {
-			//	display: none;
-			//}
-		}
-
 		.ctas {
 			display: flex;
 			flex-wrap: wrap;
@@ -82,20 +39,6 @@
 			justify-content: center;
 			gap: 10px;
 			width: 100%;
-		}
-
-		.socials {
-			display: flex;
-			align-items: center;
-			gap: 15px;
-
-			//@include for-phone-only {
-			//	justify-content: center;
-			//	margin-bottom: 10px;
-			//	span {
-			//		display: none;
-			//	}
-			//}
 		}
 	}
 </style>

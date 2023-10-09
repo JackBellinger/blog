@@ -1,7 +1,8 @@
 <svelte:options accessors />
 
 <script context="module" lang="ts">
-	export const pageNumber = 3;
+	export const pageNumber = 4;
+	export const hidden = true;
 	export const subRoutes = ['LogIn', 'ApiCheck', 'Admin', 'LogOut'];
 	export const routeParam = 'user';
 </script>

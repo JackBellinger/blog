@@ -41,7 +41,7 @@
 	<header class:has-background={showBackground}>
 		<nav class="container">
 			<div class="leftMenu">
-				<LogoPageMenu menuItems={pages} {logoText} />
+				<LogoPageMenu menuItems={pages.filter(page => !page.hidden)} {logoText} />
 			</div>
 
 			<div class="rightMenu">

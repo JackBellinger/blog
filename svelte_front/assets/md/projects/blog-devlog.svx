@@ -51,80 +51,48 @@ github routing also does not work right
 ### Frontend Todo
 - [x] Adapt Sveltekit blog template to svelte/vite served by axum backend
 - [x] create a cool styled navbar
-- [x] add *very* basic spa routing for pages
 - [x] start a few articles for testing content / display
-- [x] use a router library? (blocked on backend #1)
-- [x] url routing, enable sharing a link to a specific blog / subpage
-- [x] expand blog cards into the blogs page to display content
-- [x] enable forward/back history navigation between pages
-- [x] add images for remaining articles
+- [x] use spa router library
+- [x] add images
 - [x] host on github.io
-- [x] fix routing on github
 
 ### Backend Todo
 - [x] setup basic axum server
 - [x] route frontend to compiled svelte dir
 - [x] enable routing to more yew in addition to svelte
-- [x] send route to frontend to enable page routing
+- [x] send route to frontend to enable page routing: 404s under blog reroute to blog index page
 
-## Future Additions
-
+## Release 0.2.0: Backend
 
 ### Content
 - [x] add textual descriptions, comments, etc to the articles
-- [ ] add a resume component with skills, experience, references, and contact info
+- [ ] add a resume component with skills, experience, references, etc
 - [ ] write a blog about working at Amazon
 - [ ] write a blog about working at Redjack
 - [x] use github tickets
-- [ ] add a kanban board
-- [ ] write a blog about some outdoor stuff
 
 ### Frontend
-- [ ] refactor the navbar (too nested)
 - [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
-- [ ] fix the srcset generation on `<Image>` Frontend
-- [ ] refine head metadata Frontend
-- [ ] comments Frontend
-- [ ] online editing of markdown? CRDT? Frontend
-
-### Mobile
-- [ ] images don't work on mobile?
-- [ ] on mobile, navbar menu click counts as hover so can't go to main
-- [ ] navbar doesn't fully hide on mobile
-- [ ] content is too narrow on mobile
-
+- [ ] make `<Image>` srcset to scale images better, particularly on mobile
+- [ ] refine head metadata
 
 ### Backend
-- [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum? Backend
-- [ ] host backend somewhere Backend
-- [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc Backend
-- [ ] flowlogging Backend
-- [ ] minimize dependencies Backend
+- [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum?
+- [ ] host backend somewhere
+- [ ] get a domain name & certificate
+- [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc
+- [ ] flowlogging
+- [ ] minimize dependencies
+- [ ] bot / dos prevention, cloudflare?
 
 ### Devops
-- [ ] Integ / unit testing Devops
-- [ ] performance testing Devops
-- [ ] deployment pipeline: github actions? Devops
-- [ ] logging + dashboard Devops
-- [ ] fuzzing, static / active code scanner Devops
+- [ ] Integ / unit testing
+- [ ] performance testing
+- [ ] logging + dashboard
+- [ ] fuzzing, static / active code scanner
+- [ ] deployment pipeline: github actions
 
 ### Bugs
 - [x] related posts have wrong link
 - [x] theme toggle resets on page load
 - [x] footer waves are clipped
-
-### Projects
-- [ ] compile fft project to webassembly : web / sound / signal processing
-- [ ] lofi music gen : web / ml / sound / useful
-- [ ] twitch chat excitement sentiment based auto clip suggestions: web / ml / integrations / useful
-- [ ] speaker detection + subtitle positioning (avoid covering stuff): ml / video
-- [ ] in depth exploration comparing numerical eigenvalue algorithms for PCA: ml / math
-- [ ] collaborative filtering: ml / math / data science
-- [ ] video game: graphics / nim or golang / networks
-- [ ] guide map: web / gis / business / useful
-- [ ] wifi sensing automated roomba or lawn mower: signal processing / wifi / useful
-- [ ] security camera no cloud anomaly alerting: video / ml / clientside / useful
-- [ ] home network dashboard: networks / useful
-- [ ] live stream p2p caching: web / video / distributed / p2p / networks
-- [ ] contribute to ipfs kademlia: web / distributed / p2p / networks
-- [ ] code scanning + fix suggestions ML trained on issues + fixes scraped from public github

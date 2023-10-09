@@ -1,7 +1,8 @@
 <svelte:options accessors />
 
 <script context="module" lang="ts">
-	export const pageNumber = 1;
+	export const pageNumber = 2;
+	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParam = 'blogid';
 </script>
@@ -53,8 +54,6 @@
 		{/await}
 	</main>
 </div>
-
-<Footer />
 
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';

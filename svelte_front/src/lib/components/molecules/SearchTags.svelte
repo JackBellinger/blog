@@ -29,12 +29,4 @@
 		font-size: 1.18rem;
 
 	}
-	Chip {
-		background-color: blue;
-	}
-	.active {
-		border: 1px solid rgb(199, 22, 22);
-		border-radius: 0px;
-		/*width: 100%*/
-	}
 </style>
