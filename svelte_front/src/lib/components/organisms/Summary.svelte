@@ -111,7 +111,7 @@
 
 			<p>
 				<img
-					src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact"
+					src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
 					alt="jackbellinger"
 				/>
 			</p>
