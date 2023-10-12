@@ -9,7 +9,7 @@
 </script>
 
 <section id="hero">
-	<slot/>
+	<slot />
 </section>
 
 <style lang="scss">

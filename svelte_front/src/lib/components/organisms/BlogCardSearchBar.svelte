@@ -1,21 +1,24 @@
 <script lang="ts">
-	import type { BlogPost } from "@lib/utils/types";
-	import SearchTags from "../molecules/SearchTags.svelte";
-	import SearchTerm from "../molecules/SearchTerm.svelte";
-	import { createEventDispatcher } from "svelte";
+	import type { BlogPost } from '@lib/utils/types';
+	import SearchTags from '../molecules/SearchTags.svelte';
+	import SearchTerm from '../molecules/SearchTerm.svelte';
+	import { createEventDispatcher } from 'svelte';
 
-	export let posts: BlogPost [];
+	export let posts: BlogPost[];
 	export let filteredPosts = posts;
-	let searchTerm = "";
-	let tags: Set<string> = new Set(posts.flatMap(post => post.tags));
+	let searchTerm = '';
+	let tags: Set<string> = new Set(posts.flatMap((post) => post.tags));
 	let selectedTags: Set<string> = new Set();
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher();
 	function searchPosts(e) {
-		filteredPosts = posts.filter(post => {
-			let x = (searchTerm.length>0? post.title.toLowerCase().includes(searchTerm.toLowerCase()) : true)
-			&& (selectedTags.size>0? post.tags.some(tag => selectedTags.has(tag)) : true)
-			console.log(x)
-			return x
+		filteredPosts = posts.filter((post) => {
+			let x =
+				(searchTerm.length > 0
+					? post.title.toLowerCase().includes(searchTerm.toLowerCase())
+					: true) &&
+				(selectedTags.size > 0 ? post.tags.some((tag) => selectedTags.has(tag)) : true);
+			console.log(x);
+			return x;
 		});
 		dispatch('change', {});
 	}
@@ -23,7 +26,7 @@
 
 <section id="query-section">
 	<SearchTerm bind:searchTerm on:input={searchPosts} />
-	<SearchTags {tags} bind:selectedTags on:change={searchPosts}/>
+	<SearchTags {tags} bind:selectedTags on:change={searchPosts} />
 </section>
 
 <style>

@@ -41,7 +41,7 @@
 		{#if tags?.length}
 			<div class="tags">
 				{#each tags.slice(0, 2) as tag, i}
-					<Tag color={ i==0 ? "primary" : "secondary"}>{tag}</Tag>
+					<Tag color={i == 0 ? 'primary' : 'secondary'}>{tag}</Tag>
 				{/each}
 			</div>
 		{/if}

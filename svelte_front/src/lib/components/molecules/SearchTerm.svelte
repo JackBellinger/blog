@@ -3,12 +3,14 @@
 </script>
 
 <div id="search-input-cont">
-	<input type="text"
-				 id="search-field"
-				 placeholder="Search by Title"
-				 autocomplete="off"
-				 bind:value={searchTerm}
-				 on:input />
+	<input
+		type="text"
+		id="search-field"
+		placeholder="Search by Title"
+		autocomplete="off"
+		bind:value={searchTerm}
+		on:input
+	/>
 </div>
 
 <style>
