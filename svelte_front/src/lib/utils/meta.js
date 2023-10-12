@@ -2,13 +2,12 @@
 // So they can be added as suffixes on different pages
 // Via <svelte:head>
 
-export const siteBaseUrl = 'https://jackbellinger.github.io/';
+export const siteBaseUrl = 'https://jackbellinger.github.io/blog';
 
-export const keywords = ['Svelte', 'SvelteKit', 'Template', 'Blog', 'Starter', 'Static Site'];
+export const keywords = ['Svelte', 'Axum', 'tech', 'Blog', 'Jack', 'Bellinger'];
 
-export const description =
-	'A light, neat, and easy-to-use SvelteKit template for your next website.';
+export const description = 'The blog & portfolio of Jack Bellinger';
 
-export const title = 'SvelteKit Static Blog Template';
+export const title = 'Jack Bellinger';
 
-export const image = `@assets/images/site-preview.png`;
+export const image = `@assets/images/blog_preview.png`;

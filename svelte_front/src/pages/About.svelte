@@ -8,45 +8,47 @@
 </script>
 
 <script lang="ts">
-	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
-	import SparklingHighlight from '@lib/components/molecules/SparklingHighlight.svelte';
-	import Image from '@lib/components/atoms/Image.svelte';
+	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
+
 	import Hero from '@lib/components/organisms/Hero.svelte';
-	import Socials from '@lib/components/molecules/Socials.svelte';
 </script>
 
-<svelte:head>
-	<link rel="canonical" href={siteBaseUrl} />
-	<meta name="keywords" content={keywords.join(', ')} />
-
-	<meta name="description" content={description} />
-	<meta property="og:description" content={description} />
-	<meta name="twitter:description" content={description} />
-
-	<title>{title}</title>
-	<meta property="og:title" content={title} />
-	<meta name="twitter:title" content={title} />
-
-	<meta property="og:image" content={image} />
-	<meta name="twitter:image" content={image} />
-
-	<meta name="twitter:card" content="summary_large_image" />
-</svelte:head>
 <div class="center-container">
 	<main>
 		<Hero>
 			<h1 class="hello">About</h1>
+			<CodeBlock filename={'A bit about me.json'} lang={''}>
+				let Jack: Software Engineer = &#123;<br />
+				<p>
+					&emsp;&emsp;&emsp;years of experience: 3,<br />
+					&emsp;&emsp;&emsp;platforms: [web, microservice clusters, federated],<br />
+					&emsp;&emsp;&emsp;applications: [ML operations, data engineering, network security],<br />
+					&emsp;&emsp;&emsp;domain knowledge: [live_streaming, port & behavior based host id],<br />
+					&emsp;&emsp;&emsp;technical scope: [design & review, code, devops],<br />
+					&emsp;&emsp;&emsp;leadership skills: [requirements spec, scoping, mentoring]
+				</p>
+				&#125;
+			</CodeBlock>
 		</Hero>
 		<div class="info">
 			<h2>Background</h2>
 			<p>
-				I have 3 years of experience working on production backend systems. I have contributed designs and implementations to a computer vision platform for live sports and a distributed data pipeline for backbone network security. <br> I enjoy working at many levels of computation, from optimizing thread-safety & memory usage to creating clear abstractions & consise business logic. I always implement automated testing, CI/CD pipelines for my services, and take pride in detailed documentation. I strive to develop a deep understanding of my codebases and share my knowledge. I ensure my team's change requests are similarly eloquent through collaborative and meticulous code reviews. <br>My software is currently running in production: at Fortune 500 companies such as Walmart you can find my work creating visibility into internal network behaviors and architectures to keep customers safe; and at Amazon you can find my work detecting stream liveliness and generating highlight clips for live sports;
+				I have 3 years of experience working on production backend systems. I have contributed
+				designs and implementations to a computer vision platform for live sports and a distributed
+				data pipeline for backbone network security. <br /> I enjoy working at many levels of
+				computation, from optimizing thread-safety & memory usage to creating clear abstractions &
+				consise business logic. I always implement automated testing, CI/CD pipelines for my
+				services, and take pride in detailed documentation. I strive to develop a deep understanding
+				of my codebases and share my knowledge. I ensure my team's change requests are similarly
+				eloquent through collaborative and meticulous code reviews. <br />My software is currently
+				running in production: at Fortune 500 companies such as Walmart you can find my work
+				creating visibility into internal network behaviors and architectures to keep customers
+				safe; and at Amazon you can find my work detecting stream liveliness and generating
+				highlight clips for live sports;
 			</p>
 		</div>
 	</main>
 </div>
-
-
 
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';
