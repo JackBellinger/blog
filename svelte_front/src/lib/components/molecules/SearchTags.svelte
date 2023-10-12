@@ -1,18 +1,19 @@
 <script lang="ts">
-	import Chip from "@lib/components/atoms/Chip.svelte";
+	import Chip from '@lib/components/atoms/Chip.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	export let tags: Set<string>;
 	export let selectedTags: Set<string> = new Set();
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher();
 
 	function selectTag(tag: string) {
 		//console.log("selected: ", tag, this.classList)
 		//this.classList.toggle('active');
-		!selectedTags.has(tag) ? selectedTags.add(tag) : selectedTags.delete(tag)
+		!selectedTags.has(tag) ? selectedTags.add(tag) : selectedTags.delete(tag);
 		dispatch('change', {});
 	}
 </script>
+
 <div>
 	{#each tags as tag}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -27,6 +28,5 @@
 		flex-direction: row;
 		margin: 0;
 		font-size: 1.18rem;
-
 	}
 </style>

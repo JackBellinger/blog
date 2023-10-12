@@ -5,14 +5,6 @@
 
 <section id="about">
 	<div class="info">
-		- 🔭 I’m currently searching for a job in a fullstack or backend role.<br />
-		<br />
-		- 🌱 I’m currently learning **Svelte, Webassembly, & Machine learning**<br />
-		<br />
-		- 📝 I write articles on [jackbellinger.github.io/blog](jackbellinger.github.io/blog)<br />
-		<br />
-		- 📫 How to reach me **jdunnbellinger@gmail.com**<br />
-
 		<!-- ### Blogs posts -->
 		<!-- BLOG-POST-LIST:START -->
 		<!-- BLOG-POST-LIST:END -->
@@ -27,7 +19,7 @@
 
 		<div class="langs">
 			<h3>Languages and Tools:</h3>
-			<p >
+			<p>
 				<a href="https://aws.amazon.com" target="_blank" rel="noreferrer">
 					<img
 						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
@@ -107,8 +99,6 @@
 			>
 		</p>
 		<div class="stats">
-
-
 			<p>
 				<img
 					src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
@@ -168,16 +158,16 @@
 			}
 
 			.langs {
-				display:none;
+				display: none;
 				//display: flex;
 				flex-direction: row;
-				gap: .5em;
+				gap: 0.5em;
 			}
 
 			.stats {
 				display: flex;
 				flex-direction: row;
-				gap: .5em;
+				gap: 0.5em;
 			}
 		}
 	}

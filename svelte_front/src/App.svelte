@@ -29,6 +29,7 @@
 -->
 
 <script lang="ts">
+	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta.js';
 	import Navaid from 'navaid';
 	import { onDestroy } from 'svelte';
 	import { getSession } from '@lib/fetchers/auth';
@@ -42,6 +43,7 @@
 	import { theme } from '@lib/utils/store';
 	import Toast from '@lib/components/molecules/Toast.svelte';
 	import Footer from '@lib/components/organisms/Footer.svelte';
+
 	let savestore = false;
 	$: if (savestore && $theme) {
 		window.sessionStorage.setItem('store', JSON.stringify($theme));
@@ -67,14 +69,12 @@
 
 	function setPage(page: Page, params = {}) {
 		//console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
-		showBackground = !page.hidden
+		showBackground = !page.hidden;
 		currentPage = page.module.default;
 		propParams = params;
 		window.scrollTo(0, 0);
 	}
-	function setHiddenPage(page: Page, params = {}) {
-
-	}
+	function setHiddenPage(page: Page, params = {}) {}
 
 	//function track(obj) {
 	//	uri = obj.state || obj.uri || location.pathname;
@@ -103,6 +103,25 @@
 	onDestroy(router.unlisten);
 </script>
 
+<svelte:head>
+	<link rel="canonical" href={siteBaseUrl} />
+	<meta name="keywords" content={keywords.join(', ')} />
+
+	<meta name="description" content={description} />
+	<meta property="og:description" content={description} />
+	<meta name="twitter:description" content={description} />
+
+	<title>{title}</title>
+	<meta property="og:title" content={title} />
+	<meta name="twitter:title" content={title} />
+
+	<meta property="og:image" content={image} />
+	<meta name="twitter:image" content={image} />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<link rel="icon" type="image/x-icon" href="./assets/icons/mountain.ico" />
+</svelte:head>
+
 {#if showBackground}
 	<Waves />
 	<Header {logoText} />
@@ -114,5 +133,6 @@
 {#if showBackground}
 	<Footer />
 {/if}
+
 <style>
 </style>

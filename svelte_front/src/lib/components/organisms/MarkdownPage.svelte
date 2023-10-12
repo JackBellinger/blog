@@ -57,7 +57,7 @@
 					{#if post.tags?.length}
 						<div class="tags">
 							{#each post.tags as tag, i}
-							<Tag color={ i==0 ? "primary" : "secondary"}>{tag}</Tag>
+								<Tag color={i == 0 ? 'primary' : 'secondary'}>{tag}</Tag>
 							{/each}
 						</div>
 					{/if}

@@ -8,61 +8,37 @@
 </script>
 
 <script lang="ts">
-	import Waves from '@lib/components/organisms/Waves.svelte';
 	import Hero from '@lib/components/organisms/Hero.svelte';
-	import About from '@lib/components/organisms/Summary.svelte';
+	import Summary from '@lib/components/organisms/Summary.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStore } from '@lib/utils/store';
 	import { projectStore } from '@lib/utils/store';
-
-	import Footer from '@lib/components/organisms/Footer.svelte';
-	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
 	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
 
 	let howManyRecent = 4;
 </script>
 
-<svelte:head>
-	<link rel="canonical" href={siteBaseUrl} />
-	<meta name="keywords" content={keywords.join(', ')} />
-
-	<meta name="description" content={description} />
-	<meta property="og:description" content={description} />
-	<meta name="twitter:description" content={description} />
-
-	<title>{title}</title>
-	<meta property="og:title" content={title} />
-	<meta name="twitter:title" content={title} />
-
-	<meta property="og:image" content={image} />
-	<meta name="twitter:image" content={image} />
-
-	<meta name="twitter:card" content="summary_large_image" />
-</svelte:head>
 <div class="container">
 	<main>
 		<div class="center-container">
 			<Hero>
 				<section class="intro">
 					<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-
+					<!--<p> welcome to my blog</p>-->
 				</section>
+				<p>
+					- 🔭 I’m currently searching for a fullstack or backend role.<br />
+					<br />
+					- 🌱 I’m currently learning <b>Svelte, Webassembly, and Machine learning</b><br />
+					<br />
+					- 📝 Check out my devlogs at <a href="/blog/articles">Menu/Projects</a> <br />
+					<br />
+					- 📝 Read my blog at <a href="/blog/articles">Menu/Articles</a> <br />
+					<br />
+					- 📫 How to reach me <i>jdunnbellinger@gmail.com</i><br />
+				</p>
 			</Hero>
-			<p>
-				<CodeBlock filename={"A bit about me.json"} lang={""}>
-					let Jack: Software Engineer = &#123;<br>
-					<p>
-						&emsp;&emsp;&emsp;years of experience: 3,<br>
-						&emsp;&emsp;&emsp;platforms: [web, microservice clusters, federated],<br>
-						&emsp;&emsp;&emsp;applications: [ML operations, data engineering, network security],<br>
-						&emsp;&emsp;&emsp;domain knowledge: [live_streaming, port & behavior based host id],<br>
-						&emsp;&emsp;&emsp;technical scope: [design & review, code, devops],<br>
-						&emsp;&emsp;&emsp;leadership skills: [requirements spec, scoping, mentoring]
-					</p>
-					&#125;
-				</CodeBlock>
-			</p>
-			<About />
+			<Summary />
 		</div>
 
 		{#await projectStore.init}
@@ -81,7 +57,6 @@
 			<p style="color: red">{error.message}</p>
 		{/await}
 	</main>
-
 </div>
 
 <style lang="scss">
@@ -91,7 +66,9 @@
 		//width: min(100%, 440px);
 		display: flex;
 		flex-direction: column;
-
+		p {
+			text-align: center;
+		}
 		.left {
 			text-align: left;
 		}

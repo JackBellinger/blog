@@ -6,6 +6,7 @@
 	export const subRoutes = [];
 	export const routeParams = undefined;
 </script>
+
 <script lang="ts">
 	import { description, siteBaseUrl, title } from '@lib/utils/meta';
 	import type { BlogPost } from '@lib/utils/types';
@@ -46,7 +47,9 @@
 		<width>32</width>
 		<height>32</height>
 		</image>
-		${posts.map((post) => `
+		${posts
+			.map(
+				(post) => `
 			<item>
 			<guid>${siteBaseUrl}/${post.slug}</guid>
 			<title>${post.title}</title>
@@ -67,19 +70,19 @@
 				${post.html}
 			]]></content:encoded>
 			${
-							post.coverImage
-								? `<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="${siteBaseUrl}/${post.coverImage}"/>`
-								: ''
-						}
+				post.coverImage
+					? `<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="${siteBaseUrl}/${post.coverImage}"/>`
+					: ''
+			}
 			${
-							post.coverImage
-								? `<media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="${siteBaseUrl}/${post.coverImage}"/>`
-								: ''
-						}
+				post.coverImage
+					? `<media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="${siteBaseUrl}/${post.coverImage}"/>`
+					: ''
+			}
 			</item>
 		`
-				)
-				.join('')}
+			)
+			.join('')}
 	</channel>
 	</rss>`;
 </script>

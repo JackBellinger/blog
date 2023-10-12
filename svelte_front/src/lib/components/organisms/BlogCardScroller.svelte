@@ -24,8 +24,8 @@
 	let onHomePage = location == 'home';
 	let filteredPosts = posts;
 	function update() {
-		console.log("update, ", filteredPosts)
-		filteredPosts = [...filteredPosts]
+		console.log('update, ', filteredPosts);
+		filteredPosts = [...filteredPosts];
 	}
 
 	function loadMore() {
@@ -38,7 +38,6 @@
 			loadMore();
 		}
 	}
-
 </script>
 
 <ContentSection
@@ -48,7 +47,7 @@
 	align={'top'}
 >
 	<section id="search-bar">
-		<svelte:component this={BlogCardSearchBar} posts={posts} bind:filteredPosts  on:change={update}/>
+		<svelte:component this={BlogCardSearchBar} {posts} bind:filteredPosts on:change={update} />
 	</section>
 	<section id="blog-posts">
 		<ul bind:this={listElement} on:scroll={checkScroll}>
