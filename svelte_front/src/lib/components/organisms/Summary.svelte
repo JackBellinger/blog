@@ -127,8 +127,8 @@
 		position: relative;
 		display: grid;
 		//grid-template-columns: 500px 250px;
-		align-items: center;
-		justify-content: space-between;
+
+		justify-content: center;
 		padding-bottom: 50px;
 
 		@include for-phone-only {
@@ -140,6 +140,7 @@
 		.info {
 			display: flex;
 			flex-direction: column;
+
 			gap: 10px;
 			h2 {
 				@include for-phone-only {
@@ -167,6 +168,7 @@
 			.stats {
 				display: flex;
 				flex-direction: row;
+				justify-content: center;
 				gap: 0.5em;
 			}
 		}
