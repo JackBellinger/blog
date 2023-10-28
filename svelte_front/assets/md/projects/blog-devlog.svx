@@ -73,7 +73,7 @@ github routing also does not work right
 
 ### Frontend
 - [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
-- [ ] make `<Image>` srcset to scale images better, particularly on mobile
+- [x] make `<Image>` srcset to scale images better, particularly on mobile
 - [ ] refine head metadata
 
 ### Backend

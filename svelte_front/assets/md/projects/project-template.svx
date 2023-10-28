@@ -13,15 +13,15 @@ tags:
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
-### Todo
-
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
-
 ### General idea
 What is the thing I'm trying to make?
 
 #### Links, inspiration, etc
 
 ### Learnings
+
+### Todo
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media

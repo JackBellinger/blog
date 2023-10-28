@@ -2,14 +2,18 @@
 	export let src: string;
 	let localImage = src[0] == '/';
 	export let alt: string;
-	export let fullBleed: boolean | undefined = undefined;
-
-	export let formats: string[] = ['webp', 'png'];
 	export let widths: string[] | undefined = undefined;
 
-	$: fileName = src.split('.')[0];
+	$: fileName = src.split(".");
+	console.log(src, " ", fileName)
+	//const imageModules = import.meta.glob(fileName);
 
-	function buildSrcset() {
+	//for (const modulePath in imageModules) {
+	//	imageModules[modulePath]().then(({ default: imageUrl }) => {
+	//		console.log(modulePath, imageUrl);
+	//	});
+	//}
+	function buildSrcset(formats) {
 		let srcset = '';
 
 		if (widths) {
@@ -35,15 +39,21 @@
 </script>
 
 {#if localImage}
+<picture>
+	<source
+	  srcset={buildSrcset(['webp', 'png'])}
+	  media="screen and (-ms-high-contrast: active), (-ms-high-contrast: none)"
+	  width="1000"
+	  height="400" />
+
 	<img
-		srcset={buildSrcset()}
-		{alt}
-		loading="lazy"
-		decoding="async"
-		class:full-bleed={fullBleed}
-	/>
+	  src={src}
+	  alt="the img used when the browser does not support the sources"
+	  width="500"
+	  height="400" />
+  </picture>
 {:else}
-	<img srcset={src} {alt} loading="lazy" decoding="async" class:full-bleed={fullBleed} />
+	<img srcset={src} {alt} loading="lazy" decoding="async" />
 {/if}
 
 <style lang="scss">
