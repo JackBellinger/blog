@@ -1,5 +1,3 @@
-<svelte:options accessors />
-
 <script context="module" lang="ts">
 	export const pageNumber = 4;
 	export const hidden = true;

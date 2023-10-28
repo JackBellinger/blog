@@ -1,5 +1,3 @@
-<svelte:options accessors />
-
 <script context="module" lang="ts">
 	export const pageNumber = 0;
 	export const hidden = false;
@@ -13,7 +11,6 @@
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStore } from '@lib/utils/store';
 	import { projectStore } from '@lib/utils/store';
-	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
 
 	let howManyRecent = 4;
 </script>
@@ -27,15 +24,15 @@
 					<!--<p> welcome to my blog</p>-->
 				</section>
 				<p>
-					- 🔭 I’m currently searching for a fullstack or backend role.<br />
+					- 🔭 I'm currently searching for a fullstack or backend role.<br />
 					<br />
-					- 🌱 I’m currently learning <b>Svelte, Webassembly, and Machine learning</b><br />
+					- 🌱 I'm currently learning <b>Svelte, Webassembly, and Machine learning</b><br />
 					<br />
 					- 📝 Check out my devlogs at <a href="/blog/articles">Menu/Projects</a> <br />
 					<br />
 					- 📝 Read my blog at <a href="/blog/articles">Menu/Articles</a> <br />
 					<br />
-					- 📫 How to reach me <i>jdunnbellinger@gmail.com</i><br />
+					- 📫 Send me an email at <i>jdunnbellinger@gmail.com</i><br />
 				</p>
 			</Hero>
 			<Summary />
@@ -60,20 +57,5 @@
 </div>
 
 <style lang="scss">
-	.intro {
-		//font-weight: 500;
-		//font-size: 1.4rem;
-		//width: min(100%, 440px);
-		display: flex;
-		flex-direction: column;
-		p {
-			text-align: center;
-		}
-		.left {
-			text-align: left;
-		}
-		.right {
-			text-align: right;
-		}
-	}
+
 </style>

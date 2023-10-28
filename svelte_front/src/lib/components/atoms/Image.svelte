@@ -4,7 +4,7 @@
 	export let alt: string;
 	export let fullBleed: boolean | undefined = undefined;
 
-	export let formats: string[] = ['avif', 'png'];
+	export let formats: string[] = ['webp', 'png'];
 	export let widths: string[] | undefined = undefined;
 
 	$: fileName = src.split('.')[0];
@@ -37,7 +37,6 @@
 {#if localImage}
 	<img
 		srcset={buildSrcset()}
-		{src}
 		{alt}
 		loading="lazy"
 		decoding="async"
