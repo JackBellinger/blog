@@ -16,13 +16,7 @@
 	};
 </script>
 
-<svelte:element
-	this={tag}
-	class="card {additionalClass}"
-	{...linkProps}
-	data-sveltekit-preload-data
-	{...$$restProps}
->
+<svelte:element this={tag} class="card {additionalClass}" {...linkProps}>
 	{#if $$slots.image}
 		<div class="image">
 			<slot name="image" />

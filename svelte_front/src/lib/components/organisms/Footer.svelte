@@ -23,8 +23,8 @@
 			<br />Icons by
 			<a href="https://iconoir.com/" target="_blank" rel="noopener noreferrer">Iconoir</a>
 			and
-			<a href="https://flaticon.com/" target="_blank" rel="noopener noreferrer">Flaticon</a>,
-			Images by
+			<a href="https://flaticon.com/" target="_blank" rel="noopener noreferrer">Flaticon</a>, Images
+			by
 			<a href="https://www.freepik.com/author/vectorjuice" target="_blank" rel="noopener noreferrer"
 				>Freepik/Vectorjuice</a
 			>

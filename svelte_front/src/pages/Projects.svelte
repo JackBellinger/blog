@@ -6,10 +6,9 @@
 </script>
 
 <script lang="ts">
-	import { projectStore } from '@lib/utils/store';
+	import { projectStores } from '@lib/utils/store';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
 	import BlogCardScroller from '@lib/components/organisms/BlogCardScroller.svelte';
-	//import GithubKanban from '@lib/components/organisms/GithubKanban.svelte';
 
 	export let projectid: string;
 </script>
@@ -17,15 +16,16 @@
 <div class="container">
 	<main>
 		<!--</main> class="center-container">-->
-		{#await projectStore.init}
+
+		{#await projectStores.items.load()}
 			<p>...parsing markdown</p>
 		{:then projects}
 			{#if !(projectid ?? '').length}
-				<svelte:component this={BlogCardScroller} posts={projects} />
+				<svelte:component this={BlogCardScroller} store={projectStores} />
 			{:else}
 				<svelte:component
 					this={MarkdownPage}
-					post={projects.find((post) => post.slug == projectid)}
+					post={projects.find((project) => project.slug == projectid)}
 				/>
 			{/if}
 		{:catch error}

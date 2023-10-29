@@ -1,13 +1,14 @@
 <script lang="ts">
 	import BlogPostCard from '@lib/components/molecules/BlogPostCard.svelte';
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
-	import type { BlogPost } from '@lib/utils/types';
+	import type { BlogPost, FilterableAsyncStore, FilteredStore } from '@lib/utils/types';
 	import Button from '@lib/components/atoms/Button.svelte';
 	import SearchBar from '@lib/components/molecules/SearchTerm.svelte';
 	import BlogCardSearchBar from './BlogCardSearchBar.svelte';
 
+	export let store: FilterableAsyncStore;
+	let filteredItems: FilteredStore = store.filteredItems;
 	let listElement;
-	export let posts: BlogPost[];
 
 	let locations = ['articles', 'projects'];
 	let location = 'home';
@@ -22,10 +23,12 @@
 		}
 	}
 	let onHomePage = location == 'home';
-	let filteredPosts = posts;
+	//let filteredPosts: BlogPost[] = [];
+	//postStores.filteredItems.subscribe(newPosts => filteredPosts = newPosts);
+
 	function update() {
-		console.log('update, ', filteredPosts);
-		filteredPosts = [...filteredPosts];
+		//console.log('update, ', filteredPosts);
+		//filteredPosts = [...filteredPosts];
 	}
 
 	function loadMore() {
@@ -47,23 +50,31 @@
 	align={'top'}
 >
 	<section id="search-bar">
-		<svelte:component this={BlogCardSearchBar} {posts} bind:filteredPosts on:change={update} />
+		<svelte:component this={BlogCardSearchBar} {store} />
 	</section>
 	<section id="blog-posts">
 		<ul bind:this={listElement} on:scroll={checkScroll}>
-			{#each filteredPosts as post}
-				<li>
-					<BlogPostCard
-						slug={post.slug}
-						title={post.title}
-						excerpt={post.excerpt}
-						tags={post.tags}
-						readingTime={post.readingTime}
-						coverImage={post.coverImage}
-						href_prefix={'/blog/' + location}
-					/>
-				</li>
-			{/each}
+			{#await $filteredItems}
+				<p>...parsing markdown aaa</p>
+			{:then items}
+				<!--{console.log("fp ", $filteredItems)}-->
+				{#each items as post}
+					<!--{console.log("render new post")}-->
+					<li>
+						<BlogPostCard
+							slug={post.slug}
+							title={post.title}
+							excerpt={post.excerpt}
+							tags={post.tags}
+							readingTime={post.readingTime}
+							coverImage={post.coverImage}
+							href_prefix={'/blog/' + location}
+						/>
+					</li>
+				{/each}
+			{:catch error}
+				<p style="color: red">{error.message}</p>
+			{/await}
 		</ul>
 	</section>
 </ContentSection>

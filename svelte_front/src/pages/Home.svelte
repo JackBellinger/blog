@@ -9,8 +9,8 @@
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import Summary from '@lib/components/organisms/Summary.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
-	import { postStore } from '@lib/utils/store';
-	import { projectStore } from '@lib/utils/store';
+	import { postStores } from '@lib/utils/store';
+	import { projectStores } from '@lib/utils/store';
 
 	let howManyRecent = 4;
 </script>
@@ -38,7 +38,7 @@
 			<Summary />
 		</div>
 
-		{#await projectStore.init}
+		{#await projectStores.items.load()}
 			<p>...parsing projects</p>
 		{:then projects}
 			<BlogCardGrid posts={projects} title={'Projects'} numToShow={howManyRecent} />
@@ -46,7 +46,7 @@
 			<p style="color: red">{error.message}</p>
 		{/await}
 
-		{#await postStore.init}
+		{#await postStores.items.load()}
 			<p>...parsing markdown</p>
 		{:then posts}
 			<BlogCardGrid {posts} title={'Articles'} numToShow={howManyRecent} />
@@ -57,5 +57,4 @@
 </div>
 
 <style lang="scss">
-
 </style>

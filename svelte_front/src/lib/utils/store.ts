@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { derived, get, readable, writable } from 'svelte/store';
 import { importPosts } from '@lib/fetchers/posts';
 import type { BlogPost } from './types';
 import { type Page } from '@lib/utils/types';
@@ -25,49 +25,83 @@ function createTheme() {
 		}
 	};
 }
-function createAsyncStore() {
-	const { subscribe, update, set } = writable([]);
+
+const loadAll = async (stores) => {
+	const loadPromises = stores.map((store) => {
+		if (Object.prototype.hasOwnProperty.call(store, 'load')) {
+			let x = store.load();
+			//console.log("loaded: ", x)
+			return x;
+		} else {
+			//console.log("no load, getting ", get(store))
+			return get(store);
+		}
+	});
+	const storeValues = await Promise.all(loadPromises);
+	//console.log("store values: ", storeValues)
+	return storeValues;
+};
+
+const loadableDerived = (stores, mappingFunction) => {
+	const loadValue = async () => {
+		//console.log("loading: ", stores, " with functiuon: ", mappingFunction)
+		const parentValues = await loadAll(stores);
+		let x = mappingFunction(parentValues);
+		//console.log(x)
+		return x;
+	};
+	const { subscribe } = derived(stores, mappingFunction);
 	return {
 		subscribe,
-		set: (newList) => {
-			return new Promise<void>((resolve) => {
-				setTimeout(() => {
-					set(newList);
-					resolve();
-				}, 500);
-			});
-		},
-		update: () => {
-			return new Promise<void>((resolve) => {
-				setTimeout(() => {
-					update((list) => [...list, { name: `restaurant${list.length + 1}` }]);
-					resolve();
-				}, 500);
-			});
-		},
-		init: () => {
-			return new Promise<void>((resolve) => {
-				setTimeout(() => {
-					set([{ name: 'restaurant1' }, { name: 'restaurant2' }]);
-					resolve();
-				}, 500);
-			});
-		}
+		load: loadValue
 	};
-}
+};
 
-function createPosts() {
-	let posts: BlogPost[];
-
-	const { subscribe, set } = writable<BlogPost[]>(posts);
-
+const asyncReadable = (initial, loadFunction) => {
+	let loadPromise;
+	const loadValue = async (set, reload?) => {
+		if (!loadPromise || reload) {
+			loadPromise = loadFunction();
+		}
+		const storeValue = await loadPromise;
+		set(storeValue);
+		return storeValue;
+	};
+	const { subscribe, set } = writable(initial, (set) => {
+		loadValue(set);
+	});
 	return {
 		subscribe,
-		init: importPosts(true),
-		set: (value: BlogPost[]) => {
-			set(value);
-		}
+		load: () => loadValue(set),
+		reload: () => loadValue(set, true)
 	};
+};
+
+function createFilterableAsyncStore(itemInitializationFunction) {
+	const items = asyncReadable([], itemInitializationFunction);
+	const filter = writable({ searchTerm: '', selectedTags: new Set<string>() });
+	const filteredItems = loadableDerived([items, filter], async ([$items, $filter]) => {
+		let result = $items.filter((post) => {
+			let x =
+				$filter.searchTerm.length == 0 ||
+				post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
+			let y =
+				$filter.selectedTags.size == 0 ||
+				post.tags.some((tag) => $filter.selectedTags.has(tag.toLowerCase()));
+			//console.log("post: ", post, "filtered by", filter, "is ", x&&y)
+			return x && y;
+		});
+		//console.log("filter result: ", result)
+		return result;
+	});
+
+	let x = {
+		items,
+		filter,
+		filteredItems
+	};
+	//console.log("type of ", Object.getPrototypeOf(x))
+	return x;
 }
 
 function createProjects() {
@@ -100,6 +134,34 @@ function createPages() {
 export const theme = createTheme();
 export const user = writable('');
 
-export const postStore = createPosts();
-export const pageStore = createPages();
-export const projectStore = createProjects();
+export const postStores = createFilterableAsyncStore(importPosts);
+export const pageStores = createPages();
+export const projectStores = createFilterableAsyncStore(importProjects);
+
+//return {
+//	subscribe,
+//	set: (newList) => {
+//		return new Promise<void>((resolve) => {
+//			setTimeout(() => {
+//				set(newList);
+//				resolve();
+//			}, 500);
+//		});
+//	},
+//	update: () => {
+//		return new Promise<void>((resolve) => {
+//			setTimeout(() => {
+//				update((list) => [...list, { name: `restaurant${list.length + 1}` }]);
+//				resolve();
+//			}, 500);
+//		});
+//	},
+//	init: () => {
+//		return new Promise<void>((resolve) => {
+//			setTimeout(() => {
+//				set([{ name: 'restaurant1' }, { name: 'restaurant2' }]);
+//				resolve();
+//			}, 500);
+//		});
+//	}
+//};
