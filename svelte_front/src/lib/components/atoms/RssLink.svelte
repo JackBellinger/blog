@@ -2,10 +2,10 @@
 	import RssIcon from '@assets/icons/rss.svelte';
 	import { notifications } from '@lib/utils/notifications';
 	import { GET_RSS } from '@lib/utils/rssGen';
-	import { postStore } from '@lib/utils/store';
+	import { postStores } from '@lib/utils/store';
 </script>
 
-{#await postStore.init}
+{#await postStores.items.init}
 	<p>...parsing markdown</p>
 {:then posts}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->

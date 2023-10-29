@@ -26,7 +26,6 @@
 	class={['button', `style--${style}`, `size--${size}`, `color--${color}`, additionalClass].join(
 		' '
 	)}
-	data-sveltekit-preload-data
 	role="button"
 	tabindex={0}
 	on:click

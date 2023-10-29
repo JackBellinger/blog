@@ -9,7 +9,6 @@
 		placeholder="Search by Title"
 		autocomplete="off"
 		bind:value={searchTerm}
-		on:input
 	/>
 </div>
 

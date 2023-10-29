@@ -1,7 +1,7 @@
 import { description, siteBaseUrl, title } from '@lib/utils/meta';
 import type { BlogPost } from '@lib/utils/types';
 import dateformat from 'dateformat';
-import { postStore } from '@lib/utils/store';
+import { postStores } from '@lib/utils/store';
 
 export const prerender = true;
 

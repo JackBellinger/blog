@@ -6,29 +6,30 @@
 </script>
 
 <script lang="ts">
-	import { postStore } from '@lib/utils/store';
-	import { onMount } from 'svelte';
+	import { postStores } from '@lib/utils/store';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
 	import BlogCardScroller from '@lib/components/organisms/BlogCardScroller.svelte';
 
 	export let blogid: string = '';
-	//console.log("blg", blogid)
 </script>
 
 <div class="container">
 	<main>
-		<!-- class="center-container">-->
-		{#await postStore.init}
-			<p>...parsing markdown</p>
+		{#await postStores.items.load()}
+				<p>...parsing markdown</p>
 		{:then posts}
 			{#if !(blogid ?? '').length}
-				<svelte:component this={BlogCardScroller} {posts} />
+				<svelte:component this={BlogCardScroller} store={postStores}/>
+				<!--<InfiniteScroller
+				{data from BlogPost, format into BlogPostCard, filter with (Title, tags), query from Database}/>
+				-->
 			{:else}
 				<svelte:component this={MarkdownPage} post={posts.find((post) => post.slug == blogid)} />
 			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
+
 	</main>
 </div>
 

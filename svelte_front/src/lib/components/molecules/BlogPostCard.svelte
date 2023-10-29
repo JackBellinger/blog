@@ -17,9 +17,9 @@
 <Card
 	href={href_prefix + '/' + slug}
 	target="_self"
-	additionalClass="blog-post-card {showImage && coverImage ? '' : 'no-image'}"
+	additionalClass="blog-post-card {showImage && coverImage ? '' : 'no-image'} {coverImage}"
 >
-	<div class="image" slot="image">
+	<div class={coverImage} slot="image">
 		{#if coverImage}
 			<Image src={coverImage} alt="Cover image of this blog post" />
 		{/if}
