@@ -20,8 +20,7 @@
 	this={tag}
 	class="card {additionalClass}"
 	{...linkProps}
-	data-sveltekit-preload-data
-	{...$$restProps}
+
 >
 	{#if $$slots.image}
 		<div class="image">

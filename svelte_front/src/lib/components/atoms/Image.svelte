@@ -4,15 +4,8 @@
 	export let alt: string;
 	export let widths: string[] | undefined = undefined;
 
-	$: fileName = src.split(".");
-	console.log(src, " ", fileName)
-	//const imageModules = import.meta.glob(fileName);
+	$: fileName = src.split(".")[0];
 
-	//for (const modulePath in imageModules) {
-	//	imageModules[modulePath]().then(({ default: imageUrl }) => {
-	//		console.log(modulePath, imageUrl);
-	//	});
-	//}
 	function buildSrcset(formats) {
 		let srcset = '';
 
@@ -41,9 +34,9 @@
 {#if localImage}
 <picture>
 	<source
-	  srcset={buildSrcset(['webp', 'png'])}
-	  media="screen and (-ms-high-contrast: active), (-ms-high-contrast: none)"
-	  width="1000"
+	  srcset={buildSrcset(['webp', 'avif', 'png'])}
+	  media="(min-width: 768px)"
+	  width="500"
 	  height="400" />
 
 	<img
