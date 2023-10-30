@@ -1,11 +1,4 @@
-<svg
-	width="100%"
-	height="100%"
-	stroke-width="1.5"
-	viewBox="0 0 24 24"
-	fill="none"
-	xmlns="http://www.w3.org/2000/svg"
->
+<svg width="100%" height="100%" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path
 		d="M21 8V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16V8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8Z"
 		stroke="currentColor"
@@ -19,10 +12,5 @@
 		stroke-linecap="round"
 		stroke-linejoin="round"
 	/>
-	<path
-		d="M7 7.01L7.01 6.99889"
-		stroke="currentColor"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-	/>
+	<path d="M7 7.01L7.01 6.99889" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

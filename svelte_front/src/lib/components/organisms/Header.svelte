@@ -19,10 +19,7 @@
 		header.style.setProperty('--computed-height', `${headerHeight}px`);
 
 		headerShifterHeight =
-			Math.min(
-				header.offsetTop,
-				document.documentElement.scrollHeight - window.innerHeight - headerHeight
-			) - 1;
+			Math.min(header.offsetTop, document.documentElement.scrollHeight - window.innerHeight - headerHeight) - 1;
 	}
 
 	onMount(() => {
@@ -71,11 +68,7 @@
 
 		&.has-background {
 			text-align: center;
-			background: linear-gradient(
-				60deg,
-				var(--color--waves-start) 0%,
-				var(--color--waves-end) 100%
-			);
+			background: linear-gradient(60deg, var(--color--waves-start) 0%, var(--color--waves-end) 100%);
 		}
 
 		.container {

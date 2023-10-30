@@ -23,9 +23,7 @@
 <svelte:element
 	this={tag}
 	{...linkProps}
-	class={['button', `style--${style}`, `size--${size}`, `color--${color}`, additionalClass].join(
-		' '
-	)}
+	class={['button', `style--${style}`, `size--${size}`, `color--${color}`, additionalClass].join(' ')}
 	role="button"
 	tabindex={0}
 	on:click

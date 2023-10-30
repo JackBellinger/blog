@@ -9,8 +9,7 @@ export default [
 	},
 	{
 		name: 'Themeable',
-		description:
-			'You can easily theme the entire website by changing just a few colors in the _themes.scss file.',
+		description: 'You can easily theme the entire website by changing just a few colors in the _themes.scss file.',
 		image: '@assets/images/features/themeable.jpg',
 		link: '',
 		tags: [{ label: 'Primary Color' }, { label: 'Secondary Color', color: 'secondary' }]

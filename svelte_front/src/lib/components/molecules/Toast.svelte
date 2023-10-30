@@ -14,12 +14,7 @@
 
 <div class="notifications">
 	{#each $notifications as notification (notification.id)}
-		<div
-			animate:flip
-			class="toast"
-			style="background: {themes[notification.type]};"
-			transition:fly={{ y: 30 }}
-		>
+		<div animate:flip class="toast" style="background: {themes[notification.type]};" transition:fly={{ y: 30 }}>
 			<div class="content">
 				{notification.message}
 			</div>

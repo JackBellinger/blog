@@ -10,7 +10,7 @@ export async function importProjects(render = true) {
 		if (project) {
 			projects.push({
 				...project.metadata,
-				tags: project.metadata.tags,
+				//tags: project.metadata.tags,
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
 				module: project
 			});
@@ -24,9 +24,9 @@ export const filterProjects = (projects: BlogPost[]) => {
 	return projects
 		.filter((project) => !project.hidden)
 		.sort((a, b) =>
-			new Date(a.date).getTime() > new Date(b.date).getTime()
+			new Date(a.updated?? a.date).getTime() > new Date(b.updated?? b.date).getTime()
 				? -1
-				: new Date(a.date).getTime() < new Date(b.date).getTime()
+				: new Date(a.updated?? a.date).getTime() < new Date(b.updated?? b.date).getTime()
 				? 1
 				: 0
 		)

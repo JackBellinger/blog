@@ -81,7 +81,7 @@
 
 <style lang="scss">
 	@import '../../scss/breakpoints.scss';
-
+	//* { border: 1px solid black; }
 	ul {
 		/* We need to limit the height and show a scrollbar */
 		//width: 80%;
@@ -93,5 +93,9 @@
 		//margin: 30px;
 		//padding: 20px;
 		//border: 10px solid black;
+	}
+	#blog-posts {
+		width: 80%;
+		//border: 2px solid blue;
 	}
 </style>

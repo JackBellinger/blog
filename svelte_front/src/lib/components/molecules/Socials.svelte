@@ -40,12 +40,7 @@
 	>
 		<LinkedInIcon />
 	</a>
-	<a
-		href="mailto:jdunnbellinger@gmail.com"
-		target="_blank"
-		rel="noopener noreferrer"
-		title="Send an email"
-	>
+	<a href="mailto:jdunnbellinger@gmail.com" target="_blank" rel="noopener noreferrer" title="Send an email">
 		<EmailIcon />
 	</a>
 </div>

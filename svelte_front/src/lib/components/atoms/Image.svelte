@@ -33,19 +33,9 @@
 
 {#if localImage}
 	<picture>
-		<source
-			srcset={buildSrcset(['webp', 'avif', 'png'])}
-			media="(min-width: 768px)"
-			width="500"
-			height="400"
-		/>
+		<source srcset={buildSrcset(['webp', 'avif', 'png'])} media="(min-width: 768px)" width="500" height="400" />
 
-		<img
-			{src}
-			alt="the img used when the browser does not support the sources"
-			width="500"
-			height="400"
-		/>
+		<img {src} alt="the img used when the browser does not support the sources" width="500" height="400" />
 	</picture>
 {:else}
 	<img srcset={src} {alt} loading="lazy" decoding="async" />

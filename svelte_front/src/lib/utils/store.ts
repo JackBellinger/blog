@@ -82,12 +82,8 @@ function createFilterableAsyncStore(itemInitializationFunction) {
 	const filter = writable({ searchTerm: '', selectedTags: new Set<string>() });
 	const filteredItems = loadableDerived([items, filter], async ([$items, $filter]) => {
 		let result = $items.filter((post) => {
-			let x =
-				$filter.searchTerm.length == 0 ||
-				post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
-			let y =
-				$filter.selectedTags.size == 0 ||
-				post.tags.some((tag) => $filter.selectedTags.has(tag.toLowerCase()));
+			let x = $filter.searchTerm.length == 0 || post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
+			let y = $filter.selectedTags.size == 0 || post.tags.some((tag) => $filter.selectedTags.has(tag.toLowerCase()));
 			//console.log("post: ", post, "filtered by", filter, "is ", x&&y)
 			return x && y;
 		});

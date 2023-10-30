@@ -23,10 +23,7 @@
 			{#if !(projectid ?? '').length}
 				<svelte:component this={BlogCardScroller} store={projectStores} />
 			{:else}
-				<svelte:component
-					this={MarkdownPage}
-					post={projects.find((project) => project.slug == projectid)}
-				/>
+				<svelte:component this={MarkdownPage} post={projects.find((project) => project.slug == projectid)} />
 			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>
@@ -45,7 +42,7 @@
 
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';
-
+	//* { border: 1px solid red; }
 	//.grid {
 	//	width: 100%;
 	//	display: grid;

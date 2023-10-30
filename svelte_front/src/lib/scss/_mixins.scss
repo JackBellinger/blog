@@ -52,9 +52,5 @@
 
 	--color--#{$title}-rgb: #{red($color)}, #{green($color)}, #{blue($color)};
 
-	--color--#{$title}-contrast: #{if(
-			brightness($color) > 186,
-			var(--color--text),
-			var(--color--text-inverse)
-		)};
+	--color--#{$title}-contrast: #{if(brightness($color) > 186, var(--color--text), var(--color--text-inverse))};
 }
