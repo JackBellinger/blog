@@ -1,0 +1,28 @@
+---
+slug: infinite-scroller
+title: Infinite Scroller Component Design
+coverImage: /blog/assets/images/projects/inf-scroll.webp
+date: 2023-10-29T16:02:03.000Z
+excerpt: The design and implementation of this blog's infinite scroller compponent.
+hidden: true
+tags:
+  - Blog
+  - Svelte
+---
+
+<script>
+  import Image from "@lib/components/atoms/Image.svelte";
+</script>
+
+### General idea
+I want to make an infinite scrolling container for a list of items. Currently, the blogs are stored as files on the server, but I'd like to add the metadata to a blog so that
+
+#### Links, inspiration, etc
+
+### Learnings
+
+### Todo
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
