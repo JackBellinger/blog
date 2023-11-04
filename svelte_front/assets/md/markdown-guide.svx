@@ -8,7 +8,7 @@ tags:
 ---
 
 <script>
-  import Callout from "@lib/components/molecules/Callout.svelte";
+  import Callout from "@lib/components/atoms/Callout.svelte";
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
 

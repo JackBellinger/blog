@@ -11,7 +11,7 @@ tags:
 
 <script>
   import Image from "@lib/components/atoms/Image.svelte";
-  import Callout from "@lib/components/molecules/Callout.svelte"
+  import Callout from "@lib/components/atoms/Callout.svelte"
 </script>
 
 ### Todo

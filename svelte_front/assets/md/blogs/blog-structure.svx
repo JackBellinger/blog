@@ -10,7 +10,7 @@ tags:
 ---
 
 <script>
-  import CodeBlock from "@/lib/components/molecules/CodeBlock.svelte";
+  import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
 </script>
 
 This project follows the basic [SvelteKit structure](https://kit.svelte.dev/docs/project-structure), with some added conventions to make customization a post-management easier.
