@@ -12,7 +12,7 @@ tags:
 
 <script>
   import SparklingHighlight from "@lib/components/molecules/SparklingHighlight.svelte";
-  import Callout from "@lib/components/molecules/Callout.svelte";
+  import Callout from "@lib/components/atoms/Callout.svelte";
   import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
