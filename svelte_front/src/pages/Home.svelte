@@ -11,13 +11,20 @@
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStores } from '@lib/utils/store';
 	import { projectStores } from '@lib/utils/store';
+	import Page from '@lib/components/organisms/Page.svelte';
 
 	let howManyRecent = 4;
 </script>
 
-<div class="container">
-	<main>
-		<div class="center-container">
+<Page>
+	<div slot="header-insert">
+	</div>
+	<div slot="left-sidebar">
+	</div>
+	<div slot="right-sidebar">
+	</div>
+	<main slot="main-content">
+		<div>
 			<Hero>
 				<section class="intro">
 					<h1 class="hello">Hello, I'm Jack Bellinger</h1>
@@ -54,7 +61,7 @@
 			<p style="color: red">{error.message}</p>
 		{/await}
 	</main>
-</div>
+</Page>
 
 <style lang="scss">
 </style>

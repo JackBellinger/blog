@@ -9,10 +9,15 @@
 	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
 
 	import Hero from '@lib/components/organisms/Hero.svelte';
+	import Page from '@lib/components/organisms/Page.svelte';
 </script>
 
-<div class="center-container">
-	<main>
+<Page>
+	<div slot="left-sidebar">
+	</div>
+	<div slot="right-sidebar">
+	</div>
+	<main slot="main-content" class="center-container">
 		<Hero>
 			<h1 class="hello">About</h1>
 			<CodeBlock filename={'A bit about me.json'} lang={''}>
@@ -44,7 +49,7 @@
 			</p>
 		</div>
 	</main>
-</div>
+</Page>
 
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';

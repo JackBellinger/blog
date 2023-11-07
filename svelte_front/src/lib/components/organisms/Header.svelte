@@ -77,24 +77,17 @@
 			justify-content: space-between;
 			gap: 30px;
 			overflow: hidden;
-			@include for-phone-only {
-				.links {
-					a {
-						display: none;
-					}
-				}
-			}
 		}
 
 		.leftMenu {
 			display: flex;
-			//outline: #ff0000 solid .1em;
+			//border: 2px solid red;
 			margin: 0.1em;
 			height: 44px;
 		}
 
 		.rightMenu {
-			//outline: #289c62 solid .1em;
+			//outline: 2px solid green;
 			display: flex;
 			align-self: flex-end;
 		}

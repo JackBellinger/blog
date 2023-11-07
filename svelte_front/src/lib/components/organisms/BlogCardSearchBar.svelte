@@ -16,7 +16,7 @@
 		posts.forEach((post) => post.tags.forEach((tag) => tags.add(tag.toLowerCase())));
 		let index = 0;
 		tags.forEach((tag) => {
-			console.log('setting', index, ' = ', tag);
+			//console.log('setting', index, ' = ', tag);
 			tagMap.set(index++, tag);
 		});
 	});
@@ -25,7 +25,7 @@
 		let tagSet = new Set<string>();
 		for (let i = 0; i < 32; i++) {
 			if ((n & (1 << i)) !== 0) {
-				console.log('selecting ', i, ' = ', tagMap.get(i));
+				//console.log('selecting ', i, ' = ', tagMap.get(i));
 				tagSet.add(tagMap.get(i));
 			}
 		}
@@ -70,13 +70,14 @@
 	<SearchTags {tags} bind:tagSerial />
 </section>
 
-<style>
+<style lang="scss">
 	#query-section {
-		width: 100%;
+		max-width:min-content;
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
-		align-items: center;
+		justify-content: left;
+		align-items: left;
 		/*padding: 10% 0;*/
 	}
+
 </style>
