@@ -122,17 +122,7 @@
 	<link rel="icon" type="image/x-icon" href="./assets/icons/mountain.ico" />
 </svelte:head>
 
-{#if showBackground}
-	<Waves />
-	<Header {logoText} />
-	<Toast />
-{/if}
-
 <svelte:component this={currentPage} {...propParams} />
-
-{#if showBackground}
-	<Footer />
-{/if}
 
 <style>
 </style>

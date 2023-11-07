@@ -21,44 +21,26 @@
 				src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
 				alt="most-used-languages"
 			/>
-			<div class="techs" style="display: flex; flex-direction: row; flex-wrap: wrap; flex: 1 1 50%">
-				<a href="https://aws.amazon.com" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
-					<img
-						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-						alt="aws"
-					/>
-				</a>
-				<a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
-					<img
-						src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg"
-						alt="azure"
-					/>
-				</a>
-				<a href="https://cloud.google.com" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
-					<img id="gcloud-img"
-						src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg"
-						alt="gcp"
-					/>
-				</a>
-				<a href="https://www.java.com" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
+			<div class="techs" style="display: flex; flex-direction: row; flex-wrap: wrap; flex: 1 1 50%;">
+				<a href="https://www.java.com" target="_blank" rel="noreferrer" >
 					<img
 						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg"
 						alt="java"
 					/>
 				</a>
-				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer" >
 					<img
 						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg"
 						alt="javascript"
 					/>
 				</a>
-				<a href="https://www.python.org" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
+				<a href="https://www.python.org" target="_blank" rel="noreferrer" >
 					<img
 						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
 						alt="python"
 					/>
 				</a>
-				<a href="https://www.rust-lang.org" target="_blank" rel="noreferrer" style="height: 5.3831rem; width: 5.3831rem;">
+				<a href="https://www.rust-lang.org" target="_blank" rel="noreferrer" >
 					<img
 						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-plain.svg"
 						alt="rust"
@@ -70,6 +52,24 @@
 						alt="svelte"
 					/>
 				</a>
+				<a href="https://aws.amazon.com" target="_blank" rel="noreferrer" >
+					<img
+						src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+						alt="aws"
+					/>
+				</a>
+				<a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer" >
+					<img
+						src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg"
+						alt="azure"
+					/>
+				</a>
+				<a href="https://cloud.google.com" target="_blank" rel="noreferrer" >
+					<img id="gcloud-img"
+						src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg"
+						alt="gcp"
+					/>
+				</a>
 			</div>
 
 		</div>
@@ -78,7 +78,7 @@
 			><img src="https://github-profile-trophy.vercel.app/?username=jackbellinger&rank=-?,-A" alt="jackbellinger" /></a>
 		<a href="https://github.com/Ashutosh00710/github-readme-activity-graph">
 		<img src="https://github-readme-activity-graph.vercel.app/graph?username=JackBellinger&theme=minimal" alt="activity graph"></a>
-		<p align="left"> <img src="https://komarev.com/ghpvc/?username=jackbellinger&label=Profile%20views&color=0e75b6&style=flat" alt="jackbellinger" /> </p>
+		<!--<p> <img src="https://komarev.com/ghpvc/?username=jackbellinger&label=Profile%20views&color=0e75b6&style=flat" alt="jackbellinger" /> </p>-->
 	</div>
 
 </section>
@@ -139,9 +139,11 @@
 
 	.techs {
 		a {
+			flex: 1  auto;
 			img {
 				height: 5.3831em;
 				width: 5.3831em;
+				//border: 2px solid green;
 			}
 		}
 	}

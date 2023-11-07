@@ -83,10 +83,13 @@
 	@import '../../scss/breakpoints.scss';
 	//* { border: 1px solid black; }
 	ul {
+		li {
+			list-style: none;
+		}
 		/* We need to limit the height and show a scrollbar */
 		//width: 80%;
 		height: 100%;
-		overflow: auto;
+		//overflow: auto;
 		//z-index: 10;
 
 		/* Optional, only to check that it works with margin/padding */
@@ -94,8 +97,12 @@
 		//padding: 20px;
 		//border: 10px solid black;
 	}
+	#search-bar{
+		overflow-x:auto;
+		width: 100%;
+		//border: 2px solid red;
+	}
 	#blog-posts {
-		width: 80%;
-		//border: 2px solid blue;
+		padding-top: .5em;
 	}
 </style>
