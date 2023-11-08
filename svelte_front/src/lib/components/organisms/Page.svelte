@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Waves from "./Waves.svelte";
+	import Waves from './Waves.svelte';
 	import Header from '@lib/components/organisms/Header.svelte';
 	import Toast from '@lib/components/molecules/Toast.svelte';
 	import Footer from '@lib/components/organisms/Footer.svelte';
@@ -8,8 +8,6 @@
 	$: logoText = 'Menu';
 </script>
 
-
-
 <div class="page-layout">
 	<header class="header">
 		{#if showBackground}
@@ -17,42 +15,41 @@
 			<Header {logoText} />
 			<Toast />
 		{/if}
-		<slot name="header-post"/>
+		<slot name="header-post" />
 	</header>
 	<section class="left-sidebar">
-		<slot name="left-sidebar"/>
+		<slot name="left-sidebar" />
 	</section>
 	<main class="main-content">
-		<slot name="main-content"/>
+		<slot name="main-content" />
 	</main>
 	<aside class="right-sidebar">
-		<slot name="right-sidebar"/>
+		<slot name="right-sidebar" />
 	</aside>
 	<footer class="footer">
-		<slot name="footer-pre"/>
+		<slot name="footer-pre" />
 		{#if showBackground}
 			<Footer />
 		{/if}
 	</footer>
 </div>
 
-
 <style lang="scss">
 	//https://matthewjamestaylor.com/holy-grail-layout
 	/* set correct box model */
 	* {
-		box-sizing:border-box;
+		box-sizing: border-box;
 	}
 
 	/* flexbox container */
 	.page-layout {
-		display:flex;
-		flex-wrap:wrap;
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	/* columns (mobile) */
 	.page-layout > * {
-		width:100%;
+		width: 100%;
 		//padding:1rem;
 	}
 
@@ -64,7 +61,7 @@
 	//.page-layout > .footer {background:#72c2f1}
 
 	/* tablet breakpoint */
-	@media (min-width:768px) {
+	@media (min-width: 768px) {
 		.page-layout > .left-sidebar,
 		.page-layout > .right-sidebar {
 			width: 100%;
@@ -72,20 +69,20 @@
 	}
 
 	/* desktop breakpoint */
-	@media (min-width:1024px) {
+	@media (min-width: 1024px) {
 		.page-layout > .header {
-			order:-2; /* header first */
+			order: -2; /* header first */
 		}
 		.page-layout > .left-sidebar {
 			/* left sidebar second (first in second row) */
-			order:-1;
+			order: -1;
 		}
 		.page-layout > .main-content {
-			width:70%;
+			width: 70%;
 		}
 		.page-layout > .left-sidebar,
 		.page-layout > .right-sidebar {
-			width:15%;
+			width: 15%;
 		}
 	}
 </style>

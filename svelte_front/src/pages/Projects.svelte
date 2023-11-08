@@ -15,10 +15,8 @@
 </script>
 
 <Page>
-	<div slot="left-sidebar">
-	</div>
-	<div slot="right-sidebar">
-	</div>
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
 	<main slot="main-content">
 		{#await projectStores.items.load()}
 			<p>...parsing markdown</p>
@@ -31,7 +29,6 @@
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
-
 	</main>
 </Page>
 

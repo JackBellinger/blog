@@ -31,7 +31,7 @@
 			<Socials />
 			<RssLink />
 			<ThemeToggle />
-	</div>
+		</div>
 	</div>
 	<!--<FluidSim/>-->
 </footer>

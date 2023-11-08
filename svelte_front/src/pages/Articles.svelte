@@ -15,10 +15,8 @@
 </script>
 
 <Page>
-	<div slot="left-sidebar">
-	</div>
-	<div slot="right-sidebar">
-	</div>
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
 	<main slot="main-content">
 		{#await postStores.items.load()}
 			<p>...parsing markdown</p>

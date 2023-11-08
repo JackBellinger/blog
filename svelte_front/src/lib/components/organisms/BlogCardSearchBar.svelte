@@ -72,12 +72,11 @@
 
 <style lang="scss">
 	#query-section {
-		max-width:min-content;
+		max-width: min-content;
 		display: flex;
 		flex-direction: row;
 		justify-content: left;
 		align-items: left;
 		/*padding: 10% 0;*/
 	}
-
 </style>

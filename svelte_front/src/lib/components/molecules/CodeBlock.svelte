@@ -15,20 +15,26 @@
 </div>
 
 <style lang="scss">
+	@import '../../scss/breakpoints.scss';
 	.code-block {
 		display: block;
 		position: relative;
 		background-color: var(--color--code-background);
 		color: var(--color--code-text);
-		font-family: var(--font--mono);
-		font-size: 1rem;
+		//font-family: var(--font--mono);
+		font-size: 0.8rem;
+		@include for-phone-only {
+			font-size: 1rem;
+		}
 		line-height: 1.33em;
 		border-radius: 8px;
 		box-shadow: var(--card-shadow);
 
 		padding: 30px 15px;
-		margin: 30px 0;
 
+		:global(.indent) {
+			margin-left: 4ch;
+		}
 		:global(pre) {
 			overflow-x: auto;
 			scrollbar-color: var(--color--primary) var(--color--primary-tint);
@@ -54,7 +60,7 @@
 			border-radius: 8px;
 			padding: 5px 10px;
 			z-index: 2;
-			font-size: 0.85em;
+			//font-size: 0.85em;
 		}
 
 		.filename {

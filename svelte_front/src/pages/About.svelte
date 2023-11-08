@@ -14,14 +14,11 @@
 </script>
 
 <Page>
-	<div slot="left-sidebar">
-	</div>
-	<div slot="right-sidebar">
-	</div>
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
 	<main slot="main-content" class="center-container">
 		<Hero>
 			<h1 class="hello">About</h1>
-
 		</Hero>
 
 		<div id="swe-type">
@@ -38,18 +35,20 @@
 				&#125;
 			</CodeBlock>
 			<div id="skills">
-
 				<div id="langs">
 					<div id="blurb">
 						<h2>Languages</h2>
-						<p>I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed learning about many technologies!</p>
+						<p>
+							I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed
+							learning about many technologies!
+						</p>
 					</div>
-					<img id="most-used"
+					<img
+						id="most-used"
 						src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
 						alt="most-used-languages"
 					/>
 				</div>
-
 			</div>
 		</div>
 		<Summary />
@@ -87,7 +86,6 @@
 			//grid-template-columns: 1fr;
 			justify-items: center;
 			gap: 20px;
-
 		}
 
 		#swe-type {
@@ -95,20 +93,20 @@
 			flex-direction: row;
 			Codeblock {
 				flex: 3 1 30%;
-				font-size: .8rem;
+				font-size: 0.8rem;
 				@include for-phone-only {
 					font-size: 2rem;
 				}
 			}
 			#skills {
-				padding-left: .5rem;
+				padding-left: 0.5rem;
 				flex: 1 1.5 70%;
 				#langs {
 					//max-width: fit-content;
 					display: flex;
-					align-items:stretch;
+					align-items: stretch;
 					flex-direction: row;
-					justify-content:center;
+					justify-content: center;
 					flex-wrap: wrap;
 					#blurb {
 						h2 {

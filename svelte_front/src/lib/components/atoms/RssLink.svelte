@@ -5,7 +5,7 @@
 	import { postStores } from '@lib/utils/store';
 </script>
 
-{#await postStores.items.init}
+{#await postStores.items.load()}
 	<p>...parsing markdown</p>
 {:then posts}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->

@@ -97,12 +97,12 @@
 		//padding: 20px;
 		//border: 10px solid black;
 	}
-	#search-bar{
-		overflow-x:auto;
+	#search-bar {
+		overflow-x: auto;
 		width: 100%;
 		//border: 2px solid red;
 	}
 	#blog-posts {
-		padding-top: .5em;
+		padding-top: 0.5em;
 	}
 </style>

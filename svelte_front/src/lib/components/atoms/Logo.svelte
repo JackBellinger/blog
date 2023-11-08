@@ -20,9 +20,9 @@
 		width: var(--num-characters);
 		height: 100%;
 		//overflow:hidden;
-		//@include for-phone-only {
-		//	gap: 8px;
-		//}
+		@include for-phone-only {
+			gap: 8px;
+		}
 		//outline: #94a30c solid .1em;
 		#logo-text {
 			max-height: 100%;

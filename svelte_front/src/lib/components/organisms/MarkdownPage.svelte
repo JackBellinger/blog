@@ -89,10 +89,10 @@
 <style lang="scss">
 	@import '../../scss/_mixins.scss';
 
-	.article-layout {
-		--body-background-color: var(--color--post-page-background);
-		background-color: var(--color--post-page-background);
-	}
+	//.article-layout {
+	//	--body-background-color: var(--color--post-page-background);
+	//	background-color: var(--color--post-page-background);
+	//}
 
 	#article-content {
 		--main-column-width: 65ch;

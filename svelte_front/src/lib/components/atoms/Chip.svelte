@@ -27,7 +27,7 @@
 		align-items: center;
 		cursor: pointer;
 		line-height: 20px;
-		text-wrap:nowrap;
+		text-wrap: nowrap;
 	}
 	.active {
 		color: white;

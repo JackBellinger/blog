@@ -24,9 +24,9 @@ export const filterProjects = (projects: BlogPost[]) => {
 	return projects
 		.filter((project) => !project.hidden)
 		.sort((a, b) =>
-			new Date(a.updated?? a.date).getTime() > new Date(b.updated?? b.date).getTime()
+			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
-				: new Date(a.updated?? a.date).getTime() < new Date(b.updated?? b.date).getTime()
+				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
 				? 1
 				: 0
 		)

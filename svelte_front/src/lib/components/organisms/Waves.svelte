@@ -20,16 +20,16 @@
 </div>
 
 <style lang="scss">
-	//@import '../../scss/_breakpoints.scss';
+	@import '../../scss/_breakpoints.scss';
 	.waves-container {
 		background: linear-gradient(60deg, var(--color--waves-start) 0%, var(--color--waves-end) 100%);
 		position: absolute;
 		width: 100%;
 		height: min(65vh, 500px);
 		z-index: -1;
-		//@include for-phone-only {
-		//	height: min(75vh, 400px);
-		//}
+		@include for-phone-only {
+			height: min(75vh, 400px);
+		}
 	}
 
 	.waves {

@@ -5,7 +5,6 @@
 <input type="search" id="search-field" placeholder="Search" autocomplete="off" bind:value={searchTerm} />
 
 <style>
-
 	#search-field {
 		/*width: 40%;*/
 		min-width: 6em;

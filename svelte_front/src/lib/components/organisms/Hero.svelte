@@ -24,21 +24,8 @@
 		position: relative;
 		padding: 80px 0;
 
-		//@include for-phone-only {
-		//	padding: 40px 0 50px;
-		//}
-
-		.hello {
-			text-align: center;
-		}
-
-		.ctas {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			gap: 10px;
-			width: 100%;
+		@include for-phone-only {
+			padding: 40px 0 50px;
 		}
 	}
 </style>
