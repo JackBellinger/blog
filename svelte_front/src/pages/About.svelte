@@ -10,6 +10,7 @@
 
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import Page from '@lib/components/organisms/Page.svelte';
+	import Summary from '@lib/components/organisms/GithubStats.svelte';
 </script>
 
 <Page>
@@ -20,20 +21,39 @@
 	<main slot="main-content" class="center-container">
 		<Hero>
 			<h1 class="hello">About</h1>
+
+		</Hero>
+
+		<div id="swe-type">
 			<CodeBlock filename={'A bit about me.json'} lang={''}>
 				let Jack: Software Engineer = &#123;<br />
-				<p>
-					&emsp;&emsp;&emsp;years of experience: 3,<br />
-					&emsp;&emsp;&emsp;platforms: [web, microservice clusters, federated],<br />
-					&emsp;&emsp;&emsp;applications: [ML operations, data engineering, network security],<br />
-					&emsp;&emsp;&emsp;domain knowledge: [live_streaming, port & behavior based host id],<br />
-					&emsp;&emsp;&emsp;technical scope: [design & review, code, devops],<br />
-					&emsp;&emsp;&emsp;leadership skills: [requirements spec, scoping, mentoring]
-				</p>
+				<div class="indent">
+					years of experience: 3,<br />
+					platforms: [web, microservice clusters, federated],<br />
+					applications: [ML operations, data engineering, network security],<br />
+					domain knowledge: [live_streaming, port & behavior based host id],<br />
+					technical scope: [design & review, code, devops],<br />
+					leadership skills: [requirements spec, scoping, mentoring, process optimization]
+				</div>
 				&#125;
 			</CodeBlock>
-		</Hero>
-		<div class="info">
+			<div id="skills">
+
+				<div id="langs">
+					<div id="blurb">
+						<h2>Languages</h2>
+						<p>I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed learning about many technologies!</p>
+					</div>
+					<img id="most-used"
+						src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
+						alt="most-used-languages"
+					/>
+				</div>
+
+			</div>
+		</div>
+		<Summary />
+		<div id="info">
 			<h2>Background</h2>
 			<p>
 				I have 3 years of experience working on production backend systems. I have contributed designs and
@@ -57,7 +77,7 @@
 
 	main {
 		position: relative;
-		display: grid;
+		//display: grid;
 		//grid-template-columns: 500px 250px;
 		align-items: center;
 		justify-content: space-between;
@@ -67,21 +87,51 @@
 			//grid-template-columns: 1fr;
 			justify-items: center;
 			gap: 20px;
-		}
-		.socials {
-			display: flex;
-			align-items: center;
-			gap: 15px;
 
-			//@include for-phone-only {
-			//	justify-content: center;
-			//	margin-bottom: 10px;
-			//	span {
-			//		display: none;
-			//	}
-			//}
 		}
-		.info {
+
+		#swe-type {
+			display: flex;
+			flex-direction: row;
+			Codeblock {
+				flex: 3 1 30%;
+				font-size: .8rem;
+				@include for-phone-only {
+					font-size: 2rem;
+				}
+			}
+			#skills {
+				padding-left: .5rem;
+				flex: 1 1.5 70%;
+				#langs {
+					//max-width: fit-content;
+					display: flex;
+					align-items:stretch;
+					flex-direction: row;
+					justify-content:center;
+					flex-wrap: wrap;
+					#blurb {
+						h2 {
+							//flex: 1 1 auto;
+							//padding-top: 1rem;
+							text-align: center;
+						}
+						//width: 50%;
+						flex: 1 2 40%;
+						display: flex;
+						flex-direction: column;
+					}
+					#most-used {
+						flex: 2 1 60%;
+					}
+				}
+			}
+			@include for-phone-only {
+				flex-direction: column;
+			}
+		}
+
+		#info {
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
