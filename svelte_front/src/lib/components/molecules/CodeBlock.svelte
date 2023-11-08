@@ -37,19 +37,6 @@
 		}
 		:global(pre) {
 			overflow-x: auto;
-			scrollbar-color: var(--color--primary) var(--color--primary-tint);
-			scrollbar-width: thin;
-			padding-bottom: 5px;
-
-			&::-webkit-scrollbar {
-				height: 8px;
-			}
-			&::-webkit-scrollbar-thumb {
-				background: var(--color--primary);
-				&:hover {
-					background: var(--color--primary-shade);
-				}
-			}
 		}
 
 		.lang {

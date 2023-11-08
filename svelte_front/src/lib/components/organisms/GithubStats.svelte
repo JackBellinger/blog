@@ -5,15 +5,16 @@
 
 <section id="about">
 	<div class="info">
-		Check my Github for more details!
-		<a href="https://github.com/ryo-ma/github-profile-trophy"
-			><img src="https://github-profile-trophy.vercel.app/?username=jackbellinger&rank=-?,-A" alt="jackbellinger" /></a
-		>
+
 		<a href="https://github.com/Ashutosh00710/github-readme-activity-graph">
 			<img
 				src="https://github-readme-activity-graph.vercel.app/graph?username=JackBellinger&theme=minimal"
 				alt="activity graph"
 			/></a
+		>
+		<p>Check my <a href="https://github.com/jackbellinger">Github</a> for more details!</p>
+		<a href="https://github.com/ryo-ma/github-profile-trophy"
+			><img src="https://github-profile-trophy.vercel.app/?username=jackbellinger&rank=-?,-A" alt="jackbellinger" /></a
 		>
 	</div>
 </section>
