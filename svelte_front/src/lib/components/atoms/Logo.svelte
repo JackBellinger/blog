@@ -4,11 +4,7 @@
 </script>
 
 <div class="logo" class:animated style=" --num-characters: {logoText.length + 'ch'}">
-	<svg
-		id="logo-text"
-		style="--num-characters: {logoText.length + 'ch'}"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg id="logo-text" style="--num-characters: {logoText.length + 'ch'}" xmlns="http://www.w3.org/2000/svg">
 		<text id="text" text-anchor="start" dominant-baseline="hanging" y="32%">
 			<tspan>
 				{logoText}
@@ -24,9 +20,9 @@
 		width: var(--num-characters);
 		height: 100%;
 		//overflow:hidden;
-		//@include for-phone-only {
-		//	gap: 8px;
-		//}
+		@include for-phone-only {
+			gap: 8px;
+		}
 		//outline: #94a30c solid .1em;
 		#logo-text {
 			max-height: 100%;

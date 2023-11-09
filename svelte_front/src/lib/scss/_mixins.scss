@@ -1,17 +1,17 @@
-//@import './_breakpoints.scss';
+@import './_breakpoints.scss';
 @import './_functions.scss';
 
 @mixin padded-container {
-	padding-right: 0px;
-	padding-left: 0px;
+	padding-right: calc(8px + 1.5625vw);
+	padding-left: calc(8px + 1.5625vw);
 	padding-top: 0px;
 	margin-right: 0px;
 	margin-left: 0px;
 
-	//@include for-iphone-se {
-	//	padding-left: 0;
-	//	padding-right: 0;
-	//}
+	@include for-iphone-se {
+		padding-left: 0;
+		padding-right: 0;
+	}
 
 	//@include for-tablet-portrait-up {
 	//	padding-right: 20px;
@@ -30,11 +30,6 @@
 
 @mixin center-div {
 	@include padded-container;
-	//max-width: 60%;
-	padding: 0em 5em 0em 5em;
-	//@include for-desktop-up {
-	//	max-width: 60%;
-	//}
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -52,9 +47,5 @@
 
 	--color--#{$title}-rgb: #{red($color)}, #{green($color)}, #{blue($color)};
 
-	--color--#{$title}-contrast: #{if(
-			brightness($color) > 186,
-			var(--color--text),
-			var(--color--text-inverse)
-		)};
+	--color--#{$title}-contrast: #{if(brightness($color) > 186, var(--color--text), var(--color--text-inverse))};
 }

@@ -1,5 +1,3 @@
-<svelte:options accessors />
-
 <script context="module" lang="ts">
 	export const pageNumber = 0;
 	export const hidden = false;
@@ -9,47 +7,41 @@
 
 <script lang="ts">
 	import Hero from '@lib/components/organisms/Hero.svelte';
-	import Summary from '@lib/components/organisms/Summary.svelte';
+	import Summary from '@lib/components/organisms/GithubStats.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
-	import { postStore } from '@lib/utils/store';
-	import { projectStore } from '@lib/utils/store';
-	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
+	import { postStores } from '@lib/utils/store';
+	import { projectStores } from '@lib/utils/store';
+	import Page from '@lib/components/organisms/Page.svelte';
+	import Socials from '@lib/components/molecules/Socials.svelte';
 
 	let howManyRecent = 4;
 </script>
 
-<div class="container">
-	<main>
-		<div class="center-container">
+<Page>
+	<div slot="header-insert" />
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
+	<main slot="main-content">
+		<div>
 			<Hero>
-				<section class="intro">
-					<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-					<!--<p> welcome to my blog</p>-->
-				</section>
-				<p>
-					- 🔭 I’m currently searching for a fullstack or backend role.<br />
-					<br />
-					- 🌱 I’m currently learning <b>Svelte, Webassembly, and Machine learning</b><br />
-					<br />
-					- 📝 Check out my devlogs at <a href="/blog/articles">Menu/Projects</a> <br />
-					<br />
-					- 📝 Read my blog at <a href="/blog/articles">Menu/Articles</a> <br />
-					<br />
-					- 📫 How to reach me <i>jdunnbellinger@gmail.com</i><br />
-				</p>
+				<h1 class="hello">Hello, I'm Jack Bellinger</h1>
+				<p> I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
+				<div class="intro">
+					Send me a message!
+					<Socials />
+				</div>
 			</Hero>
-			<Summary />
 		</div>
 
-		{#await projectStore.init}
+		{#await projectStores.items.load()}
 			<p>...parsing projects</p>
 		{:then projects}
-			<BlogCardGrid posts={projects} title={'Projects'} numToShow={howManyRecent} />
+			<BlogCardGrid posts={projects} title={'Projects'} description={"Here's what I'm working on!"} numToShow={howManyRecent} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
 
-		{#await postStore.init}
+		{#await postStores.items.load()}
 			<p>...parsing markdown</p>
 		{:then posts}
 			<BlogCardGrid {posts} title={'Articles'} numToShow={howManyRecent} />
@@ -57,23 +49,19 @@
 			<p style="color: red">{error.message}</p>
 		{/await}
 	</main>
-</div>
+</Page>
 
 <style lang="scss">
+	.hello {
+		text-align: center;
+	}
 	.intro {
-		//font-weight: 500;
-		//font-size: 1.4rem;
-		//width: min(100%, 440px);
 		display: flex;
-		flex-direction: column;
-		p {
-			text-align: center;
-		}
-		.left {
-			text-align: left;
-		}
-		.right {
-			text-align: right;
-		}
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 100%;
 	}
 </style>

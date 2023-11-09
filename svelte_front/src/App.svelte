@@ -35,7 +35,7 @@
 	import { getSession } from '@lib/fetchers/auth';
 	import { onMount } from 'svelte';
 	import Header from '@lib/components/organisms/Header.svelte';
-	import { pageStore } from '@lib/utils/store';
+	import { pageStores } from '@lib/utils/store';
 	import '@lib/scss/global.scss';
 	import type { Page } from '@lib/utils/types';
 	import Waves from '@lib/components/organisms/Waves.svelte';
@@ -57,7 +57,7 @@
 		savestore = true;
 	});
 
-	const pages = pageStore.init;
+	const pages = pageStores.init;
 	let showBackground = true;
 	let currentPage = pages[0].module.default;
 	let propParams = {},
@@ -122,17 +122,7 @@
 	<link rel="icon" type="image/x-icon" href="./assets/icons/mountain.ico" />
 </svelte:head>
 
-{#if showBackground}
-	<Waves />
-	<Header {logoText} />
-	<Toast />
-{/if}
-
 <svelte:component this={currentPage} {...propParams} />
-
-{#if showBackground}
-	<Footer />
-{/if}
 
 <style>
 </style>

@@ -20,6 +20,11 @@
 	<!-- Hide the theme toggle if JavaScript is disabled -->
 	<!-- Hide the theme toggle if JavaScript is disabled -->
 	<!-- Hide the theme toggle if JavaScript is disabled -->
+	<!-- Hide the theme toggle if JavaScript is disabled -->
+	<!-- Hide the theme toggle if JavaScript is disabled -->
+	<!-- Hide the theme toggle if JavaScript is disabled -->
+	<!-- Hide the theme toggle if JavaScript is disabled -->
+	<!-- Hide the theme toggle if JavaScript is disabled -->
 	<style>
 		.theme-toggle {
 			display: none !important;
@@ -27,12 +32,7 @@
 	</style>
 </noscript>
 
-<button
-	class="theme-toggle"
-	title="Toggle between light and dark theme"
-	data-theme={$theme}
-	on:click={toggleTheme}
->
+<button class="theme-toggle" title="Toggle between light and dark theme" data-theme={$theme} on:click={toggleTheme}>
 	<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
 		<mask id="moon">
 			<rect x="0" y="0" width="100%" height="100%" fill="white" />

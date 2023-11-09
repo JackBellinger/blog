@@ -25,9 +25,9 @@ export const filterPosts = (posts: BlogPost[]) => {
 	return posts
 		.filter((post) => !post.hidden)
 		.sort((a, b) =>
-			new Date(a.date).getTime() > new Date(b.date).getTime()
+			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
-				: new Date(a.date).getTime() < new Date(b.date).getTime()
+				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
 				? 1
 				: 0
 		)

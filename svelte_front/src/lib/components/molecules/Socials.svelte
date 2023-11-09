@@ -1,10 +1,12 @@
 <script>
-	import GitHubIcon from '@assets/icons/socials/github.svelte';
-	import LinkedInIcon from '@assets/icons/socials/linkedin.svelte';
-	import EmailIcon from '@assets/icons/socials/email.svelte';
-	//import TelegramIcon from '@assets/icons/socials/telegram.svelte';
-	//import RssIcon from '@assets/icons/rss.svelte';
-	//import MastodonIcon from '@assets/icons/socials/mastodon.svelte';
+	import GitHub from '@assets/icons/socials/github.svelte';
+	import LinkedIn from '@assets/icons/socials/linkedin.svelte';
+	import Email from '@assets/icons/socials/email.svelte';
+	import Discord from '@assets/icons/socials/discord.svelte';
+	import RssLink from '../atoms/RssLink.svelte';
+	//import Telegram from '@assets/icons/socials/telegram.svelte';
+	//import Rss from '@assets/icons/rss.svelte';
+	//import Mastodon from '@assets/icons/socials/mastodon.svelte';
 </script>
 
 <div class="socials">
@@ -14,7 +16,7 @@
 		rel="noopener noreferrer"
 		title="Say Hi on Telegram"
 	>
-		<TelegramIcon />
+		<Telegram />
 	</a>
 	<a
 		href="#"
@@ -22,7 +24,7 @@
 		rel="me noreferrer"
 		title="Say Hi on Mastodon"
 	>
-		<MastodonIcon />
+		<Mastodon />
 	</a>-->
 	<a
 		href="https://www.github.com/jackbellinger"
@@ -30,7 +32,7 @@
 		rel="noopener noreferrer"
 		title="See my GitHub profile"
 	>
-		<GitHubIcon />
+		<GitHub />
 	</a>
 	<a
 		href="https://www.linkedin.com/in/jack-b-54b28987/"
@@ -38,16 +40,25 @@
 		rel="noopener noreferrer"
 		title="Connect on LinkedIn"
 	>
-		<LinkedInIcon />
+		<LinkedIn />
 	</a>
 	<a
 		href="mailto:jdunnbellinger@gmail.com"
 		target="_blank"
 		rel="noopener noreferrer"
-		title="Send an email"
+		title="Email me at jdunnbellinger@gmail.com"
 	>
-		<EmailIcon />
+		<Email />
 	</a>
+	<a href="https://discord.gg/invite" target="blank">
+		<Discord />
+	</a>
+	<!--<a
+		href="/blog/rss"
+		target="blank"
+	>
+		<RssLink/>
+	</a>-->
 </div>
 
 <style lang="scss">

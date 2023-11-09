@@ -1,5 +1,3 @@
-<svelte:options accessors />
-
 <script context="module" lang="ts">
 	export const pageNumber = 1;
 	export const hidden = false;
@@ -11,44 +9,92 @@
 	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
 
 	import Hero from '@lib/components/organisms/Hero.svelte';
+	import Page from '@lib/components/organisms/Page.svelte';
+	import GithubStats from '@lib/components/organisms/GithubStats.svelte';
 </script>
 
-<div class="center-container">
-	<main>
+<Page>
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
+	<main slot="main-content" class="center-container">
 		<Hero>
 			<h1 class="hello">About</h1>
+		</Hero>
+
+		<div id="swe-type">
 			<CodeBlock filename={'A bit about me.json'} lang={''}>
 				let Jack: Software Engineer = &#123;<br />
-				<p>
-					&emsp;&emsp;&emsp;years of experience: 3,<br />
-					&emsp;&emsp;&emsp;platforms: [web, microservice clusters, federated],<br />
-					&emsp;&emsp;&emsp;applications: [ML operations, data engineering, network security],<br />
-					&emsp;&emsp;&emsp;domain knowledge: [live_streaming, port & behavior based host id],<br />
-					&emsp;&emsp;&emsp;technical scope: [design & review, code, devops],<br />
-					&emsp;&emsp;&emsp;leadership skills: [requirements spec, scoping, mentoring]
-				</p>
+				<div class="indent">
+					years of experience: 3,<br />
+					platforms: [web, microservice clusters, federated],<br />
+					applications: [ML operations, data engineering, network security],<br />
+					domain knowledge: [live_streaming, port & behavior based host id],<br />
+					technical scope: [design & review, code, devops],<br />
+					leadership skills: [requirements spec, scoping, mentoring, process optimization]
+				</div>
 				&#125;
 			</CodeBlock>
-		</Hero>
-		<div class="info">
-			<h2>Background</h2>
+			<div id="skills">
+				<div id="langs">
+					<div id="blurb">
+						<h2>Languages</h2>
+						<p>
+							I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed learning about many technologies!
+						</p>
+					</div>
+					<img
+						id="most-used"
+						src="https://github-readme-stats.vercel.app/api/top-langs?username=jackbellinger&show_icons=true&locale=en&layout=compact&hide=HTML,ShaderLab,ApacheConf,C%23,Shell"
+						alt="most-used-languages"
+					/>
+				</div>
+			</div>
+		</div>
+		<GithubStats />
+		<div id="info">
+			<h1>Background</h1>
 			<p>
-				I have 3 years of experience working on production backend systems. I have contributed
-				designs and implementations to a computer vision platform for live sports and a distributed
-				data pipeline for backbone network security. <br /> I enjoy working at many levels of
-				computation, from optimizing thread-safety & memory usage to creating clear abstractions &
-				consise business logic. I always implement automated testing, CI/CD pipelines for my
-				services, and take pride in detailed documentation. I strive to develop a deep understanding
-				of my codebases and share my knowledge. I ensure my team's change requests are similarly
-				eloquent through collaborative and meticulous code reviews. <br />My software is currently
-				running in production: at Fortune 500 companies such as Walmart you can find my work
-				creating visibility into internal network behaviors and architectures to keep customers
-				safe; and at Amazon you can find my work detecting stream liveliness and generating
-				highlight clips for live sports;
+				I enjoy working at many levels of computation, from optimizing thread-safety & memory usage to creating clear abstractions & consise business logic. I always implement automated testing, CI/CD pipelines for my services, and take pride in detailed documentation. I strive to develop a deep understanding of my codebases and share my knowledge. I ensure my team's change requests are similarly eloquent through collaborative and meticulous code reviews.
 			</p>
+			<h2>School</h2>
+			<p>
+				In school, some of the courses I most enjoyed are:
+			</p>
+			<ul style="margin-left: 4ch;">
+				<li>
+					High Performance Computing (paralellism & distributed cluster computing, github.com/jackbellinger/420)
+				</li>
+				<li>
+					Numerical Linear Algebra (Numerical approaches to efficiently solving matrix maths, github.com/jackbellinger/420/matrix.py)
+				</li>
+				<li>
+					Systems Software & Operating Systems (C programming & The inner workings of Operating Systems, github.com/jackbellinger/350 & ...450 )
+				</li>
+				<li>
+					Datastructures and Algorithms (C++ programming of DS & Algos, soon to be moved to github.com/jackbellinger/cpp-structs & github.com/JackBellinger/Fast-and-Furious-Transformers)
+				</li>
+				<li>
+					Copmuter vision research (github.com/jtanderson/wetland-object-detection, github.com/nilay036/DOG-Breed-Identifier)
+				</li>
+				<li>
+					Hololens AR Matrix Math Visualizations (github.com/JackBellinger/Solids-of-Revolution-Visualizer)
+				</li>
+			</ul >
+			<h2>Work</h2>
+			<p>
+				I have 3 years of experience working on production backend systems. I have contributed designs and
+				implementations to a computer vision platform for live sports and a distributed data pipeline for backbone network security.
+			</p>
+
+			<h3>Amazon</h3>
+			<p>
+				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports Rapid Recap & Key Moments
+			</p>
+			<br>
+			For More details, check my blog articles, resume, or contact me with any questions.
 		</div>
 	</main>
-</div>
+</Page>
 
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';
@@ -56,7 +102,7 @@
 
 	main {
 		position: relative;
-		display: grid;
+		//display: grid;
 		//grid-template-columns: 500px 250px;
 		align-items: center;
 		justify-content: space-between;
@@ -67,20 +113,49 @@
 			justify-items: center;
 			gap: 20px;
 		}
-		.socials {
-			display: flex;
-			align-items: center;
-			gap: 15px;
 
-			//@include for-phone-only {
-			//	justify-content: center;
-			//	margin-bottom: 10px;
-			//	span {
-			//		display: none;
-			//	}
-			//}
+		#swe-type {
+			display: flex;
+			flex-direction: row;
+			Codeblock {
+				flex: 3 1 30%;
+				font-size: 0.8rem;
+				@include for-phone-only {
+					font-size: 2rem;
+				}
+			}
+			#skills {
+				padding-left: 0.5rem;
+				flex: 1 1.5 70%;
+				#langs {
+					//max-width: fit-content;
+					display: flex;
+					align-items: stretch;
+					flex-direction: row;
+					justify-content: center;
+					flex-wrap: wrap;
+					#blurb {
+						h2 {
+							//flex: 1 1 auto;
+							//padding-top: 1rem;
+							text-align: center;
+						}
+						//width: 50%;
+						flex: 1 2 40%;
+						display: flex;
+						flex-direction: column;
+					}
+					#most-used {
+						flex: 2 1 60%;
+					}
+				}
+			}
+			@include for-phone-only {
+				flex-direction: column;
+			}
 		}
-		.info {
+
+		#info {
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
@@ -91,6 +166,7 @@
 			}
 
 			p {
+				//margin-left: 4ch;
 				@include for-phone-only {
 					text-align: justify;
 				}

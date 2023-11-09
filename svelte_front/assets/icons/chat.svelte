@@ -1,11 +1,4 @@
-<svg
-	width="100%"
-	height="100%"
-	stroke-width="1.5"
-	viewBox="0 0 24 24"
-	fill="none"
-	xmlns="http://www.w3.org/2000/svg"
->
+<svg width="100%" height="100%" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<path
 		d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z"
 		fill="currentColor"

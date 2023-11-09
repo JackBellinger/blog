@@ -1,6 +1,7 @@
 import type Image from '@lib/components/atoms/Image.svelte';
 import * as fs from 'fs';
 import type { SvelteComponent } from 'svelte';
+import type { Invalidator, Subscriber, Unsubscriber, Writable } from 'svelte/store';
 
 export type Page = {
 	name: string;
@@ -51,4 +52,20 @@ export type BlogPost = {
 	readingTime: string;
 	relatedPosts: BlogPost[];
 	coverImage: string | undefined;
+};
+
+export type AsyncReadable = {
+	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
+	load: () => Promise<any>;
+	reload: () => Promise<any>;
+};
+export type StoreFilter = Writable<{ searchTerm: string; selectedTags: Set<string> }>;
+export type FilteredStore = {
+	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
+	load: () => Promise<any>;
+};
+export type FilterableAsyncStore = {
+	items: AsyncReadable;
+	filter: StoreFilter;
+	filteredItems: FilteredStore;
 };

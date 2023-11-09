@@ -89,13 +89,13 @@
 <style lang="scss">
 	@import '../../scss/_mixins.scss';
 
-	.article-layout {
-		--body-background-color: var(--color--post-page-background);
-		background-color: var(--color--post-page-background);
-	}
+	//.article-layout {
+	//	--body-background-color: var(--color--post-page-background);
+	//	background-color: var(--color--post-page-background);
+	//}
 
 	#article-content {
-		--main-column-width: 65ch;
+		--main-column-width: 85ch;
 		position: relative;
 		padding-top: 40px;
 		padding-bottom: 80px;
@@ -140,7 +140,7 @@
 		.cover-image {
 			width: min(var(--main-column-width), 100%);
 			margin: 0 auto;
-			max-height: 400px;
+			//max-height: 400px;
 			box-shadow: var(--image-shadow);
 			border-radius: 6px;
 		}
