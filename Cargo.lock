@@ -1259,9 +1259,9 @@ dependencies = [
 
 [[package]]
 name = "implicit-clone"
-version = "0.4.1"
+version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af3d77000817fd9e7db159e8d52ed9b5941a2cdbfbdc8ca646e59887ae2b2dd1"
+checksum = "789a53d49d2276908b1fcccb9dfcf65c7a6e884c1df639f26aeff4f142b3ef9e"
 dependencies = [
  "indexmap",
 ]
@@ -2451,7 +2451,9 @@ dependencies = [
 
 [[package]]
 name = "yew"
-version = "0.20.0"
+version = "0.21.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5f1a03f255c70c7aa3e9c62e15292f142ede0564123543c1cc0c7a4f31660cac"
 dependencies = [
  "console_error_panic_hook",
  "futures",
@@ -2474,7 +2476,9 @@ dependencies = [
 
 [[package]]
 name = "yew-macro"
-version = "0.20.0"
+version = "0.21.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "02fd8ca5166d69e59f796500a2ce432ff751edecbbb308ca59fd3fe4d0343de2"
 dependencies = [
  "boolinator",
  "once_cell",
