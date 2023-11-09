@@ -17,13 +17,14 @@ tags:
 ### Todo
 
 - [x] Create todos
-- [ ] estimate todos
-- [ ] understand the flask server logic
-- [ ] figure out how to share api types between rust and js
+- [x] understand the flask server logic
+- [ ] figure out how to share api types between rust and js?
 - [ ] convert the flask server to axum
-- [ ] understand the frontend
+- [x] understand the frontend
 - [ ] convert the frontend to svelte/vite
 - [ ] see if I can serve the music model in a clientside webassembly component
+- [x] read the model training code, download the dataset
+- [ ] improve the music generation
 - [ ] add productivity tracking to tune the model params
 - [ ] figure out the best way to track productivity
 - [ ] todos

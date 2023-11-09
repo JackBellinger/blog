@@ -15,37 +15,60 @@ tags:
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
-### What is this?
-For a long time, I've just used Github as my portfolio. In school, I created repos for all of my classes and projects, so that I could easily work on them on my machine and in the labs. Also, it was great for group projects, and prepared me well for learning git in more depth at work. That was good enough for a while, but now that I'm applying to mid level software jobs, I need a place to show my work running.
-Thus, a blog... well, it's just a blog for now. I only have blog content on here at the moment, and the layout is built around the blog (and based on a blog template), but after I get the basics up to snuff I'll be adding pages for other projects.
+## TL;DR
+I made this personal blog / portfolio to post articles about anything and devlogs about stuff I'm working on.
 
-### How did I make it?
-As always, I started with a bit of research first. I knew I wanted to use a Rust backend, but I tried a few different frontends before settling on svelte. Initially, I thought of building the frontend in Rust as well, since WebAssmenbly support has been improving and I've heard some good things about the Rust frameworks. I tried Yew and Leptos, and I actually have a Yew todo example in this repo that I'm going to try out on the most compute intensive projects. I think they are great for building high perfomance code, but a blog doesn't really fit that use case.
-I have worked with various JS frameworks before, but I tried Svelte and immediately knew I liked it. I haven't dug into the internals extensively yet, but the development experience has been really smooth.
+It's built using Svelte, Vite, and Axum.
+The backend is in the server directory and the blog frontend is in the svelte_front directory.
+There's a placeholder yew todo app is in the yew_front directory that I added to test out serving multiple frontends from the same webserver.
+The frontend is currently hosted on Github pages for simplicity until I implement backend features.
+
+
+## What is this?
+For a long time, I've just used Github as my portfolio. In school, I created repos for all of my classes and projects, so that I could easily work on them on my machine and in the labs. Also, it was great for group projects, and prepared me well for learning git in more depth at work. That was good enough for a while, but now that I'm applying to mid level software jobs, I need a place to show my work running.
+
+## How did I make it?
+As always, I started with a bit of research first. I knew I wanted to use a Rust backend, so I looked into Actix, Axum, Rocket, and some others. Initially, I thought of building the frontend in Rust as well, since WebAssmenbly support has been improving and I've heard some good things about the Rust frameworks. I tried Yew and Leptos, and I actually have a Yew todo example in this repo that I'm going to try out on some more compute intensive projects (Like the [Lofi music project](/blog/projects/lofi-gen) I'm currently researching). To make the frontend a bit simpler, and to brush up on my JS skills, I decided to try out a JS framework, and settled on Svelte.
+
+### Why Axum?
+Initially, I read some good things about Actix. It was / still is? the fastest webserver or something, but it had some drama with the original maintainer. The main reason I decided on Axum was that it's maintained by the Tokio community. I've used Tokio's async executor on other projects and it was pretty ergonomic, so I'm hoping Axum will be as well. Apparently it's meant to be a pretty light layer that leaves most of the heavy lifting to various Tower services. The simple stuff I've implemented so far has been pretty easy, although I encountered a few verbose Tower types. I like that modularity. That's a big reason I chose to use Svelte, as it's easy to use it bundled with Vite without the SvelteKit backend.
 
 ### Why Svelte?
+I have worked with various JS frameworks before, but I tried Svelte and I like it a lot. It doesn't have much framework specific stuff to learn, and it feels kind of writing vanilla javascript with some nice convenience abstractions. I really like how it compiles to regular DOM interacting JS. Also, what really sold me on it was that all of the few rough edges I found while implementing eg reactivity and stores were addressed in the Svelte v5 announcement. I'm excited to see how that turns out!
 
 ### Blog template
-I searched around for a bit and found a good looking, simply organized template [0](https://github.com/matfantinel/sveltekit-static-blog-template)
+To get started I wanted to find an example with good enough styling that I wouldn't mind being live while I refine it. I searched around for a bit and found a good looking, simply organized template and found [Mat Fantaniel's](https://github.com/matfantinel/sveltekit-static-blog-template). I had to re-organize the whole project to remove the SvelteKit stuff, but doing that gave me a good understanding of Vite.
 
 ### Why not SvelteKit?
-I chose not to use SvelteKit
+I chose not to use SvelteKit so that I could implement the backend myself in Rust. There's a lot of cool development on SvelteKit, but I enjoy systems programming so I don't want it abstracted away.
 
 #### Links, inspiration, etc
-\[0\]: https://github.com/matfantinel/sveltekit-static-blog-template
+blog template: https://github.com/matfantinel/sveltekit-static-blog-template
 \[1\]: https://sveltekit-static-blog-template.vercel.app/
 \[2\]: https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/
 
 ### Questions:
 How will the backend scale? If I build something and want more capacity, when will I add seperate infrastructure for that project instead of hosting it on the blog?
 
-### Learnings
-variables exported from the script section are only available to bind, need to export from the module script to access from an instance
-flexbox flexing does not re-calculate the element size after the initial load, scaleX() just changes the display, not the element size, need to set the width of the element to actually move adjacent dom elements
-had to make vite and yew bundle into dist/svelte & dist/yew and then copy the files out to get the routing to work, since the route serves the file directory from root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie svelte.blog.com and yew.blog.com, which might make more sense in the future once I figure out what I'm going to use each for, but I'm glad I figured out how to do it this way in case
+## Challenges & learnings
+### Exporting the pageid from the page components
+I ended up just renaming the blog page to articles so the menu is currently in alphabetical order, but I wanted to be able to control the order of the menu while still dynamically generating it from whatever components are in the [`src/pages`](https://github.com/JackBellinger/blog/tree/main/svelte_front/src/pages) directory.<br>
+I didn't want to encode them in the file name or restrict the order to alphabetical, so I tried
+variables exported from the script section but those are only available to use with `export let` bindings. Eventually I figured out that I needed to export the values from the module script to access from an instance.
 
-axum server doesn't accept nested routes with wildcards, so idk how to send all the spa routes to be handled by the index
-github routing also does not work right
+### Flexbox stuff
+When a flexbox flexs, it doesn't re-calculate the element size after the initial load, scaleX() just changes the display and not the element size, so I needed to set the width of the menu elements to actually move adjacent dom elements. This isn't visible right now, but I'm thinking about adding some content to the middle of the header and I want it to move when the pages expand.
+
+### Bundling
+I'm using path aliases from the Vite bundler for everything except the paths in the Markdown.svx files. Mdsvex doesn't use the same aliases and Vite doesn't process those for some reason. Since all the blog assets are hosted in the same dist directory (although I guess I could change this), I had to add a base url to the Vite config so it prepends blog to all the links and add a bundling script that moves the files out of the auto generated baseurl directory. The /blog part of the url is handled by the Axum server, since the route serves the file directory from the frontend root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie blog.domainname.com and yew-wasm-app.domainname.com, which might make more sense in the future, but I'm glad I figured out how to do it this way in case
+
+### Backend routing 2 frontends
+It was pretty tricky to figure out which combination of handling, nesting, and fallback services would let me serve the svelte and wasm frontends from a [Tower::ServeDir](https://docs.rs/tower-http/latest/tower_http/services/struct.ServeDir.html). Initially I read to use a fallback service, which only worked for one. Thankfully, there's also an [example](https://github.com/tokio-rs/axum/blob/main/examples/static-file-server/src/main.rs#L80C9-L80C9) for using 2 serve dirs.
+
+### Frontend routing with a 'prefix'
+Using this added a bit of extra complexity to the frontend though. Since I made the frontend a simple SPA, the routes I wanted to use weren't actual directories in the compiled bundle. This caused issues with ergonomic / logical asset hrefs, reloading to the same page, and I wouldn't be able to link to a page without route handling.
+I considered going back to SvelteKit with adapter-static. I might try it out or build another frontend to try out some SvelteKit features, but I like using Vite directly and customizing things. I looked into a few spa router options, and decided on [Navaid](https://github.com/lukeed/navaid) for it's simple API and back and forward button enabling history integration.
+It took some trickery to get the 404 to redirect to the main page when a route doesn't exist as a file, but then it get's handled by Navaid routing.
 
 ## Release 0.1.0
 
