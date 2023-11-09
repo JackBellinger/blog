@@ -1,4 +1,4 @@
-use axum::{routing::get_service, http::StatusCode, handler::HandlerWithoutStateExt};
+use axum::http::StatusCode;
 #[allow(unused_imports)]
 use axum::{
     body::Bytes,
@@ -12,10 +12,8 @@ use axum::{
     Router,
 };
 use axum_sessions::{async_session::SessionStore, SessionLayer};
-use std::{path::PathBuf, fs};
-#[allow(unused_imports)]
-use std::{sync::Arc, time::Duration};
-use tracing::{info_span, Level};
+use std::sync::Arc;
+use tracing::Level;
 
 use tower_http::{
     services::{ServeDir, ServeFile},
@@ -34,19 +32,25 @@ use crate::{
 // *********
 
 pub(crate) fn two_serve_dirs() -> Router {
-    // you can also have two `ServeDir`s nested at different paths
-
+    // serve svelte blog from svelte_front directory
     let mut svelte_dir = get_project_root().unwrap();
     svelte_dir.push(FRONT_SVELTE_PUBLIC);
-    tracing::info!("{:?}", &svelte_dir.clone().into_os_string());
-    let serve_dir_from_svelte = ServeDir::new(svelte_dir).append_index_html_on_directories(true);
+    //and add the 404 page as a fallback
+    let mut svelte_404_path = svelte_dir.clone();
+    svelte_404_path.push("404.html");
+    tracing::info!("serveDir: {:?}, 404 path: {:?}", &svelte_dir.clone().into_os_string(), svelte_404_path);
+    let serve_dir_from_svelte = ServeDir::new(svelte_dir)
+                                    .append_index_html_on_directories(true)
+                                    .not_found_service(ServeFile::new(svelte_404_path));
+
+    //serve yew example from yew_front directory
     let mut yew_dir = get_project_root().unwrap();
     yew_dir.push(FRONT_YEW_PUBLIC);
     let serve_dir_from_yew = ServeDir::new(yew_dir).append_index_html_on_directories(true);
 
     Router::new()
     .nest_service("/yew", serve_dir_from_yew)
-    .nest_service("/blog/*", serve_dir_from_svelte)
+    .nest_service("/blog", serve_dir_from_svelte)
     .layer(
         TraceLayer::new_for_http()
             .make_span_with(DefaultMakeSpan::new().include_headers(true))
@@ -57,158 +61,10 @@ pub(crate) fn two_serve_dirs() -> Router {
                     .latency_unit(LatencyUnit::Micros),
             ),
     )
-        //.nest_service(
-        //    "/assets",
-        //    get_service(serve_dir_from_svelte)
-        //    .handle_error(
-        //        |_| async move {
-        //            (
-        //                StatusCode::INTERNAL_SERVER_ERROR,
-        //                format!("Unhandled internal error"),
-        //            )
-        //        },
-        //    ),
-        //)
-        //.fallback_service(
-        //    get_service(ServeFile::new("./frontend/dist/index.html")).handle_error(
-        //        |_| async move { (StatusCode::INTERNAL_SERVER_ERROR, "internal server error") },
-        //    ),
-        //)
-        ////////////////////////////////////////////
-        //.nest_service("/svelte", serve_dir_from_svelte)
-        //.nest_service("/yew", serve_dir_from_yew)
-        //.layer(
-        //    TraceLayer::new_for_http()
-        //        .make_span_with(|request: &Request<_>| {
-        //            // Log the matched route's path (with placeholders not filled in).
-        //            // Use request.uri() or OriginalUri if you want the real path.
-        //            let matched_path = request
-        //                .extensions()
-        //                .get::<MatchedPath>()
-        //                .map(MatchedPath::as_str);
-
-        //            info_span!(
-        //                "http_request",
-        //                method = ?request.method(),
-        //                matched_path,
-        //                some_other_field = tracing::field::Empty,
-        //            )
-        //        })
-        //        .on_request(DefaultOnRequest::new().level(Level::DEBUG)
-        //            //|_request: &Request<_>, _span: &Span| {
-        //            // You can use `_span.record("some_other_field", value)` in one of these
-        //            // closures to attach a value to the initially empty field in the info_span
-        //            // created above.
-        //            //span.record("some_other_field", value);
-        //        //}
-        //        )
-        //        .on_response(DefaultOnResponse::new()
-        //                                .level(Level::DEBUG)
-        //                                .latency_unit(LatencyUnit::Micros)
-        ///////////////////////////
-                    //|_response: &Response, _latency: Duration, _span: &Span| {
-                    //DefaultOnResponse::new()
-                    //    .level(Level::INFO)
-                    //   .latency_unit(LatencyUnit::Micros)
-                //}
-                //)
-                //.on_body_chunk(|_chunk: &Bytes, _latency: Duration, _span: &Span| {
-                //    // ...
-                //})
-                //.on_eos(
-                //    |_trailers: Option<&HeaderMap>, _stream_duration: Duration, _span: &Span| {
-                //        // ...
-                //    },
-                //)
-                //.on_failure(
-                //    |_error: ServerErrorsFailureClass, _latency: Duration, _span: &Span| {
-                //        // ...
-                //    },
-                //),
-        //)
 }
-
-
-pub fn front_routes() -> Router {
-    tracing::debug!("Serving svelte frontend at: {:#?}", fs::canonicalize(&FRONT_SVELTE_PUBLIC));
-    Router::new()
-        .route("/hello", get(hello))
-        .fallback_service(ServeDir::new(FRONT_SVELTE_PUBLIC).not_found_service(handle_error.into_service()))
-        .layer(
-            TraceLayer::new_for_http()
-                .make_span_with(
-                    DefaultMakeSpan::new().include_headers(true)
-                )
-                .on_request(
-                    DefaultOnRequest::new().level(Level::INFO)
-                )
-                .on_response(
-                    DefaultOnResponse::new()
-                        .level(Level::INFO)
-                        .latency_unit(LatencyUnit::Micros)
-                )
-        )
-}
-
-
-
-
-
-
-
-
-// Front end to server svelte build bundle, css and index.html from public folder
-//#[allow(dead_code)]
-//pub fn front_routes() -> Router {
-//    tracing::debug!(
-//        "Serving svelte frontend at: {:#?}",
-//        fs::canonicalize(&FRONT_SVELTE_PUBLIC)
-//    );
-//    Router::new()
-//        .route("/hello", get(hello))
-//        .fallback_service(
-//            ServeDir::new(FRONT_SVELTE_PUBLIC).not_found_service(handle_error.into_service()),
-//        )
-        //.layer(
-        //    TraceLayer::new_for_http()
-        //        .make_span_with(DefaultMakeSpan::new().include_headers(true))
-        //        .on_request(DefaultOnRequest::new().level(Level::INFO))
-        //        .on_response(
-        //            DefaultOnResponse::new()
-        //                .level(Level::INFO)
-        //                .latency_unit(LatencyUnit::Micros),
-        //        ),
-        //)
-//}
-
-//#[allow(dead_code)]
-//pub fn front_yew_route() -> Router {
-//    tracing::debug!(
-//        "Serving yew frontend at: {:#?}",
-//        fs::canonicalize(&FRONT_YEW_PUBLIC)
-//    );
-//    Router::new()
-//        .fallback_service(
-//            ServeDir::new(FRONT_YEW_PUBLIC).not_found_service(handle_error.into_service()),
-//        )
-//        .layer(
-//            TraceLayer::new_for_http()
-//                .make_span_with(
-//                    DefaultMakeSpan::new()
-//                        .level(Level::INFO)
-//                        .include_headers(true),
-//                )
-//                .on_request(DefaultOnRequest::new().level(Level::INFO))
-//                .on_response(
-//                    DefaultOnResponse::new()
-//                        .level(Level::INFO)
-//                        .latency_unit(LatencyUnit::Micros),
-//                ),
-//        )
-//}
 
 #[allow(clippy::unused_async)]
-async fn handle_error() -> (StatusCode, &'static str) {
+async fn _handle_error() -> (StatusCode, &'static str) {
     (
         StatusCode::INTERNAL_SERVER_ERROR,
         "Eror 404: Something went wrong accessing static files...",

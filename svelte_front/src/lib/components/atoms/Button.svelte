@@ -23,10 +23,7 @@
 <svelte:element
 	this={tag}
 	{...linkProps}
-	class={['button', `style--${style}`, `size--${size}`, `color--${color}`, additionalClass].join(
-		' '
-	)}
-	data-sveltekit-preload-data
+	class={['button', `style--${style}`, `size--${size}`, `color--${color}`, additionalClass].join(' ')}
 	role="button"
 	tabindex={0}
 	on:click

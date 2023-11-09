@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
-/build
-/.svelte-kit
+/dist
 /package
 .env
 .env.*
@@ -10,3 +9,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .histoire
 .jampack
+/test-results/
+/playwright-report/
+/playwright/.cache/

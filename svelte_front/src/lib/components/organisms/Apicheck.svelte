@@ -15,8 +15,8 @@
 <div>
 	<container class="wider mobile">
 		<p>
-			You can try using the default API to access api of backend server or you can try entering a
-			bad token to see what happens. This can be used with or without logging in.
+			You can try using the default API to access api of backend server or you can try entering a bad token to see what
+			happens. This can be used with or without logging in.
 		</p>
 
 		<label for="apiToken">API Token</label>

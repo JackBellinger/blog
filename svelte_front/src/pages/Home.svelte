@@ -1,68 +1,67 @@
-<svelte:options accessors />
-
 <script context="module" lang="ts">
 	export const pageNumber = 0;
+	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParams = undefined;
 </script>
 
 <script lang="ts">
-	import Waves from '@lib/components/organisms/Waves.svelte';
 	import Hero from '@lib/components/organisms/Hero.svelte';
-	import About from '@lib/components/organisms/About.svelte';
-	import RecentPosts from '@lib/components/organisms/RecentPosts.svelte';
-	import { postStore } from '@lib/utils/store';
-	import { projectStore } from '@lib/utils/store';
-
-	import Footer from '@lib/components/organisms/Footer.svelte';
-	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
-
+	import Summary from '@lib/components/organisms/GithubStats.svelte';
+	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
+	import { postStores } from '@lib/utils/store';
+	import { projectStores } from '@lib/utils/store';
+	import Page from '@lib/components/organisms/Page.svelte';
+	import Socials from '@lib/components/molecules/Socials.svelte';
 
 	let howManyRecent = 4;
 </script>
 
-<svelte:head>
-	<link rel="canonical" href={siteBaseUrl} />
-	<meta name="keywords" content={keywords.join(', ')} />
+<Page>
+	<div slot="header-insert" />
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
+	<main slot="main-content">
+		<div>
+			<Hero>
+				<h1 class="hello">Hello, I'm Jack Bellinger</h1>
+				<p> I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
+				<div class="intro">
+					Send me a message!
+					<Socials />
+				</div>
+			</Hero>
+		</div>
 
-	<meta name="description" content={description} />
-	<meta property="og:description" content={description} />
-	<meta name="twitter:description" content={description} />
-
-	<title>{title}</title>
-	<meta property="og:title" content={title} />
-	<meta name="twitter:title" content={title} />
-
-	<meta property="og:image" content={image} />
-	<meta name="twitter:image" content={image} />
-
-	<meta name="twitter:card" content="summary_large_image" />
-</svelte:head>
-<div class="container">
-
-	<main class="center-container">
-		<Hero />
-		<About />
-		{#await postStore.init}
-			<p>...parsing markdown</p>
-		{:then posts}
-			<a href="/blog/articles">
-				<RecentPosts posts={posts} title={"Articles"} numToShow={4}/>
-			</a>
+		{#await projectStores.items.load()}
+			<p>...parsing projects</p>
+		{:then projects}
+			<BlogCardGrid posts={projects} title={'Projects'} description={"Here's what I'm working on!"} numToShow={howManyRecent} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
 
-		{#await projectStore.init}
-			<p>...parsing projects</p>
-		{:then projects}
-			<a href="/blog/projects">
-				<RecentPosts posts={projects} title={"Projects"} numToShow={4}/>
-			</a>
+		{#await postStores.items.load()}
+			<p>...parsing markdown</p>
+		{:then posts}
+			<BlogCardGrid {posts} title={'Articles'} numToShow={howManyRecent} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
 	</main>
+</Page>
 
-	<Footer />
-</div>
+<style lang="scss">
+	.hello {
+		text-align: center;
+	}
+	.intro {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 100%;
+	}
+</style>

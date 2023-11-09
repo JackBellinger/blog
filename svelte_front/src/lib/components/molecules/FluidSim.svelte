@@ -201,11 +201,7 @@
 			this.ctx.font = `bold ${size2}px Futura`;
 			this.ctx.textAlign = 'center';
 			this.ctx.fillStyle = '#09203f';
-			this.ctx.fillText(
-				'Click and hold to interact.',
-				this.canvas.width / 2,
-				this.canvas.height / 3.5 + size2 / 3
-			);
+			this.ctx.fillText('Click and hold to interact.', this.canvas.width / 2, this.canvas.height / 3.5 + size2 / 3);
 		}
 
 		drawCurve() {
@@ -220,12 +216,7 @@
 				this.wave.points.map((o) => o.y)
 			);
 
-			const gradient = this.ctx.createLinearGradient(
-				0,
-				highestPoint,
-				20,
-				this.canvas.height + highestPoint / 4
-			);
+			const gradient = this.ctx.createLinearGradient(0, highestPoint, 20, this.canvas.height + highestPoint / 4);
 			gradient.addColorStop(0, 'rgba(124, 231, 249, 0.7)');
 			gradient.addColorStop(0.5, 'rgba(72, 197, 239, 0.8)');
 			gradient.addColorStop(1, '#1380b2');
@@ -276,14 +267,7 @@
 				this.ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
 				this.ctx.strokeStyle = '#537895';
 				this.ctx.beginPath();
-				this.ctx.arc(
-					this.mouse.x,
-					this.mouse.y,
-					16 * this.dpr * this.mouse.power,
-					0,
-					Math.PI * 2,
-					true
-				);
+				this.ctx.arc(this.mouse.x, this.mouse.y, 16 * this.dpr * this.mouse.power, 0, Math.PI * 2, true);
 				this.ctx.closePath();
 				this.ctx.stroke();
 				this.ctx.fill();
@@ -391,9 +375,7 @@
 			const vx = dx / (points - 1);
 			const vy = dy / (points - 1);
 
-			this.points = new Array(points)
-				.fill(null)
-				.map((p, i) => new Point(p1.x + vx * i, p1.y + vy * i));
+			this.points = new Array(points).fill(null).map((p, i) => new Point(p1.x + vx * i, p1.y + vy * i));
 		}
 	}
 

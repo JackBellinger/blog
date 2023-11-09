@@ -10,7 +10,8 @@ strum = "0.25"
 strum_macros = "0.25"
 serde = "1"
 serde_derive = "1"
-yew = { path = "/home/user/code/yew/packages/yew", features = ["csr"] }
+yew = { version = "0.21.0", features = ["csr"] }
+#yew = { path = "/home/user/code/yew/packages/yew", features = ["csr"] }
 gloo = "0.10"
 
 [dependencies.web-sys]

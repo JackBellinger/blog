@@ -5,10 +5,10 @@ import path from 'path';
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-	//base: `dist/`,
+	base: `blog`,
 	build: {
-		outDir: 'dist/blog',
-		assetsDir: 'blog/assets'
+		outDir: 'dist',
+		assetsDir: 'assets'
 	},
 	plugins: [svelte({ configFile: 'svelte.config.js' })],
 	resolve: {

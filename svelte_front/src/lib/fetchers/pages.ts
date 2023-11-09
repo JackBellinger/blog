@@ -17,9 +17,10 @@ export function importPages(render = true) {
 			pages.splice(pageNumber, 1, {
 				name: filename.toLowerCase(),
 				id: pageNumber,
-				module: pageModule,
-				subpages: pageModule.subpages?? [],
-				routeParam: pageModule.routeParam?? "",
+				hidden: pageModule.hidden,
+				subpages: pageModule.subpages ?? [],
+				routeParam: pageModule.routeParam ?? '',
+				module: pageModule
 			} as Page);
 		}
 	}

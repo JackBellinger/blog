@@ -41,7 +41,7 @@
 
 	<ul class="dropdown-content" style="tabIndex='0'">
 		<li>&gt;cd</li>
-		{#each menuItems.filter((page) => page.id != 0) as page}
+		{#each menuItems.filter((page) => page.id != 0 && !page.hidden) as page}
 			<li>
 				<a href="/blog/{page.name}">{page.name}</a>
 			</li>

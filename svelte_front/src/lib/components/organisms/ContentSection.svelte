@@ -65,7 +65,7 @@
 			flex: 5;
 
 			display: grid;
-			place-items: center;
+			//place-items: center;
 		}
 
 		@include for-tablet-landscape-up {

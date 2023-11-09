@@ -13,15 +13,19 @@
 	<div class="content">
 		<div class="copyright">Copyright (c) 2023 Jack Bellinger</div>
 		<div class="credits">
-			<a href="https://github.com/sveltejs/svelte" target="_blank" rel="noopener noreferrer">
-				Svelte</a
-			>
+			<a href="https://github.com/sveltejs/svelte" target="_blank" rel="noopener noreferrer">Svelte</a>
 			Frontend,
 			<a href="https://github.com/vitejs/vite" target="_blank" rel="noopener noreferrer"> Vite</a>
 			Bundler
-			<a href="https://github.com/tokio-rs/axum" target="_blank" rel="noopener noreferrer"> Axum</a>
-			Server . Icons by
-			<a href="https://iconoir.com/" target="_blank" rel="noopener noreferrer">Iconoir</a>.
+			<a href="https://github.com/tokio-rs/axum" target="_blank" rel="noopener noreferrer">Axum</a>
+			Server
+			<br />Icons by
+			<a href="https://iconoir.com/" target="_blank" rel="noopener noreferrer">Iconoir</a>
+			and
+			<a href="https://flaticon.com/" target="_blank" rel="noopener noreferrer">Flaticon</a>, Images by
+			<a href="https://www.freepik.com/author/vectorjuice" target="_blank" rel="noopener noreferrer"
+				>Freepik/Vectorjuice</a
+			>
 		</div>
 		<div class="socials">
 			<Socials />

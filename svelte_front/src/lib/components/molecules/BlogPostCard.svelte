@@ -2,13 +2,12 @@
 	import Card from '@lib/components/atoms/Card.svelte';
 	import Tag from '@lib/components/atoms/Tag.svelte';
 	import Image from '../atoms/Image.svelte';
-	import type { TagType } from '@lib/utils/types';
 
 	export let slug: string;
 	export let title: string;
 	export let coverImage: string | undefined = undefined;
 	export let excerpt: string;
-	export let tags: TagType[] | undefined;
+	export let tags: string[] | undefined;
 	export let readingTime: string | undefined = undefined;
 
 	export let showImage = true;
@@ -16,11 +15,11 @@
 </script>
 
 <Card
-	href={href_prefix + "/" + slug}
+	href={href_prefix + '/' + slug}
 	target="_self"
-	additionalClass="blog-post-card {!showImage || !coverImage ? 'no-image' : ''}"
+	additionalClass="blog-post-card {showImage && coverImage ? '' : 'no-image'} {coverImage}"
 >
-	<div class="image" slot="image">
+	<div class={coverImage} slot="image">
 		{#if coverImage}
 			<Image src={coverImage} alt="Cover image of this blog post" />
 		{/if}
@@ -41,8 +40,8 @@
 	<div class="footer" slot="footer">
 		{#if tags?.length}
 			<div class="tags">
-				{#each tags.slice(0, 2) as tag}
-					<Tag color={tag.color}>{tag.label}</Tag>
+				{#each tags.slice(0, 2) as tag, i}
+					<Tag color={i == 0 ? 'primary' : 'secondary'}>{tag}</Tag>
 				{/each}
 			</div>
 		{/if}
@@ -90,7 +89,7 @@
 	}
 
 	:global(.blog-post-card .image img) {
-		object-fit: cover;
+		object-fit: contain;
 	}
 
 	:global(.blog-post-card.no-image > .image) {

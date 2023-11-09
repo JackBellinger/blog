@@ -8,6 +8,28 @@
 	@include center-div;
 }
 
+/* ===== Scrollbar CSS ===== */
+* {
+	scrollbar-color: var(--color--primary) var(--color--primary-tint);
+	scrollbar-width: thin;
+
+	padding-bottom: 5px;
+
+	&::-webkit-scrollbar {
+		width: 12px;
+		height: 12px;
+		//height: 8px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: var(--color--primary);
+		//border-radius: 6px;
+		//border: 1px groove #000000;
+		&:hover {
+			background: var(--color--primary-shade);
+		}
+	}
+}
+
 ul,
 ol {
 	//margin: 10px 0 10px 40px;
@@ -15,7 +37,7 @@ ol {
 
 	li {
 		margin: 0px 0;
-		padding: 0.5em;
+		padding: 0em;
 		&::marker {
 			color: var(--color--primary);
 		}

@@ -1,20 +1,20 @@
 import { description, siteBaseUrl, title } from '@lib/utils/meta';
 import type { BlogPost } from '@lib/utils/types';
 import dateformat from 'dateformat';
-import { postStore } from '@lib/utils/store';
+import { postStores } from '@lib/utils/store';
 
 export const prerender = true;
 
-export async function GET() {
-	const body = xml(await postStore.init);
+export function GET_RSS(posts: BlogPost[]) {
+	const xml = rssXml(posts);
 	const headers = {
 		'Cache-Control': 'max-age=0, s-maxage=3600',
 		'Content-Type': 'application/xml'
 	};
-	return new Response(body, { headers });
+	return btoa(xml); // Base64 encode the String
 }
 
-const xml = (posts: BlogPost[]) => `
+const rssXml = (posts: BlogPost[]) => `
 <rss version="2.0"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 	xmlns:wfw="http://wellformedweb.org/CommentAPI/"

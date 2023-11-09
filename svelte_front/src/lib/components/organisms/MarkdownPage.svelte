@@ -1,14 +1,11 @@
 <script lang="ts">
-	import Header from '@lib/components/organisms/Header.svelte';
-	import Footer from '@lib/components/organisms/Footer.svelte';
 	import Tag from '@lib/components/atoms/Tag.svelte';
 	import dateformat from 'dateformat';
-	import type { SvelteComponentTyped } from "svelte";
 
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
 	import type { BlogPost } from '@lib/utils/types';
-	import RelatedPosts from '@lib/components/organisms/RelatedPosts.svelte';
 	import Image from '@lib/components/atoms/Image.svelte';
+	import BlogCardGrid from './BlogCardGrid.svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
@@ -16,7 +13,7 @@
 
 	$: {
 		if (post?.tags?.length) {
-			metaKeywords = post.tags.map(tag => tag.label).concat(metaKeywords);
+			metaKeywords = post.tags.concat(metaKeywords);
 		}
 		if (post?.keywords?.length) {
 			metaKeywords = post.keywords.concat(metaKeywords);
@@ -59,8 +56,8 @@
 					{/if}
 					{#if post.tags?.length}
 						<div class="tags">
-							{#each post.tags as tag}
-								<Tag color={tag.color}>{tag.label}</Tag>
+							{#each post.tags as tag, i}
+								<Tag color={i == 0 ? 'primary' : 'secondary'}>{tag}</Tag>
 							{/each}
 						</div>
 					{/if}
@@ -72,29 +69,33 @@
 				</div>
 			{/if}
 			<div class="content">
-				<svelte:component this={post.module.default}/>
+				<svelte:component this={post.module.default} />
 			</div>
 		</article>
 
 		{#if post.relatedPosts && post.relatedPosts.length > 0}
 			<div class="container">
-				<RelatedPosts posts={post.relatedPosts} />
+				<BlogCardGrid
+					posts={post.relatedPosts}
+					numToShow={4}
+					showImages={false}
+					title={'Related ' + window.location.href.split('/').splice(-2)[0]}
+				/>
 			</div>
 		{/if}
 	</main>
-
 </div>
 
 <style lang="scss">
 	@import '../../scss/_mixins.scss';
 
-	.article-layout {
-		--body-background-color: var(--color--post-page-background);
-		background-color: var(--color--post-page-background);
-	}
+	//.article-layout {
+	//	--body-background-color: var(--color--post-page-background);
+	//	background-color: var(--color--post-page-background);
+	//}
 
 	#article-content {
-		--main-column-width: 65ch;
+		--main-column-width: 85ch;
 		position: relative;
 		padding-top: 40px;
 		padding-bottom: 80px;
@@ -139,21 +140,9 @@
 		.cover-image {
 			width: min(var(--main-column-width), 100%);
 			margin: 0 auto;
-			max-height: 400px;
+			//max-height: 400px;
 			box-shadow: var(--image-shadow);
 			border-radius: 6px;
-
-			img {
-				width: 100%;
-				height: 100%;
-				max-height: 400px;
-				object-fit: cover;
-			}
-		}
-
-		:global(.cover-image img) {
-			max-height: 400px;
-			object-fit: cover;
 		}
 
 		.content {

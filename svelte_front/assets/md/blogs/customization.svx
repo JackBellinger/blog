@@ -3,9 +3,10 @@ slug: customization
 title: How to Customize this Template
 date: 2023-04-22T21:55:27.154Z
 excerpt: How to customize what you're seeing here and make it your own.
-coverImage: https://picsum.photos/200
+coverImage: /blog/assets/images/blogs/customize-template.avif
 tags:
   - Documentation
+  - Blog
 ---
 
 In general, content can be modified by editing the **organisms** and the pages themselves. Below is a list of the most common changes that you may want to make.

@@ -2,10 +2,10 @@
 	import ThemeToggle from '@lib/components/molecules/ThemeToggle.svelte';
 	import RssLink from '@lib/components/atoms/RssLink.svelte';
 	import { onMount } from 'svelte';
-	import { pageStore } from '@lib/utils/store';
+	import { pageStores } from '@lib/utils/store';
 	import LogoPageMenu from '../molecules/LogoPageMenu.svelte';
 
-	const pages = pageStore.init;
+	const pages = pageStores.init;
 	let showBackground = true;
 
 	// Show mobile icon and display menu
@@ -19,10 +19,7 @@
 		header.style.setProperty('--computed-height', `${headerHeight}px`);
 
 		headerShifterHeight =
-			Math.min(
-				header.offsetTop,
-				document.documentElement.scrollHeight - window.innerHeight - headerHeight
-			) - 1;
+			Math.min(header.offsetTop, document.documentElement.scrollHeight - window.innerHeight - headerHeight) - 1;
 	}
 
 	onMount(() => {
@@ -41,7 +38,7 @@
 	<header class:has-background={showBackground}>
 		<nav class="container">
 			<div class="leftMenu">
-				<LogoPageMenu menuItems={pages} {logoText} />
+				<LogoPageMenu menuItems={pages.filter((page) => !page.hidden)} {logoText} />
 			</div>
 
 			<div class="rightMenu">
@@ -71,11 +68,7 @@
 
 		&.has-background {
 			text-align: center;
-			background: linear-gradient(
-				60deg,
-				var(--color--waves-start) 0%,
-				var(--color--waves-end) 100%
-			);
+			background: linear-gradient(60deg, var(--color--waves-start) 0%, var(--color--waves-end) 100%);
 		}
 
 		.container {
@@ -84,24 +77,17 @@
 			justify-content: space-between;
 			gap: 30px;
 			overflow: hidden;
-			@include for-phone-only {
-				.links {
-					a {
-						display: none;
-					}
-				}
-			}
 		}
 
 		.leftMenu {
 			display: flex;
-			//outline: #ff0000 solid .1em;
+			//border: 2px solid red;
 			margin: 0.1em;
 			height: 44px;
 		}
 
 		.rightMenu {
-			//outline: #289c62 solid .1em;
+			//outline: 2px solid green;
 			display: flex;
 			align-self: flex-end;
 		}

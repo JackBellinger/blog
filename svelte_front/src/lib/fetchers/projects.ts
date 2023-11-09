@@ -10,9 +10,7 @@ export async function importProjects(render = true) {
 		if (project) {
 			projects.push({
 				...project.metadata,
-				tags: project.metadata.tags.map((tag, index) => {
-					return { label: tag, color: index == 0 ? 'primary' : 'secondary' };
-				}),
+				//tags: project.metadata.tags,
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
 				module: project
 			});
@@ -26,9 +24,9 @@ export const filterProjects = (projects: BlogPost[]) => {
 	return projects
 		.filter((project) => !project.hidden)
 		.sort((a, b) =>
-			new Date(a.date).getTime() > new Date(b.date).getTime()
+			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
-				: new Date(a.date).getTime() < new Date(b.date).getTime()
+				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
 				? 1
 				: 0
 		)
@@ -47,7 +45,7 @@ export const filterProjects = (projects: BlogPost[]) => {
 const getRelatedPosts = (projects: BlogPost[], project: BlogPost) => {
 	// Get the first 3 posts that have the highest number of tags in common
 	const relatedPosts = projects
-		.filter((p) => p.slug !== project.slug && !project.hidden)
+		.filter((p) => p.slug !== project.slug && !p.hidden)
 		.sort((a, b) => {
 			const aTags = a.tags?.filter((t) => project.tags?.includes(t));
 			const bTags = b.tags?.filter((t) => project.tags?.includes(t));
