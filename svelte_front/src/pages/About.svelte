@@ -39,7 +39,8 @@
 					<div id="blurb">
 						<h2>Languages</h2>
 						<p>
-							I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed learning about many technologies!
+							I've put the most time into systems languages and I've only worked in backend roles, but I've enjoyed
+							learning about many technologies!
 						</p>
 					</div>
 					<img
@@ -54,43 +55,47 @@
 		<div id="info">
 			<h1>Background</h1>
 			<p>
-				I enjoy working at many levels of computation, from optimizing thread-safety & memory usage to creating clear abstractions & consise business logic. I always implement automated testing, CI/CD pipelines for my services, and take pride in detailed documentation. I strive to develop a deep understanding of my codebases and share my knowledge. I ensure my team's change requests are similarly eloquent through collaborative and meticulous code reviews.
+				I enjoy working at many levels of computation, from optimizing thread-safety & memory usage to creating clear
+				abstractions & consise business logic. I always implement automated testing, CI/CD pipelines for my services,
+				and take pride in detailed documentation. I strive to develop a deep understanding of my codebases and share my
+				knowledge. I ensure my team's change requests are similarly eloquent through collaborative and meticulous code
+				reviews.
 			</p>
 			<h2>School</h2>
-			<p>
-				In school, some of the courses I most enjoyed are:
-			</p>
+			<p>In school, some of the courses I most enjoyed are:</p>
 			<ul style="margin-left: 4ch;">
+				<li>High Performance Computing (paralellism & distributed cluster computing, github.com/jackbellinger/420)</li>
 				<li>
-					High Performance Computing (paralellism & distributed cluster computing, github.com/jackbellinger/420)
+					Numerical Linear Algebra (Numerical approaches to efficiently solving matrix maths,
+					github.com/jackbellinger/420/matrix.py)
 				</li>
 				<li>
-					Numerical Linear Algebra (Numerical approaches to efficiently solving matrix maths, github.com/jackbellinger/420/matrix.py)
+					Systems Software & Operating Systems (C programming & The inner workings of Operating Systems,
+					github.com/jackbellinger/350 & ...450 )
 				</li>
 				<li>
-					Systems Software & Operating Systems (C programming & The inner workings of Operating Systems, github.com/jackbellinger/350 & ...450 )
+					Datastructures and Algorithms (C++ programming of DS & Algos, soon to be moved to
+					github.com/jackbellinger/cpp-structs & github.com/JackBellinger/Fast-and-Furious-Transformers)
 				</li>
 				<li>
-					Datastructures and Algorithms (C++ programming of DS & Algos, soon to be moved to github.com/jackbellinger/cpp-structs & github.com/JackBellinger/Fast-and-Furious-Transformers)
+					Copmuter vision research (github.com/jtanderson/wetland-object-detection,
+					github.com/nilay036/DOG-Breed-Identifier)
 				</li>
-				<li>
-					Copmuter vision research (github.com/jtanderson/wetland-object-detection, github.com/nilay036/DOG-Breed-Identifier)
-				</li>
-				<li>
-					Hololens AR Matrix Math Visualizations (github.com/JackBellinger/Solids-of-Revolution-Visualizer)
-				</li>
-			</ul >
+				<li>Hololens AR Matrix Math Visualizations (github.com/JackBellinger/Solids-of-Revolution-Visualizer)</li>
+			</ul>
 			<h2>Work</h2>
 			<p>
 				I have 3 years of experience working on production backend systems. I have contributed designs and
-				implementations to a computer vision platform for live sports and a distributed data pipeline for backbone network security.
+				implementations to a computer vision platform for live sports and a distributed data pipeline for backbone
+				network security.
 			</p>
 
 			<h3>Amazon</h3>
 			<p>
-				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports Rapid Recap & Key Moments
+				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports
+				Rapid Recap & Key Moments
 			</p>
-			<br>
+			<br />
 			For More details, check my blog articles, resume, or contact me with any questions.
 		</div>
 	</main>

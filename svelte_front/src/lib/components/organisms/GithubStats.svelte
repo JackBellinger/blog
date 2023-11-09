@@ -5,7 +5,6 @@
 
 <section id="about">
 	<div class="info">
-
 		<a href="https://github.com/Ashutosh00710/github-readme-activity-graph">
 			<img
 				src="https://github-readme-activity-graph.vercel.app/graph?username=JackBellinger&theme=minimal"
