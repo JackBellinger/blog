@@ -39,10 +39,6 @@ struct Opt {
 
     #[clap(short = 's', long = "secret", default_value="ERROR: set the SERVER_SECRET env variable", env="SERVER_SECRET")]
     secret: String,
-
-    /// set the directory where static files are to be found
-    #[clap(long = "static-dir", default_value = "./frontend/dist")]
-    static_dir: String,
 }
 
 /// Server that is split into a Frontend to serve static files (Svelte) and Backend
