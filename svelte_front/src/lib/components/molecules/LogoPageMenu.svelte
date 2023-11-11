@@ -5,17 +5,17 @@
 	export let menuItems: Page[];
 	export let logoText = 'Site Logo';
 
-	export let pageNumber: number = 0;
+	export let pagePriority: number = 0;
 	// Page selection
 	//let menuOpen = false;
 	//$: pageMenuPercent = 0;
 	const handlePageSelection = (page: Page) => {
 		//console.log(menuItems);
 		console.log('swapping page to ', page.id);
-		pageNumber = page.id;
-		//console.log("pagenum: ", pageNumber);
-		//pageMenuPercent = (pageNumber == 0)? 100: 0;
-		logoText = pageNumber != 0 ? 'Home/' + page.name : page.name;
+		pagePriority = page.id;
+		//console.log("pagenum: ", pagePriority);
+		//pageMenuPercent = (pagePriority == 0)? 100: 0;
+		logoText = pagePriority != 0 ? 'Home/' + page.name : page.name;
 		//console.log("menu percent", pageMenuPercent);
 		//menuOpen = false;
 	};

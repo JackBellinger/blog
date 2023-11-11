@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const pageNumber = 2;
+	export const pagePriority = 2;
 	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParam = 'blogid';

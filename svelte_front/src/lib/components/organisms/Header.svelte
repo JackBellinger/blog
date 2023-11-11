@@ -9,7 +9,7 @@
 	let showBackground = true;
 
 	// Show mobile icon and display menu
-	//export let pageNumber: number;
+	//export let pagePriority: number;
 	export let logoText = 'Site Logo';
 
 	let header: HTMLDivElement;

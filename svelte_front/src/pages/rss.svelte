@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	export const hidden = true;
-	export const pageNumber = -1;
+	export const pagePriority = 0;
 	export const subRoutes = [];
 	export const routeParams = undefined;
 </script>

@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const pageNumber = 1;
+	export const pagePriority = 1;
 	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParam = '';
