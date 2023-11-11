@@ -3,6 +3,7 @@ slug: lofi-gen
 title: Lofi Generation
 coverImage: /blog/assets/images/projects/lofi.avif
 date: 2023-09-26T02:32:00.000Z
+updated: 2023-11-11T17:49:12.000Z
 excerpt: Converting a Python lofi music generator to Rust and adapting the webpack frontend to svelte.
 tags:
   - Machine Learning
@@ -13,6 +14,21 @@ tags:
   import Image from "@lib/components/atoms/Image.svelte";
   import Callout from "@lib/components/atoms/Callout.svelte"
 </script>
+
+### General idea
+What is the thing I'm trying to make?
+
+#### Links, inspiration, etc
+https://github.com/jacbz/Lofi
+
+### Learnings
+
+
+<Callout type="info">
+  This is a Svelte component inside a Markdown file!
+</Callout>
+
+## Processing
 
 ### Todo
 
@@ -29,17 +45,3 @@ tags:
 - [ ] figure out the best way to track productivity
 - [ ] todos
 
-### General idea
-What is the thing I'm trying to make?
-
-#### Links, inspiration, etc
-https://github.com/jacbz/Lofi
-
-### Learnings
-
-
-<Callout type="info">
-  This is a Svelte component inside a Markdown file!
-</Callout>
-
-## Processing

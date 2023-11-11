@@ -1,0 +1,91 @@
+---
+slug: keyboard
+title: My Keyboard
+coverImage: /blog/assets/images/projects/ikki-aurora.webp
+date: 2023-11-10T04:53:49.000Z
+updated: 2023-11-10T04:53:49.000Z
+excerpt: How I configure my keyboard with QMK to add macros and RGB stuff.
+hidden: true
+tags:
+  - Hardware
+  - Config
+  - QMK
+---
+
+<script>
+  import Image from "@lib/components/atoms/Image.svelte";
+</script>
+
+### Why not use an off-the-shelf keyboard?
+Mainly, I just wanted to make a keyboard. I had a mechanical keyboard from Amazon for years that typed well, but it was too clicky. I also wanted to program some macros and RGB effects.
+
+### Build goals
+My goals for this keyboard were to make something quiet, smooth typing, and compact.
+I also wanted something beginner friendly that works with QMK/VIA so that I could get it assembled and running without too much work and leave myself room to add functionality later.
+
+## Group buy
+I joined the wuque studios ikki68 aurora group buy, and recieved it a year later. My gmk keycaps took even longer to arrive 😅.
+I got the switches pretty easily, and I pulled the keycaps off my old board to use until my new set arrived.
+
+### Malware / keylogger
+I'm not sure where it's from, but there seems to be something on my computer. I don't know if I can reccommend Wuque?
+
+### Switches
+I went with Boba linear switches, and I really enjoy the sounds they make. hello I am Jack and My name is Jack and I am a software engineer and I like to write blogs and code and make cool stuff for you to use. I hope you like reading this blog and using my software. I can type pretty fast but it's hard to think of things to say so fastly. I can type type type type faster than I can think sometimes, but if I'm copying or writing something I already know what to type then I guess I'm limited by my typing skills. I can type words fast but when I'm writing code it's a bit harder to find the `{}` and \(\) keys and numbers and + - ~ and that sort of stuff. I guess it's kind of precise so it's good not to rush and make mistakes because it would be hard to catch a spelling error. The difference between stuff can be tricky to spot.
+
+
+
+### Advanced Macros
+I want to be able to define macros seperately from hwo they are invoked.
+Initially, I was putting the effect of the macros, ie `SEND_STRING(macro keys)`, in the `process_record_user` as in the [examples](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_macros.md#using-macros-in-c-keymaps).
+
+```
+
+```
+
+
+However, once I started looking into the leader key, combos, and other features, I thought it would be usefule to define the macro functions in their own map.
+First, I made a map from the keycodes enum to function pointers
+```
+typedef enum {
+    MAC_SEARCH = SAFE_RANGE,
+    MAC_TERMINAL,
+    MAC_VSCODE,
+    MAC_BLOG_URL,
+    LLOCK
+} custom_keycodes;
+
+typedef void (*operate)();
+struct action{
+  operate map[3];
+};
+
+static struct action macros = {{&search,&terminal,&blog_url}};
+int KC_isMacro(uint16_t x)
+{
+    for(int i=0; i<(sizeof(macro_kc_values)/sizeof(*macro_kc_values)); i++)
+    {
+        if(macro_kc_values[i] == x){ return 1; }
+    }
+    return 0;
+}
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+    if (KC_isMacro(keycode)) {
+        macros.map[keycode - SAFE_RANGE]();
+    }
+    return true;
+};
+```
+
+
+#### Links, inspiration, etc
+github.com/jackbellinger/dotfiles/keymap.c
+
+### Learnings
+
+### Todo
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media

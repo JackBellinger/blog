@@ -8,7 +8,7 @@ excerpt: How I set up my machine to work on software
 hidden: false
 tags:
   - SDLC
-  - Personal
+  - Config
 ---
 
 <script>
