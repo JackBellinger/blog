@@ -16,13 +16,17 @@ export async function importProjects(render = true) {
 			});
 		}
 	}
-	console.log('imported projects: ', filterProjects(projects));
-	return filterProjects(projects);
+	let retProjs = sortAndRelateProjects(projects)
+	console.log('imported projects: ', retProjs);
+	return retProjs;
 }
 
-export const filterProjects = (projects: BlogPost[]) => {
+export const filterHiddenProjects = (projects: BlogPost[]) => {
 	return projects
 		.filter((project) => !project.hidden)
+}
+export const sortAndRelateProjects = (projects: BlogPost[]) => {
+	return projects
 		.sort((a, b) =>
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1

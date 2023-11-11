@@ -17,13 +17,17 @@ export async function importPosts(render = true) {
 			});
 		}
 	}
-	console.log('imported posts: ', posts);
-	return filterPosts(posts);
+	let retPosts = sortAndRelatePosts(posts)
+	console.log('imported posts: ', retPosts);
+	return retPosts;
 }
 
 export const filterPosts = (posts: BlogPost[]) => {
 	return posts
 		.filter((post) => !post.hidden)
+}
+export const sortAndRelatePosts = (posts: BlogPost[]) => {
+	return posts
 		.sort((a, b) =>
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
