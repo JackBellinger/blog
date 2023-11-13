@@ -87,8 +87,6 @@
 </div>
 
 <style lang="scss">
-	@import '../../scss/_mixins.scss';
-
 	//.article-layout {
 	//	--body-background-color: var(--color--post-page-background);
 	//	background-color: var(--color--post-page-background);

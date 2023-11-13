@@ -40,8 +40,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 40px;
-		padding: 50px 0;
+		gap: 10px;
+		padding: 10px 0;
 
 		.title-area {
 			flex: 2;

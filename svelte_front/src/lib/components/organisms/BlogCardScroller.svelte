@@ -85,6 +85,7 @@
 	ul {
 		li {
 			list-style: none;
+			margin: 10px 0;
 		}
 		/* We need to limit the height and show a scrollbar */
 		//width: 80%;
