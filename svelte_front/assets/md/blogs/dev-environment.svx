@@ -7,8 +7,8 @@ updated: 2023-10-30T15:39:05.000Z
 excerpt: How I set up my machine to work on software
 hidden: false
 tags:
+  - Workspace
   - SDLC
-  - Config
 ---
 
 <script>
