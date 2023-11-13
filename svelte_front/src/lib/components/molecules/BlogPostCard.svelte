@@ -50,49 +50,5 @@
 </Card>
 
 <style lang="scss">
-	// .card-body {
-	// 	display: flex;
-	// 	flex-direction: column;
-	// 	gap: 0px;
-	// 	align-items: flex-start;
-	// }
 
-	// .card-title {
-	// 	display: flex;
-	// 	align-items: center;
-	// 	justify-content: space-between;
-	// 	width: 100%;
-	// 	font-size: 1.2rem;
-	// 	font-family: var(--font--title);
-	// 	font-weight: 700;
-	// }
-	// .excerpt {
-	// 	margin-top: 5px;
-	// 	font-size: 0.9rem;
-	// 	text-align: justify;
-	// }
-
-	// .tags {
-	// 	display: flex;
-	// 	align-items: center;
-	// 	gap: 5px;
-	// 	flex-wrap: wrap;
-	// }
-
-	// .note {
-	// 	font-size: 0.8rem;
-	// 	color: rgba(var(--color--text-rgb), 0.8);
-	// }
-
-	// .footer {
-	// 	margin-top: 20px;
-	// }
-
-	// :global(.blog-post-card .image img) {
-	// 	object-fit: contain;
-	// }
-
-	// :global(.blog-post-card.no-image > .image) {
-	// 	display: none;
-	// }
 </style>

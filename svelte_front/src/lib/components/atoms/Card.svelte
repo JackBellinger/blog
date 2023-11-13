@@ -39,6 +39,7 @@
 </svelte:element>
 
 <style lang="scss">
+	// *{ border: 2px solid green;}
 	.card {
 		display: flex;
 		flex-direction: column;
@@ -50,14 +51,13 @@
 		// padding: 10rem 0 0;
 		// max-width: 35ch;
 		border-radius: 0.5rem;
-		overflow:hidden;
+		overflow: hidden;
 
 		transition: transform 1000ms ease;
 
 		a {
 			color: var(--card-text-color);
 			&:hover {
-
 				text-decoration:none;
 			}
 		}
@@ -91,8 +91,8 @@
 		position:absolute;
 		z-index:1;
 		// border: 2px solid blue;
-		// --padding: 1.5rem;
-		// padding-top: var(--padding);
+		--padding: 1.5rem;
+		padding-top: var(--padding);
 		// overflow: hidden;
 		background: linear-gradient(
 			hsl(0 0% 0% / 0),
@@ -105,15 +105,15 @@
 		}
 
 		.card-title {
-		// border: 2px solid green;
-		// position: relative;
-		width: max-content;
-	}
+			// border: 2px solid green;
+			// position: relative;
+			width: max-content;
+		}
 
 
 	.card-title::after {
 		content: "";
-		// position: relative;
+		position: relative;
 		height: 4px;
 		left: calc(var(--padding) * -1);
 		bottom: -2px;
@@ -126,9 +126,18 @@
 	}
 
 	.card-body {
+		width:fit-content;
 		// border: 2px solid red;
 		color: var(--card-text-color);
 	}
+	.footer {
+		// border: 2px solid yellow;
+		width:fit-content;
+		// border: 2px solid red;
+		color: var(--card-text-color);
+	}
+
+
 
 	@media (hover) {
 		.card-content {
@@ -182,17 +191,54 @@
 		background-color: var(--clr-neutral-100);
 	}
 
-	// @media (prefers-reduced-motion: no-preference) {
-	// 	*,
-	// 	*::before,
-	// 	*::after {
-	// 		animation-duration: 0.01ms !important;
-	// 		animation-iteration-count: 1 !important;
-	// 		transition-duration: 0.01ms !important;
-	// 		scroll-behavior: auto !important;
-	// 		transition-delay: 0 !important;
-	// 	}
-	// }
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+			transition-delay: 0 !important;
+		}
+		.card:hover,
+		.card:focus-within {
+			transform: scale(1);
+		}
+		.card-content {
+			display:inline-block;
+			overflow: visible;
+			transform: scale(1);
+			visibility: visible;
+			transform: translateY(-100%);
+			max-width:fit-content;
+		}
+
+		.card:hover .card-content,
+		.card:focus-within .card-content {
+			visibility: visible;
+		}
+
+		.card:focus-within .card-content {
+			transition-duration:0ms;
+		}
+
+		.card-content > *:not(.card-title) {
+			opacity: 1;
+			transition:0ms;
+		}
+
+		.card:hover .card-content > *:not(.card-title),
+		.card:focus-within .card-content > *:not(.card-title) {
+			opacity: 1;
+			transition-delay: 1200ms ease;
+		}
+
+		.card:hover .card-title::after,
+		.card:focus-within .card-title::after {
+			transform: scaleX(1);
+		}
+	}
 
 	@media screen and (max-width: 360px) {
 		.card {

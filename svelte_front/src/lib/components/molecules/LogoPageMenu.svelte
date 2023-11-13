@@ -109,7 +109,8 @@
 		//outline: #2ba0ce solid 0.1em;
 		//background-color: rgba(98, 98, 98, 1);
 	}
-	.nav_menu:hover .dropdown-content {
+	.nav_menu:hover .dropdown-content,
+	.nav_menu:focus-within .dropdown-content {
 		width: max-content;
 		-webkit-transition: all 0.3s ease-in-out;
 		-moz-transition: all 0.3s ease-in-out;
@@ -124,5 +125,12 @@
 		flex-grow: 1;
 		//background: red;
 		//outline: #efff0f solid 0.1em;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dropdown-content {
+			width: 100%;
+			flex-grow: 1;
+		}
 	}
 </style>
