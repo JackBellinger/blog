@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const pageNumber = 3;
+	export const pagePriority = 3;
 	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParam = 'projectid';

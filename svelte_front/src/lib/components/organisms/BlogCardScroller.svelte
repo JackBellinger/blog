@@ -58,7 +58,7 @@
 				<p>...parsing markdown aaa</p>
 			{:then items}
 				<!--{console.log("fp ", $filteredItems)}-->
-				{#each items as post}
+				{#each items.filter((item) => !item.hidden) as post}
 					<!--{console.log("render new post")}-->
 					<li>
 						<BlogPostCard

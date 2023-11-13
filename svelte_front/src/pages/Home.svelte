@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const pageNumber = 0;
+	export const pagePriority = 0;
 	export const hidden = false;
 	export const subRoutes = [];
 	export const routeParams = undefined;
@@ -25,7 +25,7 @@
 		<div>
 			<Hero>
 				<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-				<p> I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
+				<p>I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
 				<div class="intro">
 					Send me a message!
 					<Socials />
@@ -36,7 +36,12 @@
 		{#await projectStores.items.load()}
 			<p>...parsing projects</p>
 		{:then projects}
-			<BlogCardGrid posts={projects} title={'Projects'} description={"Here's what I'm working on!"} numToShow={howManyRecent} />
+			<BlogCardGrid
+				posts={projects.filter((proj) => !proj.hidden)}
+				title={'Projects'}
+				description={"Here's what I'm working on!"}
+				numToShow={howManyRecent}
+			/>
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
@@ -44,7 +49,7 @@
 		{#await postStores.items.load()}
 			<p>...parsing markdown</p>
 		{:then posts}
-			<BlogCardGrid {posts} title={'Articles'} numToShow={howManyRecent} />
+			<BlogCardGrid posts={posts.filter((post) => !post.hidden)} title={'Articles'} numToShow={howManyRecent} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}

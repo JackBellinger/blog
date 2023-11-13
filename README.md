@@ -5,13 +5,13 @@ A personal blog / portfolio to post articles and devlogs.
 Built with Svelte, Vite, and Axum.
 The backend is in the server directory and the blog frontend is in the svelte_front directory.
 There's a placeholder yew todo app is in the yew_front directory that I added to test out serving multiple frontends from the same webserver.
-The frontend is currently hosted on Github pages for simplicity until I implement backend features. 
+The frontend is currently hosted on Github pages for simplicity until I implement backend features.
 
 Check out the [devlog](https://jackbellinger.github.io/blog/projects/blog-devlog) for more details.
 
 
 It was built with a few goals in mind:
-
+- Modularity: the frontend can be served statically, and the backend isn't coupled to it.
 - Responsive design: the website looks and behaves well on screens of all sizes;
 - Fast: it only loads what's needed for it to work
 - Client-first: all the content is static so interaction is blazingly fast;
@@ -23,17 +23,17 @@ It was built with a few goals in mind:
 The blog (svelte_front) is currently hosted on github pages at [jackbellinger.github.io/blog](https://jackbellinger.github.io/blog). The backend will be up soon once I finish testing and pick domain name & a hosting location.
 
 # Dependencies
-You'll need NodeJS, NPM, and Rust installed. 
+You'll need NodeJS, NPM, and Rust installed.
 
 NodeJs - [Install](https://nodejs.org/en/download/)
 Rust - [Install](https://www.rust-lang.org/tools/install)
 Trunk - [Install](https://trunkrs.dev/#install)
 
-To install the blog's dependencies, 
+To install the blog's dependencies,
 
 
 # Building & Running Locally
-To run the whole app locally, you'll need to 
+To run the whole app locally, you'll need to
 
 ### Build and bundle the Svelte frontend
 ```shell
@@ -49,7 +49,7 @@ npm run bundle
 For the Yew app there's a build script
 ```shell
 cd yew_front
-#Run the build script 
+#Run the build script
 ./build-and-bundle.sh
 ```
 All it does is:
@@ -66,7 +66,7 @@ export SERVER_SECRET=$(openssl rand -base64 64)
 cargo run --bin server --release -- --addr localhost --port 5173 --log debug
 ```
 
-### You can also hot-reload the blog 
+### You can also hot-reload the blog
 ```shell
 cd svelte_front
 # Install dependencies

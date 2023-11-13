@@ -7,16 +7,17 @@ export function importPages(render = true) {
 	const pageImports = import.meta.glob('@/pages/*.svelte', { eager: true });
 	//console.log(pageImports)
 	let numPages = Object.keys(pageImports).length;
-	const pages: Page[] = new Array(numPages).fill(null);
+	const pages2d: Page[][] = new Array(numPages).fill(null).map(() => new Array());
 	for (const path in pageImports) {
 		const pageModule: any = pageImports[path];
 		//console.log("imported ", page, "from ", path)
 		if (pageModule) {
 			let filename = path.replace(/^.*[\\\/]/, '').replace(/\.svelte$/, '');
-			let pageNumber = pageModule.pageNumber ?? alert('Page imported with no pageNumber!');
-			pages.splice(pageNumber, 1, {
+			let pagePriority = pageModule.pagePriority ?? -1;
+			pagePriority == -1 ? console.log('you should add a pagePriority to ', filename.toLowerCase()) : null;
+			pages2d[pagePriority].push({
 				name: filename.toLowerCase(),
-				id: pageNumber,
+				id: pagePriority,
 				hidden: pageModule.hidden,
 				subpages: pageModule.subpages ?? [],
 				routeParam: pageModule.routeParam ?? '',
@@ -24,9 +25,7 @@ export function importPages(render = true) {
 			} as Page);
 		}
 	}
-	console.log(
-		'imported pages: ',
-		pages.filter((n) => n)
-	);
-	return pages.filter((n) => n);
+	let pages = pages2d.flat();
+	console.log('imported pages: ', pages);
+	return pages;
 }

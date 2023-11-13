@@ -5,7 +5,7 @@
 	import { pages } from '@lib/utils/store';
 	import '@lib/scss/global.scss';
 
-	let pageNumber: number = 0;
+	let pagePriority: number = 0;
 
 	const scrollIntoView = (node) => {
 		node.scrollIntoView();
@@ -19,9 +19,9 @@
 {#await pages.init}
 	<p>...parsing markdown</p>
 {:then parsedPages}
-	<Header {logoText} bind:pageNumber />
+	<Header {logoText} bind:pagePriority />
 	<div class="scroll-container">
-		<svelte:component this={parsedPages[pageNumber].component.default} />
+		<svelte:component this={parsedPages[pagePriority].component.default} />
 	</div>
 {:catch error}
 	<p style="color: red">{error.message}</p>

@@ -5,17 +5,17 @@
 	export let menuItems: Page[];
 	export let logoText = 'Site Logo';
 
-	export let pageNumber: number = 0;
+	export let pagePriority: number = 0;
 	// Page selection
 	//let menuOpen = false;
 	//$: pageMenuPercent = 0;
 	const handlePageSelection = (page: Page) => {
 		//console.log(menuItems);
 		console.log('swapping page to ', page.id);
-		pageNumber = page.id;
-		//console.log("pagenum: ", pageNumber);
-		//pageMenuPercent = (pageNumber == 0)? 100: 0;
-		logoText = pageNumber != 0 ? 'Home/' + page.name : page.name;
+		pagePriority = page.id;
+		//console.log("pagenum: ", pagePriority);
+		//pageMenuPercent = (pagePriority == 0)? 100: 0;
+		logoText = pagePriority != 0 ? 'Home/' + page.name : page.name;
 		//console.log("menu percent", pageMenuPercent);
 		//menuOpen = false;
 	};
@@ -109,7 +109,8 @@
 		//outline: #2ba0ce solid 0.1em;
 		//background-color: rgba(98, 98, 98, 1);
 	}
-	.nav_menu:hover .dropdown-content {
+	.nav_menu:hover .dropdown-content,
+	.nav_menu:focus-within .dropdown-content {
 		width: max-content;
 		-webkit-transition: all 0.3s ease-in-out;
 		-moz-transition: all 0.3s ease-in-out;
@@ -124,5 +125,12 @@
 		flex-grow: 1;
 		//background: red;
 		//outline: #efff0f solid 0.1em;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dropdown-content {
+			width: 100%;
+			flex-grow: 1;
+		}
 	}
 </style>

@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const pageNumber = 4;
+	export const pagePriority = 4;
 	export const hidden = true;
 	export const subRoutes = ['LogIn', 'ApiCheck', 'Admin', 'LogOut'];
 	export const routeParam = 'user';

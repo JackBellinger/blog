@@ -2,7 +2,7 @@
 	import { HttpRegex } from '@lib/utils/regex';
 
 	export let additionalClass: string | undefined = undefined;
-	export let imageUrl: string = "";
+	export let imageUrl: string = '';
 	console.log(imageUrl);
 	export let href: string | undefined = undefined;
 	const isExternalLink = !!href && HttpRegex.test(href);
@@ -17,12 +17,16 @@
 	};
 </script>
 
-<svelte:element this={'div'} class="card {additionalClass}" style="--image-url: url({imageUrl}); --card-text-color: rgb(255 255 255 / 0.85);">
-	<svelte:element this={tag}  {...linkProps}>
+<svelte:element
+	this={'div'}
+	class="card {additionalClass}"
+	style="--image-url: url({imageUrl}); --card-text-color: rgb(255 255 255 / 0.85);"
+>
+	<svelte:element this={tag} {...linkProps}>
 		<div class="image">
 			<slot name="image" />
 		</div>
-		<div class="card-content" >
+		<div class="card-content">
 			<div class="card-title">
 				<slot name="card-title" />
 			</div>
@@ -39,6 +43,7 @@
 </svelte:element>
 
 <style lang="scss">
+	// *{ border: 2px solid green;}
 	.card {
 		display: flex;
 		flex-direction: column;
@@ -50,18 +55,16 @@
 		// padding: 10rem 0 0;
 		// max-width: 35ch;
 		border-radius: 0.5rem;
-		overflow:hidden;
+		overflow: hidden;
 
 		transition: transform 1000ms ease;
 
 		a {
 			color: var(--card-text-color);
 			&:hover {
-
-				text-decoration:none;
+				text-decoration: none;
 			}
 		}
-
 	}
 
 	.card:hover,
@@ -72,11 +75,11 @@
 	.image {
 		border-radius: 16px;
 		// padding: 6px 10px 6px 10px;
-		overflow:hidden;
+		overflow: hidden;
 		// position:absolute;
 		// float:inline-start;
 		// border: 2px solid green;
-		z-index:0;
+		z-index: 0;
 		// position: relative;
 		// flex: 1 0 max(50%, 330px);
 		// height: min(100%, 200px);
@@ -87,33 +90,31 @@
 
 	.card-content {
 		width: 100%;
-		height:fit-content;
-		position:absolute;
-		z-index:1;
+		height: fit-content;
+		position: absolute;
+		z-index: 1;
 		// border: 2px solid blue;
-		// --padding: 1.5rem;
-		// padding-top: var(--padding);
+		--padding: 1.5rem;
+		padding-top: var(--padding);
 		// overflow: hidden;
 		background: linear-gradient(
 			hsl(0 0% 0% / 0),
 			hsl(20 0% 0% / 0.3) 10%,
-			hsl(0 0% 0% / 1)
-			// hsl(var(--color--secondary-shade-hsla)),
+			hsl(0 0% 0% / 1) // hsl(var(--color--secondary-shade-hsla)),
 			// hsl(var(--color--secondary-shade-hsla)) 10%,
 			// hsl(var(--color--secondary-shade-hsla))
-			);
-		}
+		);
+	}
 
-		.card-title {
+	.card-title {
 		// border: 2px solid green;
 		// position: relative;
 		width: max-content;
 	}
 
-
 	.card-title::after {
-		content: "";
-		// position: relative;
+		content: '';
+		position: relative;
 		height: 4px;
 		left: calc(var(--padding) * -1);
 		bottom: -2px;
@@ -121,11 +122,18 @@
 		background: var(--color-primary);
 		transform: scaleX(0);
 		transform-origin: left;
-		transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);;
+		transition: transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
 		transition-delay: 0.8s;
 	}
 
 	.card-body {
+		width: fit-content;
+		// border: 2px solid red;
+		color: var(--card-text-color);
+	}
+	.footer {
+		// border: 2px solid yellow;
+		width: fit-content;
 		// border: 2px solid red;
 		color: var(--card-text-color);
 	}
@@ -146,12 +154,12 @@
 	}
 
 	.card:focus-within .card-content {
-		transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);;
+		transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 
 	.card-content > *:not(.card-title) {
 		opacity: 0;
-		transition: opacity 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);;
+		transition: opacity 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 
 	.card:hover .card-content > *:not(.card-title),
@@ -164,8 +172,6 @@
 	.card:focus-within .card-title::after {
 		transform: scaleX(1);
 	}
-
-
 
 	.button {
 		cursor: pointer;
@@ -182,17 +188,54 @@
 		background-color: var(--clr-neutral-100);
 	}
 
-	// @media (prefers-reduced-motion: no-preference) {
-	// 	*,
-	// 	*::before,
-	// 	*::after {
-	// 		animation-duration: 0.01ms !important;
-	// 		animation-iteration-count: 1 !important;
-	// 		transition-duration: 0.01ms !important;
-	// 		scroll-behavior: auto !important;
-	// 		transition-delay: 0 !important;
-	// 	}
-	// }
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+			transition-delay: 0 !important;
+		}
+		.card:hover,
+		.card:focus-within {
+			transform: scale(1);
+		}
+		.card-content {
+			display: inline-block;
+			overflow: visible;
+			transform: scale(1);
+			visibility: visible;
+			transform: translateY(-100%);
+			max-width: fit-content;
+		}
+
+		.card:hover .card-content,
+		.card:focus-within .card-content {
+			visibility: visible;
+		}
+
+		.card:focus-within .card-content {
+			transition-duration: 0ms;
+		}
+
+		.card-content > *:not(.card-title) {
+			opacity: 1;
+			transition: 0ms;
+		}
+
+		.card:hover .card-content > *:not(.card-title),
+		.card:focus-within .card-content > *:not(.card-title) {
+			opacity: 1;
+			transition-delay: 1200ms ease;
+		}
+
+		.card:hover .card-title::after,
+		.card:focus-within .card-title::after {
+			transform: scaleX(1);
+		}
+	}
 
 	@media screen and (max-width: 360px) {
 		.card {
@@ -256,8 +299,6 @@
 	// 		flex: 1;
 	// 	}
 	// }
-
-
 
 	// :global(.card [slot='image']) {
 	// 	width: 100%;
