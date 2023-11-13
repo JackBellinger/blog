@@ -1,7 +1,5 @@
 @import './_mixins.scss';
 
-
-
 @mixin base-theme {
 	@include define-color('primary', #02fdf1);
 	@include define-color('primary-shade', #1f706c);
@@ -81,7 +79,6 @@
 	@include define-color('code-background', #002b36);
 	@include define-color('code-text', #586e75);
 	@include define-color('code-inline-background', #2b3131);
-
 }
 
 :root {

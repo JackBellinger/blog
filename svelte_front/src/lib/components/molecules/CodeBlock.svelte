@@ -11,7 +11,7 @@
 	{#if lang}
 		<div class="lang">{lang}</div>
 	{/if}
-<pre>
+	<pre>
 <slot />
 </pre>
 </div>

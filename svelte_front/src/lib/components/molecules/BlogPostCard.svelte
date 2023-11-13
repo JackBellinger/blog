@@ -50,5 +50,4 @@
 </Card>
 
 <style lang="scss">
-
 </style>

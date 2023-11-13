@@ -24,15 +24,10 @@
 	}
 	//let onHomePage = title_Lower.startsWith("related")
 	let onHomePage = window.location.href.split('/').splice(-1)[0] == 'blog';
-	export let description=`The ${numToShow ? numToShow + ' most recent ' : ''}${title_Lower} I've posted`;
+	export let description = `The ${numToShow ? numToShow + ' most recent ' : ''}${title_Lower} I've posted`;
 </script>
 
-<ContentSection
-	id={title_Lower.replaceAll(' ', '-')}
-	{title}
-	{description}
-	align={'top'}
->
+<ContentSection id={title_Lower.replaceAll(' ', '-')} {title} {description} align={'top'}>
 	<svelte:fragment slot="button">
 		{#if onHomePage}
 			<Button href={'/blog/' + location}>View More</Button>

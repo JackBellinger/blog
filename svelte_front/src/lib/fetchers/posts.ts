@@ -17,15 +17,14 @@ export async function importPosts(render = true) {
 			});
 		}
 	}
-	let retPosts = sortAndRelatePosts(posts)
+	let retPosts = sortAndRelatePosts(posts);
 	console.log('imported posts: ', retPosts);
 	return retPosts;
 }
 
 export const filterPosts = (posts: BlogPost[]) => {
-	return posts
-		.filter((post) => !post.hidden)
-}
+	return posts.filter((post) => !post.hidden);
+};
 export const sortAndRelatePosts = (posts: BlogPost[]) => {
 	return posts
 		.sort((a, b) =>

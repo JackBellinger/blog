@@ -16,15 +16,14 @@ export async function importProjects(render = true) {
 			});
 		}
 	}
-	let retProjs = sortAndRelateProjects(projects)
+	let retProjs = sortAndRelateProjects(projects);
 	console.log('imported projects: ', retProjs);
 	return retProjs;
 }
 
 export const filterHiddenProjects = (projects: BlogPost[]) => {
-	return projects
-		.filter((project) => !project.hidden)
-}
+	return projects.filter((project) => !project.hidden);
+};
 export const sortAndRelateProjects = (projects: BlogPost[]) => {
 	return projects
 		.sort((a, b) =>

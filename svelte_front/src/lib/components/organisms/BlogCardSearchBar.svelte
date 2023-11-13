@@ -13,7 +13,7 @@
 	const tagMap = new Map<number, string>();
 	store.items.subscribe((posts) => {
 		tags.clear();
-		posts.filter(post => !post.hidden).forEach((post) => post.tags.forEach((tag) => tags.add(tag.toLowerCase())));
+		posts.filter((post) => !post.hidden).forEach((post) => post.tags.forEach((tag) => tags.add(tag.toLowerCase())));
 		let index = 0;
 		tags.forEach((tag) => {
 			//console.log('setting', index, ' = ', tag);
