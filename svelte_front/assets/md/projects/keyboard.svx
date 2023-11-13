@@ -7,13 +7,13 @@ updated: 2023-11-10T04:53:49.000Z
 excerpt: How I configure my keyboard with QMK to add macros and RGB stuff.
 hidden: true
 tags:
-  - Hardware
-  - Config
-  - QMK
+- Workspace
+- QMK
+- C
 ---
 
 <script>
-  import Image from "@lib/components/atoms/Image.svelte";
+import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
 </script>
 
 ### Why not use an off-the-shelf keyboard?
@@ -27,40 +27,31 @@ I also wanted something beginner friendly that works with QMK/VIA so that I coul
 I joined the wuque studios ikki68 aurora group buy, and recieved it a year later. My gmk keycaps took even longer to arrive 😅.
 I got the switches pretty easily, and I pulled the keycaps off my old board to use until my new set arrived.
 
-### Malware / keylogger
-I'm not sure where it's from, but there seems to be something on my computer. I don't know if I can reccommend Wuque?
-
 ### Switches
-I went with Boba linear switches, and I really enjoy the sounds they make. hello I am Jack and My name is Jack and I am a software engineer and I like to write blogs and code and make cool stuff for you to use. I hope you like reading this blog and using my software. I can type pretty fast but it's hard to think of things to say so fastly. I can type type type type faster than I can think sometimes, but if I'm copying or writing something I already know what to type then I guess I'm limited by my typing skills. I can type words fast but when I'm writing code it's a bit harder to find the `{}` and \(\) keys and numbers and + - ~ and that sort of stuff. I guess it's kind of precise so it's good not to rush and make mistakes because it would be hard to catch a spelling error. The difference between stuff can be tricky to spot.
-
-
+I went with Boba linear switches, and I really enjoy the sounds they make. hello I am Jack and My name is Jack and I am a software engineer and I like to write blogs and code and make cool stuff for you to use. I hope you like reading this blog and using my software. I can type pretty fast but it's hard to think of things to say so fastly. I can type type type type faster than I can think sometimes, but if I'm copying or writing something I already know what to type then I guess I'm limited by my typing skills. I can type words fast but when I'm writing code it's a bit harder to find the `\{\}` and \(\) keys and numbers and + - ~ and that sort of stuff. I guess it's kind of precise so it's good not to rush and make mistakes because it would be hard to catch a spelling error. The difference between stuff can be tricky to spot.
 
 ### Advanced Macros
 I want to be able to define macros seperately from hwo they are invoked.
 Initially, I was putting the effect of the macros, ie `SEND_STRING(macro keys)`, in the `process_record_user` as in the [examples](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_macros.md#using-macros-in-c-keymaps).
 
-```
-
-```
-
 
 However, once I started looking into the leader key, combos, and other features, I thought it would be usefule to define the macro functions in their own map.
 First, I made a map from the keycodes enum to function pointers
-```
+```c:keymap.c
 typedef enum {
-    MAC_SEARCH = SAFE_RANGE,
+    LLOCK = SAFE_RANGE,
+    MAC_SEARCH,
     MAC_TERMINAL,
     MAC_VSCODE,
     MAC_BLOG_URL,
-    LLOCK
 } custom_keycodes;
 
-typedef void (*operate)();
-struct action{
-  operate map[3];
+void enum_to_array(macro_keycodes *arr, int size) {
+    for (int i = 1; i < size; i++) {
+        arr[i] = i + LLOCK;
+    }
 };
-
-static struct action macros = {{&search,&terminal,&blog_url}};
+const macro_kc_values = enum_to_array(macro_keycodes, 5);
 int KC_isMacro(uint16_t x)
 {
     for(int i=0; i<(sizeof(macro_kc_values)/sizeof(*macro_kc_values)); i++)
@@ -69,6 +60,14 @@ int KC_isMacro(uint16_t x)
     }
     return 0;
 }
+
+typedef void (*operate)();
+struct action{
+  operate map[3];
+};
+
+static struct action macros = {{&search,&terminal,&blog_url}};
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
     if (KC_isMacro(keycode)) {
@@ -77,7 +76,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 ```
+This solition seems like it needs edits in a lot of places to add new macros, doesn't it?
+Having debugged mistakes caused by forgetting to change a part of something like this, I know that it can reduce errors and cognitive load to code in such a way that extending functionality requires as few changes as possible. With this in mind, I came up with a solution using x-macros:
 
+```c:keymap.c
+/* Define the macros (enum variant name, enum value, function to call) */
+#define MACRO_TABLE \
+    MACRO(MAC_SEARCH,   SAFE_RANGE + 0, search)\
+    MACRO(MAC_TERMINAL, SAFE_RANGE + 1, terminal)\
+    MACRO(MAC_BLOG_URL, SAFE_RANGE + 2, blog_url)
+/* Define any additional keycodes that don't have a void func with no params
+	LLOCK has to be last in this table to init the array mapping keys to funcs*/
+#define KEYCODES_TABLE \
+	KEYCODE(LLOCK,		SAFE_RANGE + 3)
+
+typedef enum {
+	#define MACRO(a, b, c) a = b,
+    MACRO_TABLE
+	#undef MACRO
+	#define KEYCODE(a, b) a = b,
+    KEYCODES_TABLE
+	#undef KEYCODE
+} custom_keycodes;
+
+/* Generate function to check if keycode is a macro */
+int KC_isMacro(int keycode) {
+    switch(keycode) {
+        #define MACRO(a, b, c) case a:
+        MACRO_TABLE
+        #undef MACRO
+            return 1;
+    };
+    return 0;
+}
+typedef void (*operate)();
+struct action {
+  operate map[LLOCK - SAFE_RANGE];
+};
+
+/* Generate Macro keycode to function map*/
+static struct action macros = {
+#define MACRO(a,b,c) &c,
+    MACRO_TABLE
+#undef MACRO
+};
+
+bool process_record_user(int keycode) {
+    if (keycode == LLOCK) { printf("layer lock"); }
+    if (KC_isMacro(keycode)) {
+        macros.map[keycode-SAFE_RANGE]();
+        return 1;
+    }
+    return 1;
+};
+```
 
 #### Links, inspiration, etc
 github.com/jackbellinger/dotfiles/keymap.c
