@@ -11,7 +11,9 @@
 	{#if lang}
 		<div class="lang">{lang}</div>
 	{/if}
-	<slot />
+<pre>
+<slot />
+</pre>
 </div>
 
 <style lang="scss">
@@ -34,9 +36,6 @@
 
 		:global(.indent) {
 			margin-left: 4ch;
-		}
-		:global(pre) {
-			overflow-x: auto;
 		}
 
 		.lang {
