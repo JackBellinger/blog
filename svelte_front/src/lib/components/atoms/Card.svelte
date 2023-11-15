@@ -20,7 +20,8 @@
 <svelte:element
 	this={'div'}
 	class="card {additionalClass}"
-	style="--image-url: url({imageUrl}); --card-text-color: rgb(255 255 255 / 0.85);"
+	style="--image-url: url({imageUrl});
+		--card-text-color: rgb(255 255 255 / 0.85);"
 >
 	<svelte:element this={tag} {...linkProps}>
 		<div class="image">
@@ -54,12 +55,14 @@
 		// background-position: center;
 		// padding: 10rem 0 0;
 		// max-width: 35ch;
-		border-radius: 0.5rem;
+		margin: auto;
+		border-radius: 16px;
 		overflow: hidden;
-
+		position: relative;
 		transition: transform 1000ms ease;
 
 		a {
+			overflow: hidden;
 			color: var(--card-text-color);
 			&:hover {
 				text-decoration: none;
@@ -90,13 +93,15 @@
 
 	.card-content {
 		width: 100%;
-		height: fit-content;
+		// height: fit-content;
 		position: absolute;
-		z-index: 1;
+		// box-sizing: border-box;
+		// // top: 100%;
+		// z-index: 1;
 		// border: 2px solid blue;
-		--padding: 1.5rem;
-		padding-top: var(--padding);
-		// overflow: hidden;
+		// --padding: 1.5rem;
+		// padding-top: var(--padding);
+		// // overflow: hidden;
 		background: linear-gradient(
 			hsl(0 0% 0% / 0),
 			hsl(20 0% 0% / 0.3) 10%,
@@ -140,22 +145,22 @@
 
 	@media (hover) {
 		.card-content {
-			visibility: hidden;
+			// visibility: hidden;
 			transition-delay: 0.8s;
-			transform: translateY(100%);
+			transform: translateY(-4ch);
 			transition: visibility 1000ms, transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
 		}
 	}
 
 	.card:hover .card-content,
 	.card:focus-within .card-content {
-		visibility: visible;
+		// visibility: visible;
 		transform: translateY(-100%);
 	}
 
-	.card:focus-within .card-content {
-		transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
+	// .card:focus-within .card-content {
+	// 	transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+	// }
 
 	.card-content > *:not(.card-title) {
 		opacity: 0;
@@ -165,7 +170,7 @@
 	.card:hover .card-content > *:not(.card-title),
 	.card:focus-within .card-content > *:not(.card-title) {
 		opacity: 1;
-		transition-delay: 1200ms ease;
+		transition-delay: 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 
 	.card:hover .card-title::after,

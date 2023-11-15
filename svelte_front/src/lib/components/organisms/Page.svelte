@@ -78,11 +78,11 @@
 			order: -1;
 		}
 		.page-layout > .main-content {
-			width: 70%;
+			width: 60%;
 		}
 		.page-layout > .left-sidebar,
 		.page-layout > .right-sidebar {
-			width: 15%;
+			width: 20%;
 		}
 	}
 </style>
