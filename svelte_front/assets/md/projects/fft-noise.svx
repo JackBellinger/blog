@@ -17,7 +17,8 @@ tags:
 
 ### What is the FFT?
 FFT is an algorithm for transforming signals in the time domain into the frequency domain.
-It can be used in so many different applications,
+In college I did a project to filter sound files with the FFT.
+It can be used for many things.
 
 #### Links, inspiration, etc
 github.com/jackbellinger/fast-and-furious-transformers

@@ -5,6 +5,7 @@ coverImage: /blog/assets/images/projects/lofi.avif
 date: 2023-09-26T02:32:00.000Z
 updated: 2023-11-11T17:49:12.000Z
 excerpt: Converting a Python lofi music generator to Rust and adapting the webpack frontend to svelte.
+hidden: true
 tags:
   - Machine Learning
   - Webassembly

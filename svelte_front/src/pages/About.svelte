@@ -7,10 +7,18 @@
 
 <script lang="ts">
 	import CodeBlock from '@lib/components/molecules/CodeBlock.svelte';
-
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import Page from '@lib/components/organisms/Page.svelte';
 	import GithubStats from '@lib/components/organisms/GithubStats.svelte';
+	import Aboutme from "@assets/md/aboutme.svx"
+	let aboutme = import.meta.glob('@assets/md/aboutme.svx', { eager: true });
+	let aboutcodeblock = {
+				md: aboutme.metadata,
+				//html: render ? post.default.render()?.html : undefined,
+				module: aboutme
+			}
+			console.log(aboutcodeblock);
+
 </script>
 
 <Page>
@@ -22,18 +30,7 @@
 		</Hero>
 
 		<div id="swe-type">
-			<CodeBlock filename={'A bit about me.json'} lang={''}>
-				let Jack: Software Engineer = &#123;<br />
-				<div class="indent">
-					years of experience: 3,<br />
-					platforms: [web, microservice clusters, federated],<br />
-					applications: [ML operations, data engineering, network security],<br />
-					domain knowledge: [live_streaming, port & behavior based host id],<br />
-					technical scope: [design & review, code, devops],<br />
-					leadership skills: [requirements spec, scoping, mentoring, process optimization]
-				</div>
-				&#125;
-			</CodeBlock>
+			<Aboutme/>
 			<div id="skills">
 				<div id="langs">
 					<div id="blurb">
@@ -104,7 +101,11 @@
 <style lang="scss">
 	@import '../lib/scss/_mixins.scss';
 	@import '../lib/scss/breakpoints.scss';
-
+	:global(.remark-code-container) {
+				:global(code){
+					white-space : pre-wrap !important;
+				}
+		}
 	main {
 		position: relative;
 		//display: grid;
@@ -122,13 +123,7 @@
 		#swe-type {
 			display: flex;
 			flex-direction: row;
-			Codeblock {
-				flex: 3 1 30%;
-				font-size: 0.8rem;
-				@include for-phone-only {
-					font-size: 2rem;
-				}
-			}
+
 			#skills {
 				padding-left: 0.5rem;
 				flex: 1 1.5 70%;
