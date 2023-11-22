@@ -1,54 +1,20 @@
-<!--<script lang="ts">
-	import { getSession } from '@lib/fetchers/auth';
-	import { onMount } from 'svelte';
-	import Header from '@lib/components/organisms/Header.svelte';
-	import { pages } from '@lib/utils/store';
-	import '@lib/scss/global.scss';
-
-	let pagePriority: number = 0;
-
-	const scrollIntoView = (node) => {
-		node.scrollIntoView();
-	};
-
-	$: logoText = 'Menu';
-	// check if logged in
-	//onMount(getSession);
-</script>
-
-{#await pages.init}
-	<p>...parsing markdown</p>
-{:then parsedPages}
-	<Header {logoText} bind:pagePriority />
-	<div class="scroll-container">
-		<svelte:component this={parsedPages[pagePriority].component.default} />
-	</div>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
--->
-
 <script lang="ts">
 	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta.js';
 	import Navaid from 'navaid';
 	import { onDestroy } from 'svelte';
 	import { getSession } from '@lib/fetchers/auth';
 	import { onMount } from 'svelte';
-	import Header from '@lib/components/organisms/Header.svelte';
-	import { pageStores } from '@lib/utils/store';
 	import '@lib/scss/global.scss';
-	import type { Page } from '@lib/utils/types';
-	import Waves from '@lib/components/organisms/Waves.svelte';
-
+	import type { Page, SyncReadable } from '@lib/utils/types';
 	import { theme } from '@lib/utils/store';
-	import Toast from '@lib/components/molecules/Toast.svelte';
-	import Footer from '@lib/components/organisms/Footer.svelte';
+
+	export let pageStore:  SyncReadable = undefined;
 
 	let savestore = false;
 	$: if (savestore && $theme) {
 		window.sessionStorage.setItem('store', JSON.stringify($theme));
 	}
-	onMount(async () => {
+	onMount( () => {
 		let ses = window.sessionStorage.getItem('store');
 		if (ses) {
 			//console.log("loading session", ses)
@@ -57,22 +23,21 @@
 		savestore = true;
 	});
 
-	const pages = pageStores.init;
+	const pages = pageStore.init;
 	let showBackground = true;
-	let currentPage = pages[0].module.default;
-	let propParams = {},
+	let currentPage = pages[0].module?.default;
+	export let propParams = {},
 		active;
 	let uri = location.pathname;
 	let baseUrl = '/blog/';
 	$: active = uri.split('/')[1] || 'home';
-	$: logoText = 'Menu';
 
 	function setPage(page: Page, params = {}) {
 		//console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
 		showBackground = !page.hidden;
-		currentPage = page.module.default;
+		currentPage = page.module?.default;
 		propParams = params;
-		window.scrollTo(0, 0);
+		// window.scrollTo(0, 0);
 	}
 	function setHiddenPage(page: Page, params = {}) {}
 
@@ -85,7 +50,7 @@
 	//addEventListener('pushstate', track);
 	//addEventListener('popstate', track);
 
-	const router = Navaid(baseUrl).on('/', () => setPage(pages[0]));
+	export let router = Navaid(baseUrl).on('/', () => setPage(pages[0]));
 	//router.on("rss", (obj) => setPage(page))
 	for (let page of pages.slice(1)) {
 		//console.log("on ", page.name, " route to ", page)

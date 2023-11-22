@@ -22,22 +22,6 @@ export type SparkleType = {
 	style: any;
 };
 
-export type TagType = {
-	label: string;
-	color?: 'primary' | 'secondary';
-};
-
-export type SocialLink = {};
-
-//export type Project = {
-//  name: string,
-//  description: string,
-//  //assetPath: string,
-//  imagePath?: string,
-//  link: string,
-//  tags?: TagType[]
-//}
-
 export type BlogPost = {
 	tags: string[];
 	keywords: string[];
@@ -54,12 +38,20 @@ export type BlogPost = {
 	coverImage: string | undefined;
 };
 
+export type SyncReadable ={
+	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
+	init: any;
+	set: (value: any) => void;
+};
+
 export type AsyncReadable = {
 	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
 	load: () => Promise<any>;
 	reload: () => Promise<any>;
 };
+
 export type StoreFilter = Writable<{ searchTerm: string; selectedTags: Set<string> }>;
+
 export type FilteredStore = {
 	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
 	load: () => Promise<any>;

@@ -1,6 +1,6 @@
 import { derived, get, readable, writable } from 'svelte/store';
 import { importPosts } from '@lib/fetchers/posts';
-import type { BlogPost } from './types';
+import type { BlogPost, SyncReadable } from './types';
 import { type Page } from '@lib/utils/types';
 import { importPages } from '../fetchers/pages';
 import { importProjects } from '../fetchers/projects';
@@ -131,7 +131,7 @@ export const theme = createTheme();
 export const user = writable('');
 
 export const postStores = createFilterableAsyncStore(importPosts);
-export const pageStores = createPages();
+export const pageStore: SyncReadable = createPages();
 export const projectStores = createFilterableAsyncStore(importProjects);
 
 //return {
