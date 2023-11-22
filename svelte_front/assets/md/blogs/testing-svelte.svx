@@ -1,0 +1,148 @@
+---
+
+title: Testing Svelte with Vitest
+coverImage: /blog/assets/images/blogs/vitest.webp
+date: 2023-11-14T23:12:25.000Z
+updated: 2023-11-23T20:07:01.000Z
+excerpt: How I implemented the tests for this blog.
+hidden: false
+tags:
+  - Testing
+  - Svelte
+  - Vite
+---
+
+# Testing!
+If you've read my [testing thoughts article](/blog/articles/testing-thoughts), you'll know I am a fan of testing software. Haha no just kiding, it keeps my code working well but it's pretty boring.
+I need to test this blog though, mainly to learn javascript testing, but I don't want it to break. Especially when I update versions! I already had one update break things. It was in the server code, a library I used was deprecated and moved to a new repo. They added breaking changes too! That's the main thing I'd like to prevent. I guess I could do some really basic acceptance testing to check if the code builds, I could even try deploying on each PR.
+
+While I'm at it though I might as well add more in depth testing.
+
+## Vitest config
+First, I had to configure Vitest. I copied an example config, and modified it a bit to fit my needs.
+
+This example merges your Vite config into the Vitest config, as shown in the [Vitest Docs](https://vitest.dev/config/). Then I added `jsdom` so that I can test elements rendering. I made the include pattern fit my test naming convention (.test. instead of .spec. some other libs use). The exclude and watch exclude I left the same as the example, I set a high timeout, used verbose reporter to log each test name that suceeds or fails, and set it to use 1 thread when running in CI (github actions).
+
+```js:vitest.config.js
+export default mergeConfig(
+	viteConfig,
+	defineConfig({
+		test: {
+			environment: 'jsdom',
+			include: ['./tst/**/*.test.([tj]s|svelte)'],
+			exclude: ['**/node_modules/**', '**/dist/**', './packages/e2e-tests/**/*.*', './temp/**/*.*'],
+			watchExclude: ['**/node_modules/**', '**/dist/**', './packages/e2e-tests/**/*.*', './temp/**/*.*'],
+			testTimeout: 20000,
+			reporters: 'verbose',
+			maxThreads: process.env.CI ? 1 : undefined,
+			minThreads: process.env.CI ? 1 : undefined
+		}
+	})
+);
+```
+## App Test
+Routing is vital, and I implemented it to automatically generate the routes and nav menu slots based on the components in src/pages, so it shouldn't have to change any time soon. Thus, it seems like a good time to write a test that verifies those functions.
+
+I just mocked the page store with some example pages to test some edge cases, then started the app and routed to each page and checked the window's href. I also made sure that the page with routeparams got the right params
+If you'd like to read the whole test you can find it [here](https://github.com/JackBellinger/blog/tree/main/svelte_front/tst/App.test.ts).
+```js:App.test.js
+// === App ===
+app = new App({
+	target: global.document.documentElement,
+	props: {
+		pageStore: pageStoreMock
+	},
+});
+describe('Loading the App', () => {
+	afterEach(() => {
+		vi.clearAllMocks();
+		vi.resetAllMocks();
+	})
+	it('creates routes for all pages', () => {
+		vi.doMock(pageStore.init, getPages)
+
+		app.router.route("/blog/Home")
+		expect(window.location.href).toMatch('/blog/Home')
+    //test all the pages ...
+	})
+
+	it('passes route params', () => {
+		vi.doMock(pageStore.init, getPages)
+
+		app.router.route("/blog/Page1/paramValue")
+		expect(app.propParams).toContain({param:"paramValue"})
+	})
+})
+
+```
+
+I also made a test for project devlog and blog article parsing, which just creates the project / post stores as normal, reads the filesystem for the blog and project markdown file names, and checks if the store has all the files. There used to be a slug field in the markdown frontmatter, but it wasn't the same as the filename for some of the blogs, and if someone else uses this code they might trip up on that, so I made it auto parse the slug from the filename - extension.
+
+```js:projects.test.ts
+describe('Importing projects', () => {
+	it('should find all projects & slug = filename', async () => {
+		let path = "./assets/md/projects"
+		const project_slugs = (await importProjects()).map(project => project.slug).sort()
+		let file_names;
+		try {
+			file_names = await (await readdir(path)).map(filename => filename.split('.')[0]).sort()
+		} catch (err) {
+			console.error(err);
+		}
+		expect(project_slugs).toMatchObject(file_names)
+	})
+})
+```
+
+I also made tests for the stores. I kept this one as more of an integration test, so I didn't mock anything. I created a test for posts and projects that's basically the same as the import/parse test, except that it checks the filenames are all in the respective store.
+
+I also needed a test to verify the title and tag search filtering logic.
+Since searching by title shows all posts that include the search string, there will be more than one filteredItems if a post contains the title of another, so instead of checking if the filteredItems has one item (which I tried first) I check that each filteredItem contains the search term.
+
+```js:store.test.ts
+describe('Filtering the post store by each title', () => {
+
+	it('should find the post in filteredItems', async () => {
+		postStores.items.load().then(posts => posts.forEach(
+			async post => {
+				postStores.filter.set(
+					{searchTerm: post.title, selectedTags: new Set()}
+				)
+				await postStores.filteredItems.load().then(
+					filteredItems => {
+						filteredItems.forEach(filteredPost => {
+							expect(filteredPost.title.includes(post.title))
+						})
+						expect(filteredItems).toContain(post)
+				})
+			}
+		))
+	})
+})
+
+```
+Searching by tags shows all the posts which have at least one of the tags, so I basically just replicated the logic in the actual filtering code to check whether each of the filteredItems has at least one of the selected tags, and that the post is in there.
+```js:store.test.ts
+
+describe('Filtering the post store by each tagset', () => {
+
+	it('should produce only items with such tags', async () => {
+		postStores.items.load().then(posts => posts.forEach(
+			async post => {
+				postStores.filter.set(
+					{searchTerm: "", selectedTags: new Set(post.tags)}
+				);
+				await postStores.filteredItems.load().then(
+					filteredItems => {
+						filteredItems.forEach(filteredPost => {
+							expect(post.tags.some(
+								tag => filteredPost.tags.includes(tag)
+							)).toBeTruthy()
+						})
+						expect(filteredItems).toContain(post)
+				})
+			}
+		))
+	})
+})
+```
