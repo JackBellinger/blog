@@ -6,13 +6,13 @@
 	console.log(imageUrl);
 	export let href: string | undefined = undefined;
 	const isExternalLink = !!href && HttpRegex.test(href);
-	export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';
+	//export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';
 	export let rel = isExternalLink ? 'noopener noreferrer' : undefined;
 
 	$: tag = href ? 'a' : 'article';
 	$: linkProps = {
 		href,
-		target,
+		//target,
 		rel
 	};
 </script>
@@ -60,7 +60,9 @@
 		overflow: hidden;
 		position: relative;
 		transition: transform 1000ms ease;
-
+		.card-content {
+			padding: .3rem .3rem .1rem .3rem;
+		}
 		a {
 			overflow: hidden;
 			color: var(--card-text-color);
@@ -104,7 +106,8 @@
 		// // overflow: hidden;
 		background: linear-gradient(
 			hsl(0 0% 0% / 0),
-			hsl(20 0% 0% / 0.3) 10%,
+			hsl(10 0% 0% / 0.5) 4%,
+			hsl(50 0% 0% / 0.7) 20%,
 			hsl(0 0% 0% / 1) // hsl(var(--color--secondary-shade-hsla)),
 			// hsl(var(--color--secondary-shade-hsla)) 10%,
 			// hsl(var(--color--secondary-shade-hsla))
