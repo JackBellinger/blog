@@ -6,7 +6,9 @@ import sveltePreprocess from 'svelte-preprocess';
 export default {
 	// svelte options
 	extensions: ['.svelte', ...mdsvexConfig.extensions],
-	compilerOptions: {},
+	compilerOptions: {
+		accessors: process.env.TEST,
+	},
 	onwarn: (warning, handler) => handler(warning),
 	// plugin options
 	vitePlugin: {
