@@ -1,6 +1,6 @@
 import { afterEach, assert, describe, expect, it, vi } from 'vitest'
 import { pageStore } from '../src/lib/utils/store';
-import App from '../src/App.svelte'
+import App from '../src/App.svelte';
 import { writable } from 'svelte/store';
 // vi.stubEnv('TEST', 'true')
 let app;
@@ -85,13 +85,13 @@ app = new App({
 
 /* === Tests ===
 	loading the app
-		creates routes for all pages
-		creates route params for all pages
+		x creates routes for all pages
+		x creates route params for all pages
 		gets theme from savestore
 	navigating to a page
-		changes to the right url
+		x changes to the right url
+		x passes route params
 		sets the correct page module
-		passes route params
 	*not implemented Check router makes subroutes
 */
 
@@ -121,8 +121,3 @@ describe('Loading the App', () => {
 
 	})
 })
-// describe('Navigating to a page', () => {
-// 	afterEach(() => {
-// 		vi.restoreAllMocks()
-// 	})
-// })

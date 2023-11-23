@@ -20,7 +20,7 @@ export async function importProjects(render = true) {
 		}
 	}
 	let retProjs = sortAndRelateProjects(projects);
-	console.log('imported projects: ', retProjs);
+	// console.log('imported projects: ', retProjs);
 	return retProjs;
 }
 

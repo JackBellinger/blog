@@ -1,4 +1,5 @@
 ---
+slug: qmk-tapdances
 title: Adding tap dance in my QMK keyboard
 coverImage: /blog/assets/images/projects/ikki-aurora.webp
 date: 2023-11-19T21:09:21.000Z

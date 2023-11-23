@@ -7,8 +7,9 @@ updated: 2023-11-11T17:49:12.000Z
 excerpt: Converting a Python lofi music generator to Rust and adapting the webpack frontend to svelte.
 hidden: true
 tags:
-  - Machine Learning
+  - Sound
   - Webassembly
+  - Machine Learning
 ---
 
 <script>
@@ -16,11 +17,28 @@ tags:
   import Callout from "@lib/components/atoms/Callout.svelte"
 </script>
 
-### General idea
-What is the thing I'm trying to make?
+## General idea
+I always listen to lofi music while I'm coding, cooking, driving, etc. The continuous sound helps keep other sounds from distracting me, and it helps keep me in the zone. I don't listen to music with lyrics while I'm working with text. Although there is a tooon of lofi music on youtube, and a lot of it is good, I wanted to try generating some myself!
+Also, I want to be able to listen to music offline indefinitely without having to fill up my hard drive with songs.
+
+## How?
+### Machine learning
+I'm considering 2 options for generating the music, both of which I'm planning on trying. The first thing I thought of was machine learning of course. I have some experience with computer vision and tabular data models, but I've never worked with sound. I even found a project that implemented this idea in python so I know it's feasible.
+### Algorithmic generation
+TidalCycles is a live coding environment which is designed for musical improvisation and composition. It lets
+
+### Webassembly
+WebGPU recently added support for compute shaders, which enables generalized gpu-speed matrix operations in the browser. Past gpu acceleration libraries only supported vertex and fragment shaders, which are only useful for graphics afaik.
+
+### Data
 
 #### Links, inspiration, etc
 https://github.com/jacbz/Lofi
+https://mynoise.net/NoiseMachines/blueJazzGenerator.php
+https://lofigenerator.com/
+
+https://github.com/tqchen/tvm-webgpu-example
+https://github.com/mlc-ai/web-stable-diffusion
 
 ### Learnings
 

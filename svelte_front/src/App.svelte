@@ -26,11 +26,9 @@
 	const pages = pageStore.init;
 	let showBackground = true;
 	let currentPage = pages[0].module?.default;
-	export let propParams = {},
-		active;
-	let uri = location.pathname;
+	export let propParams = {}
+
 	let baseUrl = '/blog/';
-	$: active = uri.split('/')[1] || 'home';
 
 	function setPage(page: Page, params = {}) {
 		//console.log("setting currentPage from ", currentPage.name, " to ", page, " with params: ", params)
@@ -39,8 +37,9 @@
 		propParams = params;
 		// window.scrollTo(0, 0);
 	}
-	function setHiddenPage(page: Page, params = {}) {}
+	// function setHiddenPage(page: Page, params = {}) {}
 
+	// let uri = location.pathname;
 	//function track(obj) {
 	//	uri = obj.state || obj.uri || location.pathname;
 	//	if (window.goog) ga.send('pageview', { dp:uri });

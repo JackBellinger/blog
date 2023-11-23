@@ -20,7 +20,7 @@ export async function importPosts(render = true) {
 		}
 	}
 	let retPosts = sortAndRelatePosts(posts);
-	console.log('imported posts: ', retPosts);
+	// console.log('imported posts: ', retPosts);
 	return retPosts;
 }
 

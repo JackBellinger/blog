@@ -1,6 +1,7 @@
 ---
+slug: blog-stack
 title: Blog Stack
-coverImage: /blog/assets/images/blogs/blog-stack.webp
+coverImage: https://picsum.photos/200
 date: 2023-09-26T02:32:00.000Z
 updated: 2023-11-22T21:45:39.000Z
 excerpt: The tech stack I chose for this blog
