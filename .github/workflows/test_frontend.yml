@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: CODE LINT (Prettier & ESLint)
-        run: npm lint
+        run: npm run lint
 
       - name: UNIT TEST (Vitest)
-        run: npm test
+        run: npm run test

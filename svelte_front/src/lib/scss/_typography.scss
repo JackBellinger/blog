@@ -6,7 +6,9 @@ a {
 	transition: all 0.2s ease-in-out;
 
 	&:hover {
+		color: var(--color--primary-shade);
 		text-underline-offset: 0.3em;
+		filter: drop-shadow(0px 0px 3px var(--color--primary));
 	}
 }
 

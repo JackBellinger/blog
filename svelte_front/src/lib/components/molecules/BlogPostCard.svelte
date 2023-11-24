@@ -25,10 +25,10 @@
 			<Image src={coverImage} alt="Cover image of this blog post" />
 		{/if}
 	</div>
-	<div slot="card-title">
+	<div slot="title">
 		{title}
 	</div>
-	<div slot="card-body">
+	<div slot="body">
 		{#if readingTime}
 			<div class="note">{readingTime}</div>
 		{/if}
