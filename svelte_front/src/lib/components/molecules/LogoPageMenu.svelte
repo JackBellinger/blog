@@ -4,32 +4,6 @@
 
 	export let menuItems: Page[];
 	export let logoText = 'Site Logo';
-
-	export let pagePriority: number = 0;
-	// Page selection
-	//let menuOpen = false;
-	//$: pageMenuPercent = 0;
-	const handlePageSelection = (page: Page) => {
-		//console.log(menuItems);
-		console.log('swapping page to ', page.id);
-		pagePriority = page.id;
-		//console.log("pagenum: ", pagePriority);
-		//pageMenuPercent = (pagePriority == 0)? 100: 0;
-		logoText = pagePriority != 0 ? 'Home/' + page.name : page.name;
-		//console.log("menu percent", pageMenuPercent);
-		//menuOpen = false;
-	};
-
-	//page search filtering`
-	//let inputValue = "";
-	//$: console.log(inputValue);
-	//let filteredItems = [];
-	//const handleInput = () => {
-	//	console.log("menu items: ", menuItems);
-	//	return (filteredItems = menuItems.filter((item) =>
-	//		!item ? false : item.name.toLowerCase().match(inputValue.toLowerCase())
-	//	));
-	//};
 </script>
 
 <div class="nav_menu">
@@ -56,7 +30,9 @@
 		display: flex;
 		flex: 0 2 1;
 		flex-wrap: wrap;
-		text-decoration: none;
+		:global(a) {
+			text-decoration: none;
+		}
 		max-height: 100%;
 		-webkit-transition: all 0.3s ease-in-out;
 		-moz-transition: all 0.3s ease-in-out;
@@ -67,8 +43,6 @@
 
 	.dropdown {
 		height: 100%;
-		//flex: 0 1 auto;
-		//padding-right: .5em;
 		//outline: #000000 solid 0.1em;
 		&:hover {
 			color: var(--color--primary);
@@ -78,15 +52,15 @@
 	.dropdown-content {
 		display: flex;
 		gap: 0.5rem;
-		flex: 0 1 0;
 		flex: wrap;
 		margin: 0px 0.3em;
-		//transform: scaleX(0);
-		width: 0;
-		//min-width: 0%;
-		//max-width: max-content;
-		//flex-grow: 0;
-		//transform-origin: left;
+		//to enable dropdown shrinking
+		// width: 0;
+		//flex: 0 1 0;
+		//else,
+		width: 100%;
+		flex: 1 1 0;
+
 		overflow: hidden;
 		-webkit-transition: all 0.3s ease-in-out;
 		-moz-transition: all 0.3s ease-in-out;
@@ -99,12 +73,12 @@
 			padding: 0.1em;
 			list-style: none;
 			display: inline-flex;
-			a {
-				&:hover {
-					color: var(--color--primary);
-					filter: drop-shadow(0px 0px 3px var(--color--primary));
-				}
-			}
+			// a {
+			// 	&:hover {
+			// 		color: var(--color--primary);
+			// 		filter: drop-shadow(0px 0px 3px var(--color--primary));
+			// 	}
+			// }
 		}
 		//outline: #2ba0ce solid 0.1em;
 		//background-color: rgba(98, 98, 98, 1);
@@ -116,12 +90,6 @@
 		-moz-transition: all 0.3s ease-in-out;
 		-o-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
-		//transform: scaleX(1);
-		//overflow: hidden;
-		//li {
-		//  margin: 1;
-		//  padding: 1em;
-		//}
 		flex-grow: 1;
 		//background: red;
 		//outline: #efff0f solid 0.1em;
