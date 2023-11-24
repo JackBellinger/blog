@@ -1,9 +1,8 @@
 ---
-slug: blog-devlog
 title: Blog Development Log
 coverImage: /blog/assets/images/projects/app-architectures.webp
 date: 2023-09-26T02:32:00.000Z
-updated: 2023-11-09T04:53:49.000Z
+updated: 2023-11-22T21:45:39.000Z
 excerpt: How I created this blog
 tags:
   - Blog
@@ -15,32 +14,50 @@ tags:
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
-## TL;DR
-I made this personal blog / portfolio to post articles about anything and devlogs about stuff I'm working on.
+# Release 2.0
 
-It's built using Svelte, Vite, and Axum.
-The backend is in the server directory and the blog frontend is in the svelte_front directory.
-There's a placeholder yew todo app is in the yew_front directory that I added to test out serving multiple frontends from the same webserver.
-The frontend is currently hosted on Github pages for simplicity until I implement backend features.
+## Infrastructure design
+
+### Serverless
+I'd like to test if an application can be designed firstly, so that it can run on serverless without being stuck on it, and secondly so that it's efficient.
+
+Put your frontend files (HTML, CSS, JS) in S3
+Load your dynamic content through API
+Implement the dynamic functionality in Lambda functions
+Use API gateway to call the Lambdas
+The DB can be Aurora Serverless or DynamoDB On-Demand
+
+### Cluster
+Classic horizontally scaled backend.
+
+### Self Hosted
+Vertically scale
+do some performance testing to see how much traffic I could squeeze out of a basic server.
 
 
-## What is this?
-For a long time, I've just used Github as my portfolio. In school, I created repos for all of my classes and projects, so that I could easily work on them on my machine and in the labs. Also, it was great for group projects, and prepared me well for learning git in more depth at work. That was good enough for a while, but now that I'm applying to mid level software jobs, I need a place to show my work running.
 
-## How did I make it?
-As always, I started with a bit of research first. I knew I wanted to use a Rust backend, so I looked into Actix, Axum, Rocket, and some others. Initially, I thought of building the frontend in Rust as well, since WebAssmenbly support has been improving and I've heard some good things about the Rust frameworks. I tried Yew and Leptos, and I actually have a Yew todo example in this repo that I'm going to try out on some more compute intensive projects (Like the [Lofi music project](/blog/projects/lofi-gen) I'm currently researching). To make the frontend a bit simpler, and to brush up on my JS skills, I decided to try out a JS framework, and settled on Svelte.
+## Todos
+### Backend
+- [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum?
+- [ ] host backend somewhere
+- [ ] get a domain name & certificate
+- [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc
+- [ ] flowlogging
+- [x] minimize dependencies
+- [ ] bot / dos prevention, cloudflare?
+### Devops
+- [ ] performance testing
+- [ ] logging + dashboard
+- [ ] fuzzing
 
-### Why Axum?
-Initially, I read some good things about Actix. It was / still is? the fastest webserver or something, but it had some drama with the original maintainer. The main reason I decided on Axum was that it's maintained by the Tokio community. I've used Tokio's async executor on other projects and it was pretty ergonomic, so I'm hoping Axum will be as well. Apparently it's meant to be a pretty light layer that leaves most of the heavy lifting to various Tower services. The simple stuff I've implemented so far has been pretty easy, although I encountered a few verbose Tower types. I like that modularity. That's a big reason I chose to use Svelte, as it's easy to use it bundled with Vite without the SvelteKit backend.
+## Challenges & learnings
+having `target: '_self'` in the blog card and nav menu anchors caused the whole page to rerender
 
-### Why Svelte?
-I have worked with various JS frameworks before, but I tried Svelte and I like it a lot. It doesn't have much framework specific stuff to learn, and it feels kind of writing vanilla javascript with some nice convenience abstractions. I really like how it compiles to regular DOM interacting JS. Also, what really sold me on it was that all of the few rough edges I found while implementing eg reactivity and stores were addressed in the Svelte v5 announcement. I'm excited to see how that turns out!
+
+# Release 1.0 Frontend Rough Draft
 
 ### Blog template
 To get started I wanted to find an example with good enough styling that I wouldn't mind being live while I refine it. I searched around for a bit and found a good looking, simply organized template and found [Mat Fantaniel's](https://github.com/matfantinel/sveltekit-static-blog-template). I had to re-organize the whole project to remove the SvelteKit stuff, but doing that gave me a good understanding of Vite.
-
-### Why not SvelteKit?
-I chose not to use SvelteKit so that I could implement the backend myself in Rust. There's a lot of cool development on SvelteKit, but I enjoy systems programming so I don't want it abstracted away.
 
 #### Links, inspiration, etc
 blog template: https://github.com/matfantinel/sveltekit-static-blog-template
@@ -90,7 +107,7 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 
 ### Content
 - [x] add textual descriptions, comments, etc to the articles
-- [ ] add a resume component with skills, experience, references, etc
+- [x] add a resume component with skills, experience, etc
 - [ ] write a blog about working at Amazon
 - [ ] write a blog about working at Redjack
 - [x] use github tickets
@@ -100,21 +117,11 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 - [x] make `<Image>` srcset to scale images better, particularly on mobile
 - [ ] refine head metadata
 
-### Backend
-- [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum?
-- [ ] host backend somewhere
-- [ ] get a domain name & certificate
-- [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc
-- [ ] flowlogging
-- [ ] minimize dependencies
-- [ ] bot / dos prevention, cloudflare?
-
 ### Devops
-- [ ] Integ / unit testing
-- [ ] performance testing
-- [ ] logging + dashboard
-- [ ] fuzzing, static / active code scanner
-- [ ] deployment pipeline: github actions
+- [x] Integ / unit testing
+- [x] code scanner
+- [x] deployment pipeline: github actions
+
 
 ### Bugs
 - [x] related posts have wrong link

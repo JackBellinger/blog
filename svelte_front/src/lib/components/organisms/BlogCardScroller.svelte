@@ -105,5 +105,8 @@
 	}
 	#blog-posts {
 		padding-top: 0.5em;
+		:global(.card) {
+			max-width: 80%;
+		}
 	}
 </style>

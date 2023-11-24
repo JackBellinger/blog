@@ -12,12 +12,12 @@
 
 	export let showImage = true;
 	export let href_prefix: string;
+	//	target="_self"
 </script>
 
 <Card
 	href={href_prefix + '/' + slug}
-	target="_self"
-	additionalClass="blog-post-card {showImage && coverImage ? '' : 'no-image'} {coverImage}"
+	additionalClass="blog-post {showImage && coverImage ? '' : 'no-image'} {coverImage}"
 	imageUrl={coverImage}
 >
 	<div class={coverImage} slot="image">
@@ -50,4 +50,9 @@
 </Card>
 
 <style lang="scss">
+	.tags {
+		display: inline-flex;
+		flex-direction: row;
+		overflow: hidden;
+	}
 </style>

@@ -6,18 +6,21 @@ export async function importProjects(render = true) {
 
 	const projects: BlogPost[] = [];
 	for (const path in projectImports) {
+		let filename = path.split('/').at(-1).split('.')[0];
+		// console.log("aaa", filename)
 		const project = projectImports[path] as any;
 		if (project) {
 			projects.push({
 				...project.metadata,
-				//tags: project.metadata.tags,
+				slug: filename,
+				tags: project.metadata.tags.map((tag) => tag.toLowerCase()),
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
 				module: project
 			});
 		}
 	}
 	let retProjs = sortAndRelateProjects(projects);
-	console.log('imported projects: ', retProjs);
+	// console.log('imported projects: ', retProjs);
 	return retProjs;
 }
 

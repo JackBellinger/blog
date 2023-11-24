@@ -1,5 +1,4 @@
 ---
-slug: amazon-experience
 title: My experience at Amazon
 coverImage: /blog/assets/images/blogs/pv-sports.avif
 date: 2023-09-26T02:32:00.000Z

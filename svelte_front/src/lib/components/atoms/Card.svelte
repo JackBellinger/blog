@@ -3,16 +3,15 @@
 
 	export let additionalClass: string | undefined = undefined;
 	export let imageUrl: string = '';
-	console.log(imageUrl);
 	export let href: string | undefined = undefined;
 	const isExternalLink = !!href && HttpRegex.test(href);
-	export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';
+	//export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';
 	export let rel = isExternalLink ? 'noopener noreferrer' : undefined;
 
 	$: tag = href ? 'a' : 'article';
 	$: linkProps = {
 		href,
-		target,
+		//target,
 		rel
 	};
 </script>
@@ -20,7 +19,8 @@
 <svelte:element
 	this={'div'}
 	class="card {additionalClass}"
-	style="--image-url: url({imageUrl}); --card-text-color: rgb(255 255 255 / 0.85);"
+	style="--image-url: url({imageUrl});
+		--card-text-color: rgb(255 255 255 / 0.85);"
 >
 	<svelte:element this={tag} {...linkProps}>
 		<div class="image">
@@ -54,12 +54,16 @@
 		// background-position: center;
 		// padding: 10rem 0 0;
 		// max-width: 35ch;
-		border-radius: 0.5rem;
+		margin: auto;
+		border-radius: 16px;
 		overflow: hidden;
-
+		position: relative;
 		transition: transform 1000ms ease;
-
+		.card-content {
+			padding: 0.3rem 0.3rem 0.1rem 0.3rem;
+		}
 		a {
+			overflow: hidden;
 			color: var(--card-text-color);
 			&:hover {
 				text-decoration: none;
@@ -90,16 +94,19 @@
 
 	.card-content {
 		width: 100%;
-		height: fit-content;
+		// height: fit-content;
 		position: absolute;
-		z-index: 1;
+		// box-sizing: border-box;
+		// // top: 100%;
+		// z-index: 1;
 		// border: 2px solid blue;
-		--padding: 1.5rem;
-		padding-top: var(--padding);
-		// overflow: hidden;
+		// --padding: 1.5rem;
+		// padding-top: var(--padding);
+		// // overflow: hidden;
 		background: linear-gradient(
 			hsl(0 0% 0% / 0),
-			hsl(20 0% 0% / 0.3) 10%,
+			hsl(10 0% 0% / 0.5) 4%,
+			hsl(50 0% 0% / 0.7) 20%,
 			hsl(0 0% 0% / 1) // hsl(var(--color--secondary-shade-hsla)),
 			// hsl(var(--color--secondary-shade-hsla)) 10%,
 			// hsl(var(--color--secondary-shade-hsla))
@@ -140,22 +147,22 @@
 
 	@media (hover) {
 		.card-content {
-			visibility: hidden;
+			// visibility: hidden;
 			transition-delay: 0.8s;
-			transform: translateY(100%);
+			transform: translateY(-4ch);
 			transition: visibility 1000ms, transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
 		}
 	}
 
 	.card:hover .card-content,
 	.card:focus-within .card-content {
-		visibility: visible;
+		// visibility: visible;
 		transform: translateY(-100%);
 	}
 
-	.card:focus-within .card-content {
-		transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
+	// .card:focus-within .card-content {
+	// 	transition-duration: 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+	// }
 
 	.card-content > *:not(.card-title) {
 		opacity: 0;
@@ -165,7 +172,7 @@
 	.card:hover .card-content > *:not(.card-title),
 	.card:focus-within .card-content > *:not(.card-title) {
 		opacity: 1;
-		transition-delay: 1200ms ease;
+		transition-delay: 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 
 	.card:hover .card-title::after,

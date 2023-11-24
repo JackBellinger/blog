@@ -7,7 +7,6 @@
 
 <script lang="ts">
 	import Hero from '@lib/components/organisms/Hero.svelte';
-	import Summary from '@lib/components/organisms/GithubStats.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStores } from '@lib/utils/store';
 	import { projectStores } from '@lib/utils/store';
@@ -18,7 +17,7 @@
 </script>
 
 <Page>
-	<div slot="header-insert" />
+	<div slot="header-post" />
 	<div slot="left-sidebar" />
 	<div slot="right-sidebar" />
 	<main slot="main-content">

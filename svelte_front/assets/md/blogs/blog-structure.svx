@@ -1,19 +1,21 @@
 ---
-slug: project-structure
-title: Project Structure
+slug: blog-structure
+title: blog Structure
 date: 2023-09-26T02:32:00.000Z
 excerpt: How code and structure are organized.
 coverImage: /blog/assets/images/blogs/project-structure.avif
 tags:
   - Documentation
   - Blog
+  - Svelte
+  - Vite
 ---
 
 <script>
   import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
 </script>
 
-This project follows the basic [SvelteKit structure](https://kit.svelte.dev/docs/project-structure), with some added conventions to make customization a post-management easier.
+This project follows the a SPA style architecture, with a components library, pages directory, all mounted inside an App component, with routing handled by  Navaid. When the code is deployed, the svelte code is compiled to vanillaJS and everything is bundled with Vite into a few files.
 
 ## Components
 

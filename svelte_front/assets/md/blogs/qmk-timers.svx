@@ -1,0 +1,25 @@
+---
+slug: qmk-timers
+title: Adding timers in my QMK keyboard
+coverImage: /blog/assets/images/projects/ikki-aurora.webp
+date: 2023-11-10T04:53:49.000Z
+updated: 2023-11-19T21:09:21.000Z
+excerpt: How I programmed the macros on my keyboard with QMK
+hidden: true
+tags:
+- Workspace
+- QMK
+- C
+---
+
+# Timers
+A timer can be used for many things. The example that gave me the idea was a stretch timer, to remind me to get up and move around every once in a while. The basic idea is that I press a button and the keyboard starts counting seconds. After however long it does something. My initial implementation sets some leds to orange and incrementally changes them to green until the timer is over and it flashes the whole underglow red as an alert, but there's no speaker on board.
+One could argue that since I already have a timer on my phone and my computer, it's not particularly useful. I try not to use my phone while I'm at my computer, and any app is not going to be as convenient as clicking a button. Also it's pretty cool to make the underglow leds do something useful. I would like to add a speaker to my keyboard if there's an extra pwm pin, but I also plan on building or designing a split keyboard with one.
+
+## My macros:
+So far, I've made only a few macros:
+I made a search macro to emulate the 'highlight > right click > search web for x' behavior browsers give you, but from anywhere. It copies highlighted text, opens my browser, targets the address bar, pastes, and enters to search the string.
+
+I made macros to open my terminal, text editor, and browser.
+
+I also made a macro to take a screenshot of the window and paste it into paint.

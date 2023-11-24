@@ -45,8 +45,8 @@
 	--color--#{$title}-s: #{saturation($color)};
 	--color--#{$title}-a: #{alpha($color)};
 
-	--color--#{$title}-hsl: #{hue($color) lightness($color) \%saturation($color) \%};
-	--color--#{$title}-hsla: #{hue($color) lightness($color) \%saturation($color) \%/ alpha($color)};
+	--color--#{$title}-hsl: #{hue($color) lightness($color) \%saturation($color)\%};
+	--color--#{$title}-hsla: #{hue($color) lightness($color) \%saturation($color)\%/alpha($color)};
 
 	--color--#{$title}-rgb: #{red($color)}, #{green($color)}, #{blue($color)};
 

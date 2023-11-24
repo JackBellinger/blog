@@ -1,6 +1,5 @@
 ---
-slug: infinite-scroller
-title: Infinite Scroller Component Design
+title: Infinite Scroller
 coverImage: /blog/assets/images/projects/inf-scroll.webp
 date: 2023-10-29T16:02:03.000Z
 updated: 2023-11-11T17:49:12.000Z
@@ -10,6 +9,9 @@ tags:
   - Blog
   - Svelte
 ---
+
+
+
 
 <script>
   import Image from "@lib/components/atoms/Image.svelte";

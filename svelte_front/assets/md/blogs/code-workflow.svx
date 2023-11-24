@@ -1,5 +1,5 @@
 ---
-slug: dev-environment
+slug: code-workflow
 title: My Development Environment Setup and Coding Workflow
 coverImage: /blog/assets/images/blogs/dev-env.webp
 date: 2023-10-29T16:02:03.000Z

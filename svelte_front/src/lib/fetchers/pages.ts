@@ -4,7 +4,7 @@ export const stringIsNumber = (value) => isNaN(Number(value)) === false;
 
 export function importPages(render = true) {
 	//https://vitejs.dev/guide/projects.html#glob-import\
-	const pageImports = import.meta.glob('@/pages/*.svelte', { eager: true });
+	const pageImports = import.meta.glob('@src/pages/*.svelte', { eager: true });
 	//console.log(pageImports)
 	let numPages = Object.keys(pageImports).length;
 	const pages2d: Page[][] = new Array(numPages).fill(null).map(() => new Array());
@@ -26,6 +26,6 @@ export function importPages(render = true) {
 		}
 	}
 	let pages = pages2d.flat();
-	console.log('imported pages: ', pages);
+	// console.log('imported pages: ', pages);
 	return pages;
 }

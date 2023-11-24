@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
-export default defineConfig({
+export default {
 	base: `blog`,
 	build: {
 		outDir: 'dist',
@@ -13,10 +13,10 @@ export default defineConfig({
 	plugins: [svelte({ configFile: 'svelte.config.js' })],
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, './src'),
+			'@src': path.resolve(__dirname, './src'),
 			'@lib': path.resolve(__dirname, './src/lib'),
-			'@assets': path.resolve(__dirname, './assets')
-			//"@utils": path.resolve(__dirname, "./src/lib/utils"),
+			'@assets': path.resolve(__dirname, './assets'),
+			'@utils': path.resolve(__dirname, './src/lib/utils')
 		}
 	},
 	css: {
@@ -26,4 +26,4 @@ export default defineConfig({
 			}
 		}
 	}
-});
+};

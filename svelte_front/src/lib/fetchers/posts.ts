@@ -6,19 +6,21 @@ export async function importPosts(render = true) {
 
 	const posts: BlogPost[] = [];
 	for (const path in blogImports) {
+		let filename = path.split('/').at(-1).split('.')[0];
 		const post = blogImports[path] as any;
 		if (post) {
-			//console.log("Parsing: ", post, post.default.current)
+			// console.log("Parsing: ", post, post.default.current)
 			posts.push({
 				...post.metadata,
-				tags: post.metadata.tags,
+				slug: filename,
+				tags: post.metadata.tags.map((tag) => tag.toLowerCase()),
 				//html: render ? post.default.render()?.html : undefined,
 				module: post
 			});
 		}
 	}
 	let retPosts = sortAndRelatePosts(posts);
-	console.log('imported posts: ', retPosts);
+	// console.log('imported posts: ', retPosts);
 	return retPosts;
 }
 

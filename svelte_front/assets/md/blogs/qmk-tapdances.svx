@@ -1,0 +1,69 @@
+---
+slug: qmk-tapdances
+title: Adding tap dance in my QMK keyboard
+coverImage: /blog/assets/images/projects/ikki-aurora.webp
+date: 2023-11-19T21:09:21.000Z
+updated: 2023-11-19T21:09:21.000Z
+excerpt: How I programmed the tap dances on my keyboard with QMK
+hidden: true
+tags:
+- Workspace
+- QMK
+- C
+---
+
+# Tapdance
+Tap dance is a feature that lets one key do many things. One tap sends a certain keycode, 2 taps sends another, 2 taps and a hold sends yet a different one, and so on.
+
+## My tap dances:
+So far, I've made only a few tap dances:
+I made a play/pause button that behaves like an earbud with media controls: first tap is play/ pause, second is skip to next track, third is skip to previous track, fourth tap is toggle mute.
+
+I made a tapdance to trigger the macro that opens my terminal, text editor, and browser on one, two, and 3 taps.
+
+Lastly, I made a tapdance for the rest of my miscelaneous macros, one tap searches a highlighted string, and two taps does a screenshot.
+
+```c:tapdance.h
+#pragma once
+#include "quantum.h"
+
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
+    TD_DOUBLE_SINGLE_TAP, // Send two single taps
+    TD_TRIPLE_TAP,
+    TD_TRIPLE_HOLD,
+    TD_QUAD_TAP,
+    TD_QUAD_HOLD,
+} td_state_t;
+
+// Tap Dance
+typedef struct {
+    bool is_press_action;
+    int  state;
+} td_tap_t;
+
+// Tap dance enums
+enum {
+    PLAY,
+    TASKBAR,
+    MACRO
+};
+
+td_state_t cur_dance(tap_dance_state_t *state);
+
+// declare tapdance functions here
+// void play_each(tap_dance_state_t *state, void *user_data)
+void play_finished(tap_dance_state_t *state, void *user_data);
+void play_reset(tap_dance_state_t *state, void *user_data);
+
+void taskbar_finished(tap_dance_state_t *state, void *user_data);
+void taskbar_reset(tap_dance_state_t *state, void *user_data);
+
+void macro_finished(tap_dance_state_t *state, void *user_data);
+void macro_reset(tap_dance_state_t *state, void *user_data);
+```

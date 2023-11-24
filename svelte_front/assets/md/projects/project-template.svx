@@ -1,5 +1,4 @@
 ---
-slug: project-template
 title: Project Template
 coverImage: https://picsum.photos/200
 date: 2023-09-26T02:32:00.000Z

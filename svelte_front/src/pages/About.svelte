@@ -10,15 +10,14 @@
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import Page from '@lib/components/organisms/Page.svelte';
 	import GithubStats from '@lib/components/organisms/GithubStats.svelte';
-	import Aboutme from "@assets/md/aboutme.svx"
+	import Aboutme from '@assets/md/aboutme.svx';
 	let aboutme = import.meta.glob('@assets/md/aboutme.svx', { eager: true });
 	let aboutcodeblock = {
-				md: aboutme.metadata,
-				//html: render ? post.default.render()?.html : undefined,
-				module: aboutme
-			}
-			console.log(aboutcodeblock);
-
+		md: aboutme.metadata,
+		//html: render ? post.default.render()?.html : undefined,
+		module: aboutme
+	};
+	console.log(aboutcodeblock);
 </script>
 
 <Page>
@@ -30,7 +29,7 @@
 		</Hero>
 
 		<div id="swe-type">
-			<Aboutme/>
+			<Aboutme />
 			<div id="skills">
 				<div id="langs">
 					<div id="blurb">
@@ -102,10 +101,10 @@
 	@import '../lib/scss/_mixins.scss';
 	@import '../lib/scss/breakpoints.scss';
 	:global(.remark-code-container) {
-				:global(code){
-					white-space : pre-wrap !important;
-				}
+		:global(code) {
+			white-space: pre-wrap !important;
 		}
+	}
 	main {
 		position: relative;
 		//display: grid;
