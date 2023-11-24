@@ -1,5 +1,5 @@
 ---
-slug: keyboard
+
 title: My Keyboard
 coverImage: /blog/assets/images/projects/ikki-aurora.webp
 date: 2023-11-10T04:53:49.000Z

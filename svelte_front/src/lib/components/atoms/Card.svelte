@@ -3,7 +3,6 @@
 
 	export let additionalClass: string | undefined = undefined;
 	export let imageUrl: string = '';
-	console.log(imageUrl);
 	export let href: string | undefined = undefined;
 	const isExternalLink = !!href && HttpRegex.test(href);
 	//export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';

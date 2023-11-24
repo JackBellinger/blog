@@ -1,5 +1,4 @@
 ---
-slug: leetcode
 title: Leetcode Solutions
 coverImage: https://picsum.photos/200
 date: 2023-11-10T18:55:37.000Z
@@ -7,7 +6,7 @@ updated: 2023-11-10T18:55:37.000Z
 excerpt: Template for project reports
 hidden: true
 tags:
-  - templates
+  - leetcode
 ---
 
 <script>

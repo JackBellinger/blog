@@ -7,6 +7,7 @@ excerpt: The tech stack I chose for this blog
 hidden: false
 tags:
   - Blog
+  - Documentation
 ---
 
 

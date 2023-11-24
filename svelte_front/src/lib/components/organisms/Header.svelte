@@ -2,10 +2,10 @@
 	import ThemeToggle from '@lib/components/molecules/ThemeToggle.svelte';
 	import RssLink from '@lib/components/atoms/RssLink.svelte';
 	import { onMount } from 'svelte';
-	import { pageStores } from '@lib/utils/store';
+	import { pageStore } from '@lib/utils/store';
 	import LogoPageMenu from '../molecules/LogoPageMenu.svelte';
 
-	const pages = pageStores.init;
+	const pages = pageStore.init;
 	let showBackground = true;
 
 	// Show mobile icon and display menu

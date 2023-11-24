@@ -1,6 +1,5 @@
 ---
-slug: project-structure
-title: Project Structure
+title: blog Structure
 date: 2023-09-26T02:32:00.000Z
 excerpt: How code and structure are organized.
 coverImage: /blog/assets/images/blogs/project-structure.avif

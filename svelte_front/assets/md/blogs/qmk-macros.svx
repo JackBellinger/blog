@@ -1,0 +1,189 @@
+---
+title: Adding macros in my QMK keyboard
+coverImage: /blog/assets/images/projects/ikki-aurora.webp
+date: 2023-11-10T04:53:49.000Z
+updated: 2023-11-19T21:09:21.000Z
+excerpt: How I programmed the macros on my keyboard with QMK
+hidden: true
+tags:
+- Workspace
+- QMK
+- C
+---
+
+# Macros
+Macros are sequences of keypresses that are run all at once automatically. Usually they're triggered by a single keypress, for example, you could make a macro to send your favorite website url when you press function + w, and your keyboard would send the string "www.url.com" as if you had typed it. Remember, you can program a macro to type any key. As you'll see shortly, there are a lot of possibilities with this simple pattern.
+
+## My macros:
+So far, I've made only a few macros:
+I made a search macro to emulate the 'highlight > right click > search web for x' behavior browsers give you, but from anywhere. It copies highlighted text, opens my browser, targets the address bar, pastes, and enters to search the string.
+
+I made macros to open my terminal, text editor, and browser.
+
+I also made a macro to take a screenshot of the window and paste it into paint.
+
+### Macros
+After my initial experimentation, I decided that I wanted to be able to define macros seperately from how they are invoked.
+Initially, I was putting the effect of the macros, ie `SEND_STRING(macro keys)`, in the `process_record_user` as in the [examples](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_macros.md#using-macros-in-c-keymaps).
+
+However, once I started looking into tap dance, combos, and other features, I thought it would be usefule to define the macro functions in their own map so I can call them from various places without copying code.
+First, I made a map from the keycodes enum to function pointers
+```c:keymap.c
+typedef enum {
+    LLOCK = SAFE_RANGE,
+    MAC_SEARCH,
+    MAC_TERMINAL,
+    MAC_VSCODE,
+    MAC_BLOG_URL,
+} custom_keycodes;
+
+void enum_to_array(macro_keycodes *arr, int size) {
+    for (int i = 1; i < size; i++) {
+        arr[i] = i + LLOCK;
+    }
+};
+const macro_kc_values = enum_to_array(macro_keycodes, 5);
+int KC_isMacro(uint16_t x)
+{
+    for(int i=0; i<(sizeof(macro_kc_values)/sizeof(*macro_kc_values)); i++)
+    {
+        if(macro_kc_values[i] == x){ return 1; }
+    }
+    return 0;
+}
+
+typedef void (*operate)();
+struct action{
+  operate map[3];
+};
+
+static struct action macros = {{&search,&terminal,&blog_url}};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+    if (KC_isMacro(keycode)) {
+        macros.map[keycode - SAFE_RANGE]();
+    }
+    return true;
+};
+```
+This solition seems like it needs edits in a lot of places to add new macros, doesn't it?
+Having debugged mistakes caused by forgetting to change a part of something like this, I know that it can reduce errors and cognitive load to code in such a way that extending functionality requires as few changes as possible. With this in mind, I came up with a solution using x-macros.
+
+First, I made a macro table to define the macro keycode names, the uint16_t value of the keycode, and the name of the function to run when the keycode is sent.
+
+```c:macro.h
+#pragma once
+#include "quantum.h"
+
+/* Define the macros (enum variant name, enum value, function to call) */
+#define MACRO_TABLE \
+	MACRO(MAC_SEARCH,		SAFE_RANGE + 0, search)\
+	MACRO(MAC_TERMINAL,		SAFE_RANGE + 1, terminal)\
+	MACRO(MAC_EDITOR,		SAFE_RANGE + 2, editor) \
+	MACRO(MAC_BROWSER,		SAFE_RANGE + 3, browser) \
+	MACRO(MAC_SCREENSHOT,	SAFE_RANGE + 4, screenshot)
+/* Define any additional keycodes that don't have a void func with no params
+	LLOCK has to be last in this table to init the array mapping keys to funcs*/
+#define KEYCODES_TABLE \
+	KEYCODE(LLOCK,			SAFE_RANGE + 5)
+```
+Then I wrote a macro to generate the function prototypes from the macro functions' names.
+```c: macro.h
+/* Generate function prototypes */
+#define MACRO(a, b, c) void c(void);
+    MACRO_TABLE
+#undef MACRO
+```
+Then The enum gets generated from the keycode names and values.
+```c: macro.h
+typedef enum {
+	#define MACRO(a, b, c) a = b,
+    MACRO_TABLE
+	#undef MACRO
+	#define KEYCODE(a, b) a = b,
+    KEYCODES_TABLE
+	#undef KEYCODE
+} custom_keycodes;
+```
+Then the struct that holds the array mapping from keycode values to function pointers.
+The keycodes start from SAFE_RANGE, which is the qmk export that defines the max value of the default keycodes.
+```c: macro.h
+typedef void (*operate)(void);
+struct action {
+  operate map[LLOCK - SAFE_RANGE];
+};
+struct action macros;
+```
+Then the prototypes for functions to check if a keycode is a macro and to call the associated functions.
+```c: macro.h
+int KC_isMacro(uint16_t keycode);
+
+void send_macro(uint16_t keycode);
+```
+In the source file I define the macro functions.
+Search copies highlighted text
+```c:macro.c
+#include "macro.h"
+void search(void) {
+    SEND_STRING(SS_LCTL("c")); send_macro(MAC_BROWSER); SEND_STRING(SS_LCTL("l" "v") SS_TAP(X_ENT));
+}
+//These 3 need to be updated if the task bar order changes or on different OSs, but they only have to be changed here
+void terminal(void) {
+    SEND_STRING(SS_LGUI("1"));
+}
+void editor(void) {
+    SEND_STRING(SS_LGUI("2"));
+}
+void browser(void) {
+    SEND_STRING(SS_LGUI("3"));
+}
+void screenshot(void) {
+    SEND_STRING(SS_TAP(X_PSCR) SS_LGUI("r") SS_DELAY(500) "mspaint" SS_TAP(X_ENTER) SS_DELAY(500) SS_LCTL("v"));
+}
+
+/* Generate function to check if keycode is a macro */
+int KC_isMacro(uint16_t keycode) {
+    switch(keycode) {
+        #define MACRO(a, b, c) case a:
+        MACRO_TABLE
+        #undef MACRO
+            return 1;
+    };
+    return 0;
+}
+
+/* Generate Macro keycode to function map*/
+struct action macros = {{
+#define MACRO(a,b,c) &c,
+    MACRO_TABLE
+#undef MACRO
+}};
+
+void send_macro(uint16_t keycode) {
+    macros.map[keycode-SAFE_RANGE]();
+}
+```
+### Tap Dance
+
+### Combos
+
+### RBG Underglow
+RGB ideas:
+layer indication
+timer, stopwatch, loading
+minigame
+typing reactive
+
+
+
+#### Links, inspiration, etc
+github.com/jackbellinger/dotfiles/keymap.c
+
+### Learnings
+
+### Todo
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
