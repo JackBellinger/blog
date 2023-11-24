@@ -8,13 +8,13 @@
 	import type { Page, SyncReadable } from '@lib/utils/types';
 	import { theme } from '@lib/utils/store';
 
-	export let pageStore:  SyncReadable = undefined;
+	export let pageStore: SyncReadable = undefined;
 
 	let savestore = false;
 	$: if (savestore && $theme) {
 		window.sessionStorage.setItem('store', JSON.stringify($theme));
 	}
-	onMount( () => {
+	onMount(() => {
 		let ses = window.sessionStorage.getItem('store');
 		if (ses) {
 			//console.log("loading session", ses)
@@ -26,7 +26,7 @@
 	const pages = pageStore.init;
 	let showBackground = true;
 	let currentPage = pages[0].module?.default;
-	export let propParams = {}
+	export let propParams = {};
 
 	let baseUrl = '/blog/';
 

@@ -7,7 +7,7 @@ export default {
 	// svelte options
 	extensions: ['.svelte', ...mdsvexConfig.extensions],
 	compilerOptions: {
-		accessors: process.env.TEST,
+		accessors: process.env.TEST
 	},
 	onwarn: (warning, handler) => handler(warning),
 	// plugin options

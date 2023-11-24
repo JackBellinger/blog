@@ -60,7 +60,7 @@
 		position: relative;
 		transition: transform 1000ms ease;
 		.card-content {
-			padding: .3rem .3rem .1rem .3rem;
+			padding: 0.3rem 0.3rem 0.1rem 0.3rem;
 		}
 		a {
 			overflow: hidden;

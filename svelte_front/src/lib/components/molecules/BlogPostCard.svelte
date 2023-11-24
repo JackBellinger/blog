@@ -50,10 +50,9 @@
 </Card>
 
 <style lang="scss">
-
 	.tags {
 		display: inline-flex;
 		flex-direction: row;
-		overflow:hidden;
+		overflow: hidden;
 	}
 </style>

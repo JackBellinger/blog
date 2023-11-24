@@ -38,7 +38,7 @@ export type BlogPost = {
 	coverImage: string | undefined;
 };
 
-export type SyncReadable ={
+export type SyncReadable = {
 	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
 	init: any;
 	set: (value: any) => void;

@@ -1,5 +1,4 @@
 ---
-
 title: Testing Svelte with Vitest
 coverImage: /blog/assets/images/blogs/vitest.webp
 date: 2023-11-14T23:12:25.000Z

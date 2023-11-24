@@ -16,7 +16,7 @@ export default {
 			'@src': path.resolve(__dirname, './src'),
 			'@lib': path.resolve(__dirname, './src/lib'),
 			'@assets': path.resolve(__dirname, './assets'),
-			"@utils": path.resolve(__dirname, "./src/lib/utils"),
+			'@utils': path.resolve(__dirname, './src/lib/utils')
 		}
 	},
 	css: {

@@ -1,10 +1,9 @@
-import { afterEach, assert, describe, expect, it, vi } from 'vitest'
+import { afterEach, assert, describe, expect, it, vi } from 'vitest';
 import { pageStore } from '../src/lib/utils/store';
 import App from '../src/App.svelte';
 import { writable } from 'svelte/store';
 // vi.stubEnv('TEST', 'true')
 let app;
-
 
 // // === LocalStorage Mock ===
 // const localStorageMock = (() => {
@@ -35,30 +34,29 @@ let app;
 function getPages() {
 	return [
 		{
-			name: "Home",
-			id: "0",
+			name: 'Home',
+			id: '0',
 			hidden: false,
 			module: undefined,
 			subpages: [],
-			routeParam: undefined,
+			routeParam: undefined
 		},
 		{
-			name: "Page1",
-			id: "1",
+			name: 'Page1',
+			id: '1',
 			hidden: false,
 			module: undefined,
 			subpages: [],
-			routeParam: "param",
+			routeParam: 'param'
 		},
 		{
-			name: "PageHidden",
-			id: "2",
+			name: 'PageHidden',
+			id: '2',
 			hidden: true,
 			module: undefined,
 			subpages: [],
-			routeParam: "",
+			routeParam: ''
 		}
-
 	];
 }
 function createPagesMock() {
@@ -80,7 +78,7 @@ app = new App({
 	target: global.document.documentElement,
 	props: {
 		pageStore: pageStoreMock
-	},
+	}
 });
 
 /* === Tests ===
@@ -99,25 +97,24 @@ describe('Loading the App', () => {
 	afterEach(() => {
 		vi.clearAllMocks();
 		vi.resetAllMocks();
-	})
+	});
 	it('creates routes for all pages', () => {
-		vi.doMock(pageStore.init, getPages)
+		vi.doMock(pageStore.init, getPages);
 
-		app.router.route("/blog/Home")
-		expect(window.location.href).toMatch('/blog/Home')
+		app.router.route('/blog/Home');
+		expect(window.location.href).toMatch('/blog/Home');
 
-		app.router.route("/blog/Page1")
-		expect(window.location.href).toMatch('/blog/Page1')
+		app.router.route('/blog/Page1');
+		expect(window.location.href).toMatch('/blog/Page1');
 
-		app.router.route("/blog/PageHidden")
-		expect(window.location.href).toMatch('/blog/PageHidden')
-	})
+		app.router.route('/blog/PageHidden');
+		expect(window.location.href).toMatch('/blog/PageHidden');
+	});
 
 	it('passes route params', () => {
-		vi.doMock(pageStore.init, getPages)
+		vi.doMock(pageStore.init, getPages);
 
-		app.router.route("/blog/Page1/paramValue")
-		expect(app.propParams).toContain({param:"paramValue"})
-
-	})
-})
+		app.router.route('/blog/Page1/paramValue');
+		expect(app.propParams).toContain({ param: 'paramValue' });
+	});
+});

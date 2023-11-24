@@ -1,5 +1,4 @@
 ---
-
 title: FFT Noise Filtering
 coverImage: /blog/assets/images/projects/fft-noise.avif
 date: 2023-10-04T20:34:02.0400Z
