@@ -50,9 +50,14 @@
 	>
 		<Email />
 	</a>
-	<a href="https://discord.gg/invite" target="blank">
+	<!-- <a
+		href="https://discord.gg/invite"
+		target="blank"
+		rel="noopener noreferrer"
+		title="Join my Discord server"
 		<Discord />
 	</a>
+	> -->
 	<!--<a
 		href="/blog/rss"
 		target="blank"
@@ -75,7 +80,7 @@
 			fill: var(--color--text);
 
 			&:hover {
-				color: var(--color--primary);
+				color: var(--color--primary-shade);
 				fill: var(--color--primary);
 				filter: drop-shadow(0px 0px 3px var(--color--primary));
 			}
