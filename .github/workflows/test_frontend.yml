@@ -1,0 +1,34 @@
+name: Test Frontend
+
+on:
+  push:
+    branches: [frontend-develop]
+  pull_request_target:
+    types: [opened, edited, closed]
+    branches: [main]
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./svelte_front
+    strategy:
+      matrix:
+        node-version: [20.x]
+        architecture: [x86_64]
+    steps:
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v2
+
+      - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
+        uses: actions/setup-node@v2
+
+      - name: INSTALL PROJECT DEPENDENCIES
+        run: npm install
+
+      - name: CODE LINT (Prettier & ESLint)
+        run: npm lint
+
+      - name: UNIT TEST (Vitest)
+        run: npm test
