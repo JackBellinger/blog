@@ -28,13 +28,13 @@
 		</div>
 		<div class="card-content">
 			<div class="card-title">
-				<slot name="card-title" />
+				<slot name="title" />
 			</div>
 			<div class="card-body">
-				<slot name="card-body" />
+				<slot name="body" />
 			</div>
 			{#if $$slots.footer}
-				<div class="footer">
+				<div class="card-footer">
 					<slot name="footer" />
 				</div>
 			{/if}
@@ -43,6 +43,7 @@
 </svelte:element>
 
 <style lang="scss">
+	@import '../../scss/_breakpoints.scss';
 	// *{ border: 2px solid green;}
 	.card {
 		display: flex;
@@ -138,7 +139,7 @@
 		// border: 2px solid red;
 		color: var(--card-text-color);
 	}
-	.footer {
+	.card-footer {
 		// border: 2px solid yellow;
 		width: fit-content;
 		// border: 2px solid red;
@@ -244,9 +245,13 @@
 		}
 	}
 
-	@media screen and (max-width: 360px) {
-		.card {
-			max-width: 250px;
+	@include for-phone-only {
+		// .card {
+		// 	max-width: 300px;
+		// }
+
+		.card-footer {
+			display: none;
 		}
 
 		.card-title {
@@ -263,6 +268,52 @@
 
 		.card-content .button {
 			font-size: 0.75rem;
+		}
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+			transition-delay: 0 !important;
+		}
+		.card:hover,
+		.card:focus-within {
+			transform: scale(1);
+		}
+		.card-content {
+			display: inline-block;
+			overflow: visible;
+			transform: scale(1);
+			visibility: visible;
+			transform: translateY(-100%);
+			width: 100%;
+		}
+
+		.card:hover .card-content,
+		.card:focus-within .card-content {
+			visibility: visible;
+		}
+
+		.card:focus-within .card-content {
+			transition-duration: 0ms;
+		}
+
+		.card-content > *:not(.card-title) {
+			opacity: 1;
+			transition: 0ms;
+		}
+
+		.card:hover .card-content > *:not(.card-title),
+		.card:focus-within .card-content > *:not(.card-title) {
+			opacity: 1;
+			transition-delay: 1200ms ease;
+		}
+
+		.card:hover .card-title::after,
+		.card:focus-within .card-title::after {
+			transform: scaleX(1);
 		}
 	}
 

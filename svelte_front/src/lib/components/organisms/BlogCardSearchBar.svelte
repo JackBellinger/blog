@@ -32,6 +32,8 @@
 		return tagSet;
 	};
 
+	//the logic for filtering is in @utils/store.ts
+
 	//function debounce<A, R>(fn: (args: A) => R, delay: number): (args: A) => Promise<R> {
 	//	let timer: NodeJS.Timeout;
 	//	return (args: A): Promise<R> => {
