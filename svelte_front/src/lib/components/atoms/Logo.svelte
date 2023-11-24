@@ -36,7 +36,6 @@
 
 	@media screen and (prefers-reduced-motion: no-preference) {
 		.animated {
-
 			#text {
 				animation: svg-text-stroke 3s;
 				stroke-width: 2;
