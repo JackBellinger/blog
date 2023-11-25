@@ -8,17 +8,9 @@
 {#await postStores.items.load()}
 	<p>...parsing markdown</p>
 {:then posts}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<!-- svelte-ignore a11y-missing-attribute -->
-	<a
-		on:click={() => notifications.warning('Not implemented!', 1000)}
-		target="_blank"
-		rel="noopener noreferrer"
-		title="Subscribe to my RSS Feed"
-	>
+	<button on:click={() => notifications.warning('Not implemented!', 1000)} title="Subscribe to my RSS Feed">
 		<RssIcon />
-	</a>
+	</button>
 {:catch error}
 	<p style="color: red">{error.message}</p>
 {/await}
@@ -28,11 +20,12 @@
 </a>-->
 
 <style lang="scss">
-	a {
+	button {
+		all: unset;
+		padding: 0.5rem 0 0.5rem 0;
 		transition: all 0.2s ease-in-out;
-		width: 24px;
+		width: 1.6rem;
 		color: var(--color--text);
-		fill: var(--color--text);
 
 		&:hover {
 			color: var(--color--primary);

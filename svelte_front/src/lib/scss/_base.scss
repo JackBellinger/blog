@@ -12,16 +12,15 @@
 * {
 	scrollbar-color: var(--color--primary) var(--color--primary-tint);
 	scrollbar-width: thin;
-
 	&::-webkit-scrollbar {
 		width: 12px;
 		height: 12px;
-		//height: 8px;
 	}
 	&::-webkit-scrollbar-thumb {
 		background: var(--color--primary);
 		//border-radius: 6px;
 		//border: 1px groove #000000;
+
 		&:hover {
 			background: var(--color--primary-shade);
 		}

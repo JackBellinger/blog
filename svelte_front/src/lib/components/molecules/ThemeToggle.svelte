@@ -13,22 +13,6 @@
 </script>
 
 <noscript>
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
-	<!-- Hide the theme toggle if JavaScript is disabled -->
 	<style>
 		.theme-toggle {
 			display: none !important;
@@ -60,16 +44,16 @@
 
 <style lang="scss">
 	.theme-toggle {
-		height: 24px;
-		padding-top: 16px;
+		// height: fit-content;
+		// padding-top: 16px;
 		appearance: none;
 		border: none;
 		background: none;
-		cursor: pointer;
 		display: flex;
 		align-items: center;
 		vertical-align: center;
 		gap: 5px;
+		padding: 0.5rem;
 
 		&:hover {
 			.label {
@@ -79,14 +63,10 @@
 			#moon,
 			#sun {
 				fill: var(--color--primary);
-				> * {
-					filter: drop-shadow(0px 0px 3px var(--color--primary));
-				}
 			}
 
 			#sun-beams {
 				stroke: var(--color--primary);
-
 				line {
 					filter: drop-shadow(0px 0px 3px var(--color--primary));
 				}

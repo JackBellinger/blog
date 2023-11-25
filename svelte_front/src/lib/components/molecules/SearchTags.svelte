@@ -18,8 +18,6 @@
 
 <div>
 	{#each tags as tag}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		<Chip handler={() => selectTag(tag)}>{tag}</Chip>
 	{/each}
 </div>
@@ -28,7 +26,8 @@
 	div {
 		display: flex;
 		flex-direction: row;
-		margin: 0;
-		font-size: 1.18rem;
+		gap: 1px;
+		align-items: center;
+		vertical-align: middle;
 	}
 </style>
