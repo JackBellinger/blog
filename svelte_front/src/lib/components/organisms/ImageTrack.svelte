@@ -166,7 +166,9 @@
 		padding: 10px 20px;
 		position: fixed;
 		text-decoration: none;
-		transition: background-color 400ms, border-color 400ms;
+		transition:
+			background-color 400ms,
+			border-color 400ms;
 		z-index: 10000;
 	}
 
