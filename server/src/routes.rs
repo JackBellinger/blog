@@ -1,8 +1,13 @@
-pub mod api;
-mod auth;
-mod notimplemented;
+mod app;
+pub use app::App;
+
+mod protected;
+mod restricted;
+
+mod frontend;
+
+pub mod data_api;
 pub mod session;
 
-pub use auth::login;
-pub use auth::logout;
+mod notimplemented;
 pub use notimplemented::not_implemented_route;

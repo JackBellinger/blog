@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta.js';
+	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
 	import Navaid from 'navaid';
 	import { onDestroy } from 'svelte';
 	import { getSession } from '@lib/fetchers/auth';

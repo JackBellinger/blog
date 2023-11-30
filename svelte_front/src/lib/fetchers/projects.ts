@@ -33,8 +33,8 @@ export const sortAndRelateProjects = (projects: BlogPost[]) => {
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
 				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
-				? 1
-				: 0
+				  ? 1
+				  : 0
 		)
 		.map((project) => {
 			const relatedPosts = getRelatedPosts(projects, project);

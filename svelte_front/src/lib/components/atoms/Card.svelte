@@ -151,7 +151,9 @@
 			// visibility: hidden;
 			transition-delay: 0.8s;
 			transform: translateY(-4ch);
-			transition: visibility 1000ms, transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+			transition:
+				visibility 1000ms,
+				transform 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
 		}
 	}
 

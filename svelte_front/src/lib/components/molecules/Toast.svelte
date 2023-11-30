@@ -1,7 +1,7 @@
 <script>
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
-	import { notifications } from '@lib/utils/notifications.js';
+	import { notifications } from '@lib/utils/notifications';
 
 	export let themes = {
 		error: '#E26D69',
