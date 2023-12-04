@@ -33,7 +33,7 @@
 		"sass": "^1.69.5",
 		"string-width": "7.0.0",
 		"striptags": "^3.2.0",
-		"svelte": "^4.2.7",
+		"svelte": "^4.2.8",
 		"svelte-preprocess": "5.0.4",
 		"typescript": "^5.2.2",
 		"vite": "^4.5.0",
