@@ -89,21 +89,22 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 
 ## Release 0.1.0
 
-### Frontend Todo
+### Frontend 
 - [x] Adapt Sveltekit blog template to svelte/vite served by axum backend
 - [x] create a cool styled navbar
 - [x] start a few articles for testing content / display
 - [x] use spa router library
 - [x] add images
 - [x] host on github.io
+- [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
+- [x] make `<Image>` srcset to scale images better, particularly on mobile
+- [ ] refine head metadata
 
-### Backend Todo
+### Backend
 - [x] setup basic axum server
 - [x] route frontend to compiled svelte dir
 - [x] enable routing to more yew in addition to svelte
 - [x] send route to frontend to enable page routing: 404s under blog reroute to blog index page
-
-## Release 0.2.0: Backend
 
 ### Content
 - [x] add textual descriptions, comments, etc to the articles
@@ -112,16 +113,10 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 - [ ] write a blog about working at Redjack
 - [x] use github tickets
 
-### Frontend
-- [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
-- [x] make `<Image>` srcset to scale images better, particularly on mobile
-- [ ] refine head metadata
-
 ### Devops
-- [x] Integ / unit testing
+- [x] Frontend Integ / unit testing
 - [x] code scanner
 - [x] deployment pipeline: github actions
-
 
 ### Bugs
 - [x] related posts have wrong link
