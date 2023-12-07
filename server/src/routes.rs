@@ -6,7 +6,7 @@ mod restricted;
 
 mod frontend;
 
-pub mod data_api;
+pub mod comments;
 pub mod session;
 
 mod notimplemented;
