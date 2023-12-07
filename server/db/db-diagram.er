@@ -1,0 +1,116 @@
+title {label: "Blog Features Entity-Relationship Diagram", size: "20"}
+
+[Users]
+*id {label: "int"}
+username {label: "string"}
+password_hash {label: "varchar"}
+ip_fingerprint {label: "varchar"}
+email {label: "varchar"}
+post_notif {label: "boolean"}
+comment_notif {label: "boolean"}
+
+[Groups]
+*id {label: "int"}
+name {label: "varchar"}
+
+[Permissions]
+*id {label: "int"}
+name {label: "varchar"}
+
+Users *--+ Groups
+Groups *--+ Permissions
+
+[Comments]
+*id {label: "int"}
++user_id {label: "users(id)"}
+reply_to {label: "comments(id)"}
+timestamp {label: "datetime"}
+upvotes {label: "int"}
+hidden {label: "boolean"}
+text {label: "text"}
+
+Users 1--* Comments
+Blogs 1--* Comments
+
+[Blogs]
+*id {label: "int"}
+slug {label: "varchar(20)"}
+title {label: "varchar"}
+excerpt {label: "text"}
+date {label: "datetime"}
+updated {label: "datetime"}
+hidden {label: "boolean"}
+views {label: "int"}
+uri {label: "varchar"}
+
+[Tags]
+*id {label: "int"}
+name {label: "varchar"}
+
+Blogs +--+ Tags
+Users 1--* Blogs
+
+
+# [Songs]
+# *id {label: "int"}
+# spotify_id {label: "varchar"}
+# acousticness {label: "float"}
+# danceability {label: "float"}
+# duration_ms {label: "int"}
+# energy {label: "float"}
+# instrumentalness {label: "float"}
+# key {label: "int"}
+# liveness {label: "float"}
+# loudness {label: "float"}
+# mode {label: "int"}
+# speechiness {label: "float"}
+# tempo {label: "float"}
+# time_signature {label: "int"}
+# valence {label: "float"}
+# 
+# [Playlists]
+# *id {label: "int"}
+# embedding {label: "varchar"}
+# 
+# [MusicPrefs]
+# *id {label: "int"}
+# embedding {label: "varchar"}
+# 
+# Songs +--* Playlists
+# Users 1--* MusicPrefs
+# Users 1--* Playlists
+# 
+# [Locations]
+# *id {label: "int"}
+# +user_id {label: "user(id)"}
+# latitude {label: "float"}
+# longitude {label: "float"}
+# title {label: "varchar"}
+# description {label: "text"}
+# 
+# [Services]
+# *id {label: "int"}
+# +user_id {label: "user(id)"}
+# +location_id {label: "location(id)"}
+# title {label: "varchar"}
+# description {label: "text"}
+# price {label: "int"}
+# 
+# Locations *--1 Users
+# Services *--1 Users
+# Services *--+ Locations
+# Locations 1--* Comments
+# Services 1--* Comments
+# 
+# [Logs]
+# *id {label: "int"}
+# name {label: "varchar"}
+# 
+# [Analytics]
+# *id {label: "int"}
+# timestamp {label: "datetime"}
+# source {label: "varchar"}
+# key {label: "varchar"}
+# value {label: "text"}
+# 
+# Logs +--* Analytics
