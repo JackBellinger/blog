@@ -23,6 +23,7 @@ export type SparkleType = {
 };
 
 export type Session = {
+	backend_connected: boolean;
 	logged_in: boolean;
 	username?: string;
 };

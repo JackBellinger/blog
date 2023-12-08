@@ -3,9 +3,9 @@
 
 	function toggleTheme() {
 		if ($theme === 'auto') {
-			theme.set('light');
-		} else if ($theme === 'light') {
 			theme.set('dark');
+		} else if ($theme === 'dark') {
+			theme.set('light');
 		} else {
 			theme.set('auto');
 		}
