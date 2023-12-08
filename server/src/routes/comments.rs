@@ -15,7 +15,6 @@ use sqlx::{
 	types::chrono::{DateTime, Utc},
 	FromRow, Sqlite,
 };
-use std::str::FromStr;
 
 // Path segment labels will be matched with struct field names
 #[derive(Deserialize)]
@@ -101,26 +100,48 @@ async fn blog_comments_create(
 ) -> Result<impl IntoResponse, (StatusCode, String)> {
 	tracing::info!("Posting comment on blog#{}", blog_slug);
 	let comment = form.0;
-	tracing::debug!("got blog post: {:#?}", comment);
-	let query = r#"
-		INSERT INTO comments (user_id, reply_to, timestamp, text)
-		VALUES ((SELECT id FROM users WHERE users.username = $1), $3, CURRENT_TIMESTAMP, $4);
-
-		INSERT INTO blogs_comments (blog_id, comment_id)
-		VALUES ((SELECT id FROM blogs WHERE blogs.slug = $2), last_insert_rowid());
-	"#;
 	let commentcl = comment.clone();
-	let query_result = sqlx::query(query)
-		.bind(comment.username)
-		.bind(blog_slug)
-		.bind(comment.reply_to)
-		.bind(comment.text)
-		.execute(&ctx.db)
-		.await;
-	match query_result {
-		Ok(query_res) => {
+	tracing::debug!("got blog post: {:#?}", comment);
+	let mut transaction = ctx.db.begin().await.ok().unwrap();
+
+	let username = comment.username;
+	let reply_to = comment.reply_to;
+	let text = comment.text;
+
+	let query_result1 = sqlx::query!(
+		r#"
+			INSERT INTO comments (user_id, reply_to, timestamp, text)
+			VALUES ((SELECT id FROM users WHERE users.username = $1), $2, CURRENT_TIMESTAMP, $3);
+		"#,
+		username,
+		reply_to,
+		text
+	)
+	.execute(&mut *transaction)
+	.await
+	.ok()
+	.unwrap();
+	let comment_id = query_result1.last_insert_rowid();
+	let mut rows_affected = query_result1.rows_affected();
+
+	let query_result2 = sqlx::query!(
+		r#"
+			INSERT INTO blogs_comments (blog_id, comment_id)
+			VALUES ((SELECT id FROM blogs WHERE blogs.slug = $1), $2);
+		"#,
+		blog_slug,
+		comment_id
+	)
+	.execute(&mut *transaction)
+	.await
+	.ok()
+	.unwrap();
+	rows_affected += query_result2.rows_affected();
+
+	match transaction.commit().await {
+		Ok(_) => {
 			tracing::debug!("posted {}'s comment successfully", commentcl.username);
-			match query_res.rows_affected() {
+			match rows_affected {
 				2 => Ok(Json("Your comment was successfully posted.")),
 				0 => Err((StatusCode::BAD_REQUEST, "Failed to post comment.".to_string())),
 				_ => Err((
@@ -130,13 +151,14 @@ async fn blog_comments_create(
 			}
 		}
 		Err(e) => {
-			tracing::debug!("unable to post comment: {:#?} b/c error: {}", commentcl, e);
+			tracing::error!("unable to post comment: {:#?} b/c error: {}", commentcl, e);
 			Err((
 				StatusCode::INTERNAL_SERVER_ERROR,
 				"Posting comment had no result".to_string(),
 			))
 		}
 	}
+	// Ok(Json(json!("ok ")))
 }
 
 pub fn route_gets() -> Router<()> {
@@ -147,8 +169,8 @@ pub fn route_gets() -> Router<()> {
 
 pub fn route_posts() -> Router<()> {
 	Router::new()
-		.route("/comments/blog/:blog_slug", post(blog_comments_create))
 		.route("/comments/user/:username", post(users_comments_create))
+		.route("/comments/blog/:blog_slug", post(blog_comments_create))
 		.route_layer(permission_required!(
 			AuthBackend,
 			login_url = "/login",

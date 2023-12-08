@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     username varchar(20) NOT NULL UNIQUE,
     password_hash varchar(100) NOT NULL
 );
-
+CREATE INDEX IF NOT EXISTS idx_users_username ON users (username);
 -- Create `groups` table.
 CREATE TABLE IF NOT EXISTS groups (
     id integer PRIMARY KEY autoincrement,
@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS blogs (
     updated DATETIME NOT NULL,
     hidden BOOLEAN NOT NULL DEFAULT FALSE -- uri varchar(100) NOT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_blogs_slug ON blogs (slug);
 
 CREATE TABLE if not exists tags (
     id integer PRIMARY KEY autoincrement,
@@ -165,6 +166,7 @@ CREATE TABLE IF NOT EXISTS comments (
     text TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+CREATE INDEX IF NOT EXISTS idx_comments_user_id ON comments (user_id);
 
 CREATE TABLE IF NOT EXISTS blogs_comments (
     blog_id integer NOT NULL,
@@ -173,6 +175,7 @@ CREATE TABLE IF NOT EXISTS blogs_comments (
     FOREIGN KEY (blog_id) REFERENCES blogs(id),
     FOREIGN KEY (comment_id) REFERENCES comments(id)
 );
+CREATE INDEX IF NOT EXISTS idx_blogs_comments_blog_id_comment_id ON blogs_comments(blog_id, comment_id);
 
 CREATE TEMP TABLE IF NOT EXISTS VARIABLES (Name TEXT PRIMARY KEY, Value ANY);
 

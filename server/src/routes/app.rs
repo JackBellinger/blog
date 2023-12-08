@@ -5,7 +5,6 @@ use crate::{
 };
 use axum::{error_handling::HandleErrorLayer, http::StatusCode, middleware, BoxError, Router};
 use axum_login::{
-	permission_required,
 	tower_sessions::{Expiry, MemoryStore, SessionManagerLayer},
 	AuthManagerLayerBuilder,
 };
@@ -20,14 +19,14 @@ pub struct App {
 }
 
 #[derive(Clone, Debug)]
-pub(crate) struct ApiContext {
+pub struct ApiContext {
 	// config: Arc<Config>,
 	pub db: SqlitePool,
 }
 
 impl App {
 	pub async fn new() -> Result<Self, Box<dyn std::error::Error>> {
-		let db = SqlitePool::connect("db/blog.db").await?;
+		let db = SqlitePool::connect("./server/db/blog.db").await?;
 		sqlx::migrate!("db/migrations").run(&db).await?;
 
 		Ok(Self { db })

@@ -16,10 +16,10 @@
 
     <form method="post">
       <fieldset>
-        <legend>User login</legend>
+        <legend>Sign Up</legend>
         <p>
           <label for="username">Username</label>
-          <input name="username" id="username" value="guest" />
+          <input name="username" id="username" value="" />
         </p>
         <p>
           <label for="password">Password</label>
@@ -27,12 +27,12 @@
             name="password"
             id="password"
             type="password"
-            value="password"
+            value=""
           />
         </p>
       </fieldset>
 
-      <input type="submit" value="login" />
+      <input type="submit" value="signup" />
 
       {% if let Some(next) = next %}
       <input type="hidden" name="next" value="{{next}}" />

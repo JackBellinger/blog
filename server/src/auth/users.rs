@@ -1,9 +1,10 @@
 use async_trait::async_trait;
+use axum::Json;
 use axum_login::{AuthUser, AuthnBackend, AuthzBackend, UserId};
-use password_auth::verify_password;
+use password_auth::{generate_hash, verify_password};
 use serde::{Deserialize, Serialize};
 use sqlx::{FromRow, SqlitePool};
-use std::collections::HashSet;
+use std::{collections::HashSet, error::Error};
 
 #[derive(Clone, Serialize, Deserialize, FromRow)]
 pub struct User {
@@ -114,3 +115,49 @@ impl AuthzBackend for AuthBackend {
 //
 // Note that we've supplied our concrete AuthBackend here.
 pub type AuthSession = axum_login::AuthSession<AuthBackend>;
+
+pub trait SignUp {
+	async fn make_user(&self, creds: Credentials) -> Result<Option<User>, sqlx::Error>;
+}
+
+impl SignUp for AuthSession {
+	async fn make_user(&self, creds: Credentials) -> Result<Option<User>, sqlx::Error> {
+		let password_hash = generate_hash(creds.password);
+		let mut transaction = self.backend.db.begin().await.ok().unwrap();
+
+		let maybe_user: Option<User> = sqlx::query_as!(
+			User,
+			r#"
+				INSERT INTO users (username, password_hash)
+				VALUES ($1, $2)
+				RETURNING *;
+			"#,
+			creds.username,
+			password_hash,
+		)
+		.fetch_optional(&mut *transaction)
+		.await?;
+
+		let _query_result2 = sqlx::query!(
+			r#"
+				INSERT INTO users_groups (user_id, group_id)
+				values (
+					(select id from users where users.username = $1), 
+					(select id from groups where name = 'users'));
+			"#,
+			creds.username,
+		)
+		.execute(&mut *transaction)
+		.await?;
+		match transaction.commit().await {
+			Ok(_) => {
+				tracing::debug!("Successfully created user: {:#?}", maybe_user);
+				Ok(maybe_user)
+			}
+			Err(e) => {
+				tracing::error!("unable to created user: {:#?} b/c error: {:#?}", maybe_user, e);
+				Err(e)
+			}
+		}
+	}
+}

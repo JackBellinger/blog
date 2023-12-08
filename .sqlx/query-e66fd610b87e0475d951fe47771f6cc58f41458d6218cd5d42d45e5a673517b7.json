@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n\t\t\tINSERT INTO comments (user_id, reply_to, timestamp, text)\n\t\t\tVALUES ((SELECT id FROM users WHERE users.username = $1), $2, CURRENT_TIMESTAMP, $3);\n\t\t",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "e66fd610b87e0475d951fe47771f6cc58f41458d6218cd5d42d45e5a673517b7"
+}
