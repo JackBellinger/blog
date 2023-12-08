@@ -3,9 +3,10 @@
 	import dateformat from 'dateformat';
 
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
-	import type { BlogPost } from '@lib/utils/types';
+	import { CommentSource, type BlogPost } from '@lib/utils/types';
 	import Image from '@lib/components/atoms/Image.svelte';
 	import BlogCardGrid from './BlogCardGrid.svelte';
+	import CommentSection from './CommentSection.svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
@@ -83,6 +84,7 @@
 				/>
 			</div>
 		{/if}
+		<CommentSection source={CommentSource.Blog} identifier={post.slug} />
 	</main>
 </div>
 

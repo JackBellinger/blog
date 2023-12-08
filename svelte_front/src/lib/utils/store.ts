@@ -1,9 +1,10 @@
 import { derived, get, readable, writable } from 'svelte/store';
 import { importPosts } from '@lib/fetchers/posts';
-import type { BlogPost, SyncReadable } from './types';
+import type { BlogPost, Session, SyncReadable } from './types';
 import { type Page } from '@lib/utils/types';
 import { importPages } from '../fetchers/pages';
 import { importProjects } from '../fetchers/projects';
+import { fetchSession } from '@lib/fetchers/session';
 
 function createTheme() {
 	let currentTheme;
@@ -135,7 +136,7 @@ export const user = writable('');
 export const postStores = createFilterableAsyncStore(importPosts);
 export const pageStore: SyncReadable = createPages();
 export const projectStores = createFilterableAsyncStore(importProjects);
-
+export const sessionStore = asyncReadable({logged_in: false, username: null}, fetchSession)
 //return {
 //	subscribe,
 //	set: (newList) => {

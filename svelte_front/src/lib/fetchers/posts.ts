@@ -9,7 +9,7 @@ export async function importPosts(render = true) {
 		let filename = path.split('/').at(-1).split('.')[0];
 		const post = blogImports[path] as any;
 		if (post) {
-			// console.log("Parsing: ", post, post.default.current)
+			//console.log("Parsing: ", post, post.default.current)
 			posts.push({
 				...post.metadata,
 				slug: filename,
@@ -20,7 +20,7 @@ export async function importPosts(render = true) {
 		}
 	}
 	let retPosts = sortAndRelatePosts(posts);
-	// console.log('imported posts: ', retPosts);
+	//console.log('imported posts: ', retPosts);
 	return retPosts;
 }
 

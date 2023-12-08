@@ -57,11 +57,11 @@ describe('Opening the project store', () => {
 	it('should find all projects & slug = filename', async () => {
 		let path = './assets/md/projects';
 		const project_slugs = (await projectStores.items.load()).map((project) => project.slug).sort();
-		// console.log("slugs", project_slugs)
+		//console.log("slugs", project_slugs)
 		let file_names;
 		try {
 			file_names = await (await readdir(path)).map((filename) => filename.split('.')[0]).sort();
-			// console.log("filenames", file_names)
+			//console.log("filenames", file_names)
 		} catch (err) {
 			console.error(err);
 		}

@@ -17,7 +17,7 @@
 </script>
 
 <Page>
-	<div slot="header-post" />
+	<div slot="header-after" />
 	<div slot="left-sidebar" />
 	<div slot="right-sidebar" />
 	<main slot="main-content">

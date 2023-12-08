@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { pageStore } from '@lib/utils/store';
 	import LogoPageMenu from '../molecules/LogoPageMenu.svelte';
+	import UserButton from '../molecules/UserMenu.svelte';
 
 	const pages = pageStore.init;
 	let showBackground = true;
@@ -42,8 +43,9 @@
 			</div>
 
 			<div class="rightMenu">
-				<RssLink />
+				<!-- <RssLink /> -->
 				<ThemeToggle />
+				<UserButton/>
 			</div>
 		</nav>
 	</header>

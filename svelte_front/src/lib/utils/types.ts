@@ -22,6 +22,56 @@ export type SparkleType = {
 	style: any;
 };
 
+export type Session = {
+	logged_in: boolean;
+	username?: string;
+};
+
+export type Comment = {
+	id?: number;
+	username: string;
+	reply_to: number;
+	timestamp?: number;
+	upvotes?: number;
+	hidden?: boolean;
+	text: string;
+};
+
+export function defComment({
+	id = 1,
+	username = 'guest',
+	reply_to = 0,
+	timestamp = Date.now(),
+	upvotes = 0,
+	hidden = false,
+	text = '',
+}: {
+	id?: number;
+	username: string;
+	reply_to: number;
+	timestamp?: number;
+	upvotes?: number;
+	hidden?: boolean;
+	text: string;
+}): Comment {
+	return {
+		id, 
+		username: (username??"guest"),
+		reply_to,
+		timestamp,
+		upvotes,
+		hidden,
+		text,
+	};
+}
+
+export enum CommentSource {
+	Blog,
+	User,
+	Service,
+	Song
+}
+
 export type BlogPost = {
 	tags: string[];
 	keywords: string[];
@@ -61,3 +111,17 @@ export type FilterableAsyncStore = {
 	filter: StoreFilter;
 	filteredItems: FilteredStore;
 };
+
+type MergedType<T extends object, U extends Partial<T>> = { [K in keyof U]: U[K] } & {
+	[K in keyof T]: Exclude<T[K], undefined>;
+};
+
+// function addDefaultValues<T extends object, U extends Partial<T>>(type: T, data: U): MergedType<T, U> {
+// 	const defaults: Partial<T> = {};
+// 	for (const key in type) {
+// 		if (type.hasOwnProperty(key) && !data.hasOwnProperty(key)) {
+// 			defaults[key] = (type as any)[key];
+// 		}
+// 	}
+// 	return { ...defaults, ...data };
+// }

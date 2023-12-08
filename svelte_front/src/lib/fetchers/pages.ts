@@ -26,6 +26,6 @@ export function importPages(render = true) {
 		}
 	}
 	let pages = pages2d.flat();
-	// console.log('imported pages: ', pages);
+	//console.log('imported pages: ', pages);
 	return pages;
 }
