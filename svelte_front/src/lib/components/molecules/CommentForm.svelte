@@ -10,14 +10,14 @@
 	const handleSubmit = async () => {
 		// Send the comment data to the server
 		const response = await sessionStore.load().then((session) => {
-			console.log("Submitting comment, session is ", session)
-			if(!session.logged_in) {
-				sessionStorage.setItem('commentText', commentText)
+			console.log('Submitting comment, session is ', session);
+			if (!session.logged_in) {
+				sessionStorage.setItem('commentText', commentText);
 				const currentUrl = new URL(window.location.href);
-					const encodedUrl = encodeURIComponent(currentUrl.href);
-					const navigate_to = `/login?next=${encodedUrl}`;
-					// Redirect to login page
-					window.location.href = navigate_to;
+				const encodedUrl = encodeURIComponent(currentUrl.href);
+				const navigate_to = `/login?next=${encodedUrl}`;
+				// Redirect to login page
+				window.location.href = navigate_to;
 			} else {
 				let newComment = {
 					username: session.username,
@@ -25,13 +25,11 @@
 					timestamp: Date.now(),
 					text: commentText
 				};
-				postComment(0, identifier, newComment )
-				.then((response) => {
-					if (response.ok){ 
+				postComment(0, identifier, newComment).then((response) => {
+					if (response.ok) {
 						console.log('Comment submitted successfully!');
 						dispatch('comment', newComment, { cancelable: true });
-					}
-					else {
+					} else {
 						console.error('Error submitting comment. ', response.status, ': ', response.statusText);
 					}
 				});

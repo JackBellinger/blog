@@ -45,7 +45,7 @@
 			<div class="rightMenu">
 				<!-- <RssLink /> -->
 				<ThemeToggle />
-				<UserButton/>
+				<UserButton />
 			</div>
 		</nav>
 	</header>

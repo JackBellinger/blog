@@ -10,12 +10,16 @@
 	let upvote = () => {
 		comment.upvotes += upvoted ? 1 : -1;
 	};
-	let reply = () => {reply_to = comment.id}
+	let reply = () => {
+		reply_to = comment.id;
+	};
 </script>
 
 <div class="comment">
-	<div class="username">{comment.username}: 
-		{#if comment.timestamp}{getDurationSince(comment.timestamp)} ago {/if}
+	<div class="username">
+		{comment.username}:
+		{#if comment.timestamp}{getDurationSince(comment.timestamp)} ago
+		{/if}
 	</div>
 	<div id="second-line">
 		<div id="upvote"><Chip handler={upvote}>👍</Chip></div>

@@ -20,7 +20,7 @@ function convertMilliseconds(milliseconds) {
 }
 
 export function getDurationSince(millis: number) {
-	let since = new Date(millis)
+	let since = new Date(millis);
 	let duration = Date.now() - since.getTime();
 	return convertMilliseconds(duration);
 }

@@ -136,7 +136,7 @@ export const user = writable('');
 export const postStores = createFilterableAsyncStore(importPosts);
 export const pageStore: SyncReadable = createPages();
 export const projectStores = createFilterableAsyncStore(importProjects);
-export const sessionStore = asyncReadable({logged_in: false, username: null}, fetchSession)
+export const sessionStore = asyncReadable({ logged_in: false, username: null }, fetchSession);
 //return {
 //	subscribe,
 //	set: (newList) => {

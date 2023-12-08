@@ -44,7 +44,7 @@ export function defComment({
 	timestamp = Date.now(),
 	upvotes = 0,
 	hidden = false,
-	text = '',
+	text = ''
 }: {
 	id?: number;
 	username: string;
@@ -55,13 +55,13 @@ export function defComment({
 	text: string;
 }): Comment {
 	return {
-		id, 
-		username: (username??"guest"),
+		id,
+		username: username ?? 'guest',
 		reply_to,
 		timestamp,
 		upvotes,
 		hidden,
-		text,
+		text
 	};
 }
 

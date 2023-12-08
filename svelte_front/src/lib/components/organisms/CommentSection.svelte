@@ -8,8 +8,8 @@
 	export let source: CommentSource = CommentSource.Blog;
 	let reply_to = 0;
 	let comments: Comment[] = [];
-	let importComments = async () => { await queryComments(source, identifier)
-		.then(resp_comments => {
+	let importComments = async () => {
+		await queryComments(source, identifier).then((resp_comments) => {
 			comments = [...comments, ...resp_comments];
 		});
 	};
@@ -18,10 +18,10 @@
 	}
 	importComments();
 	const append_comment = (event) => {
-		console.log("appending: ", event)
+		console.log('appending: ', event);
 		comments = [...comments, event.detail];
 	};
-	$: comments, console.log("got new comments: ", comments)
+	$: comments, console.log('got new comments: ', comments);
 </script>
 
 <h2>Comments</h2>
