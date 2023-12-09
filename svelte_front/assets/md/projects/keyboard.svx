@@ -22,12 +22,13 @@ Mainly, I just wanted to make a keyboard. I had a mechanical keyboard from Amazo
 My goals for this keyboard were to make something quiet, smooth typing, and compact.
 I also wanted something beginner friendly that works with QMK/VIA so that I could get it assembled and running without too much work and leave myself room to add functionality later.
 
+
 ### Group buy
 I joined the wuque studios ikki68 aurora group buy, and recieved it a year later. My gmk keycaps took even longer to arrive 😅.
 I got the switches pretty easily, and I pulled the keycaps off my old board to use until my new set arrived.
 
 ### Switches
-I went with Boba linear switches, and I really enjoy the sounds they make. hello I am Jack and My name is Jack and I am a software engineer and I like to write blogs and code and make cool stuff for you to use. I hope you like reading this blog and using my software. I can type pretty fast but it's hard to think of things to say so fastly. I can type type type type faster than I can think sometimes, but if I'm copying or writing something I already know what to type then I guess I'm limited by my typing skills. I can type words fast but when I'm writing code it's a bit harder to find the `\{\}` and \(\) keys and numbers and + - ~ and that sort of stuff. I guess it's kind of precise so it's good not to rush and make mistakes because it would be hard to catch a spelling error. The difference between stuff can be tricky to spot.
+I went with Boba linear switches, and I really enjoy the sounds they make. 
 
 ## Features
 After I had been using the keyboard for a while, I decided to try out some of the more advanced features.
