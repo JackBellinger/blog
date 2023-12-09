@@ -1,15 +1,13 @@
-use std::net::{IpAddr, SocketAddr};
-use std::str::FromStr;
-
 use clap::Parser;
-use tracing_subscriber::EnvFilter;
-use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
-use tracing_subscriber::util::SubscriberInitExt;
+use std::{
+	net::{IpAddr, SocketAddr},
+	str::FromStr,
+};
+use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
-
-mod store;
-mod routes;
 mod auth;
+mod routes;
+mod store;
 mod utils {
 	pub mod workspace;
 }
@@ -17,7 +15,7 @@ mod utils {
 use crate::routes::App;
 // SETUP Constants
 const FRONT_SVELTE_PUBLIC: &str = "./svelte_front/dist";
-const FRONT_YEW_PUBLIC: &str = "./yew_front/dist";
+const FRONT_YEW_PUBLIC: &str = "/yew_front/dist";
 
 // Setup the command line interface with clap.
 #[derive(Parser, Debug)]
@@ -35,7 +33,12 @@ struct Opt {
 	#[clap(short = 'p', long = "port", default_value = "8080")]
 	port: u16,
 
-	#[clap(short = 's', long = "secret", default_value="ERROR: set the SERVER_SECRET env variable", env="SERVER_SECRET")]
+	#[clap(
+		short = 's',
+		long = "secret",
+		default_value = "ERROR: set the SERVER_SECRET env variable",
+		env = "SERVER_SECRET"
+	)]
 	secret: String,
 }
 

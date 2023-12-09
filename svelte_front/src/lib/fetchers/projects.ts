@@ -7,7 +7,7 @@ export async function importProjects(render = true) {
 	const projects: BlogPost[] = [];
 	for (const path in projectImports) {
 		let filename = path.split('/').at(-1).split('.')[0];
-		// console.log("aaa", filename)
+		//console.log("aaa", filename)
 		const project = projectImports[path] as any;
 		if (project) {
 			projects.push({
@@ -20,7 +20,7 @@ export async function importProjects(render = true) {
 		}
 	}
 	let retProjs = sortAndRelateProjects(projects);
-	// console.log('imported projects: ', retProjs);
+	//console.log('imported projects: ', retProjs);
 	return retProjs;
 }
 

@@ -4,3 +4,10 @@ members = [
   "server",
   "yew_front",
 ]
+
+[workspace.tool.rustfmt]
+target = "2021"
+
+[workspace.lints.clippy]
+unsafe_code = "forbid"
+tabs_in_doc_comments = "allow"

@@ -6,8 +6,9 @@ mod restricted;
 
 mod frontend;
 
-pub mod data_api;
+pub mod comments;
 pub mod session;
 
 mod notimplemented;
+pub use crate::routes::app::ApiContext;
 pub use notimplemented::not_implemented_route;

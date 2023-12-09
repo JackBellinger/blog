@@ -1,11 +1,10 @@
 ---
-slug: qmk-macros
 title: Adding macros in my QMK keyboard
 coverImage: /blog/assets/images/projects/ikki-aurora.webp
 date: 2023-11-10T04:53:49.000Z
-updated: 2023-11-19T21:09:21.000Z
+updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the macros on my keyboard with QMK
-hidden: true
+hidden: false
 tags:
 - Workspace
 - QMK
@@ -127,42 +126,43 @@ Search copies highlighted text
 ```c:macro.c
 #include "macro.h"
 void search(void) {
-    SEND_STRING(SS_LCTL("c")); send_macro(MAC_BROWSER); SEND_STRING(SS_LCTL("l" "v") SS_TAP(X_ENT));
-}
-//These 3 need to be updated if the task bar order changes or on different OSs, but they only have to be changed here
-void terminal(void) {
-    SEND_STRING(SS_LGUI("1"));
+    SEND_STRING(SS_LCTL("c"));
+    send_macro(MAC_BROWSER);
+    SEND_STRING(SS_DELAY(200) SS_LCTL("t" "l" "v") SS_TAP(X_ENT));
 }
 void editor(void) {
+    SEND_STRING(SS_LGUI("1"));
+}
+void terminal(void) {
     SEND_STRING(SS_LGUI("2"));
 }
 void browser(void) {
     SEND_STRING(SS_LGUI("3"));
 }
 void screenshot(void) {
-    SEND_STRING(SS_TAP(X_PSCR) SS_LGUI("r") SS_DELAY(500) "mspaint" SS_TAP(X_ENTER) SS_DELAY(500) SS_LCTL("v"));
+    SEND_STRING(SS_TAP(X_PSCR) SS_LGUI("r") SS_DELAY(500) "mspaint" SS_TAP(X_ENTER) SS_DELAY(600) SS_LCTL("v"));
 }
 
 /* Generate function to check if keycode is a macro */
 int KC_isMacro(uint16_t keycode) {
-    switch(keycode) {
-        #define MACRO(a, b, c) case a:
+    switch (keycode) {
+#define MACRO(a, b, c) case a:
         MACRO_TABLE
-        #undef MACRO
-            return 1;
+#undef MACRO
+        return 1;
     };
     return 0;
 }
 
 /* Generate Macro keycode to function map*/
 struct action macros = {{
-#define MACRO(a,b,c) &c,
+#define MACRO(a, b, c) &c,
     MACRO_TABLE
 #undef MACRO
 }};
 
 void send_macro(uint16_t keycode) {
-    macros.map[keycode-SAFE_RANGE]();
+    macros.map[keycode - SAFE_RANGE]();
 }
 ```
 ### Tap Dance

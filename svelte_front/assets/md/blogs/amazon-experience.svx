@@ -7,7 +7,6 @@ excerpt: Blog Template
 hidden: true
 tags:
   - Jobs
-  - Amazon
 ---
 
 <script>
@@ -28,3 +27,6 @@ tags:
 ### Annotations
 ### Rapid Recap
 a<a><SparklingHighlight color="secondary">Rapid Recap!</SparklingHighlight></a>a
+
+### What did I learn?
+

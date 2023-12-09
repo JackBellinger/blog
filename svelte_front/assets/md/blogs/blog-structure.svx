@@ -1,9 +1,9 @@
 ---
-slug: blog-structure
 title: blog Structure
+coverImage: /blog/assets/images/blogs/project-structure.avif
 date: 2023-09-26T02:32:00.000Z
 excerpt: How code and structure are organized.
-coverImage: /blog/assets/images/blogs/project-structure.avif
+hidden: false
 tags:
   - Documentation
   - Blog
@@ -15,34 +15,7 @@ tags:
   import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
 </script>
 
-This project follows the a SPA style architecture, with a components library, pages directory, all mounted inside an App component, with routing handled by  Navaid. When the code is deployed, the svelte code is compiled to vanillaJS and everything is bundled with Vite into a few files.
-
-## Components
-
-The components are organized following the [Atomic Design](https://medium.com/@WeAreMobile1st/atomic-design-getting-started-916bc81bad0e) principles, albeit somewhat simplified. Components are in the `src/lib/components` folder, and are organized in the following way:
-
-### Atoms
-
-Atoms are the most basic components, which can be seen as building blocks for other components. They're small and self-contained, and do only one thing. Examples of atoms are buttons, inputs, and tags.
-
-### Molecules
-
-Molecules are groups of atoms that work together to form a more complex component. Examples of molecules are cards, groups of links, or an alert callout.
-
-### Organisms
-
-Organisms, in this project, are code blocks that represent a section of a page, such as the header, footer and hero section. They can be used directly in a page as a sort of building block, so the page's code can be as simple as this:
-
-<CodeBlock lang="html" filename="/src/pages/Home.svelte">
-
-```html
-<Header />
-<Hero />
-<About />
-<Footer />
-```
-
-</CodeBlock>
+This project follows the a SPA style architecture, with a components library, pages directory, all mounted inside an App component, with routing handled by Navaid. When the code is deployed, the svelte code is compiled to vanillaJS and everything is bundled with Vite into a few files.
 
 ## Pages
 
@@ -51,5 +24,8 @@ Pages are in the /src/Pages directory
 - There are two different page layouts in this site: the "Waves" layout, which all pages inside the `(waves)` folder use, and the "Blog Article" layout, which all pages inside the `(blog-article)` folder use;
 
 ## Blog Posts
+To know how the blog posts are created and parsed, check out [How Blog Posts Work](/blog-explainer).
 
-To know how blog posts work and how to create new ones, check out [How Blog Posts Work](/blog-posts).
+### Deployment
+When the frontend is compiled with Svelte and bundled with Vite, the markdown files are compiled into svelte components by MDsvex, then copied into `./svelte_front/dist/assets/md`.
+When they are parsed, the

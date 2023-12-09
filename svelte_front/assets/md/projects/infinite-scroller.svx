@@ -10,9 +10,6 @@ tags:
   - Svelte
 ---
 
-
-
-
 <script>
   import Image from "@lib/components/atoms/Image.svelte";
 </script>
@@ -21,7 +18,9 @@ tags:
 I want to make an infinite scrolling container for a list of items that can search by title and filter by tags. Ideally it would take as params the data source (a list of items or a database) and a component to display that data in (which needs to take that data as a prop); something like `<InfiniteScroller dataSource={BlogAsyncStore} displayComponent={BlogPostCard} />`. I'll have to think more about whether it should require the data items to have a tags object or to make tag filtering optional.
 
 
-Currently, the blogs are stored as files on the server and imported into a store, but I plan to add a database to the backend after I add enough content, add testing, and find the right place to host.
+Currently, the blogs are stored as files on the server and imported into a store all at once.
+Next, I need to parse the metadata into the blogs db table and add an API so that I can query them.
+Then, I need to change the frontend so it first requests the top x or featured blogs, and queries whatever the user scrolls to.
 
 #### Links, inspiration, etc
 
@@ -32,8 +31,10 @@ Currently, the blogs are stored as files on the server and imported into a store
 - [x] Add scrolling list of blog summary cards
 - [x] Add title search and tag filter for cards
 - [x] Add reactive async store to implement the filter logic
+- [x] Add blog database
+- [ ] Aake Blogs api
 - [ ] Add filter terms to query params
-- [ ] Add blog database
+- [ ] Parse blog metadata into db
 - [ ] Make sure the api is abstract to handle any data and list display component
 - [ ] Fine tune when to query for more items
 - [ ] Dynamically remove and add tags of filtered items instead of always displaying all items' tags

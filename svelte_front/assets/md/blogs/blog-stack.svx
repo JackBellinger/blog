@@ -10,14 +10,13 @@ tags:
   - Documentation
 ---
 
-
-
 ## TL;DR
 I made this personal blog / portfolio to post articles about anything and devlogs about stuff I'm working on.
 
 It's built using Svelte, Vite, and Axum.
 The backend is in the server directory and the blog frontend is in the svelte_front directory.
 There's a placeholder yew todo app is in the yew_front directory that I added to test out serving multiple frontends from the same webserver.
+As this blog is a launch pad for my projects, each new feature will run on this backend until it's ready to be spun out into a seperate server. I am architecting the features and applications in such a way that splitting the apps out will be easy. Ease of architectural refactoring is a major reason why I want to try out the microfrontends pattern. Time will tell if it is good in practice.
 The frontend is currently hosted on Github pages for simplicity until I implement backend features.
 
 

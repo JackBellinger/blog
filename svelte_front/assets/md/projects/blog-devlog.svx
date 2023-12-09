@@ -4,6 +4,7 @@ coverImage: /blog/assets/images/projects/app-architectures.webp
 date: 2023-09-26T02:32:00.000Z
 updated: 2023-11-22T21:45:39.000Z
 excerpt: How I created this blog
+hidden: false
 tags:
   - Blog
   - Rust
@@ -34,17 +35,16 @@ Classic horizontally scaled backend.
 Vertically scale
 do some performance testing to see how much traffic I could squeeze out of a basic server.
 
-
-
 ## Todos
 ### Backend
 - [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum?
-- [ ] host backend somewhere
-- [ ] get a domain name & certificate
-- [ ] database & blob store for images, markdown files, todos, metrics, users, comments, etc
-- [ ] flowlogging
 - [x] minimize dependencies
+- [x] Database for users, comments
+- [ ] auto parse markdown metadata into db
+- [ ] Dashboard and flowlogging
+- [ ] get a domain name & certificate
 - [ ] bot / dos prevention, cloudflare?
+- [ ] host backend somewhere
 ### Devops
 - [ ] performance testing
 - [ ] logging + dashboard
@@ -89,21 +89,22 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 
 ## Release 0.1.0
 
-### Frontend Todo
+### Frontend 
 - [x] Adapt Sveltekit blog template to svelte/vite served by axum backend
 - [x] create a cool styled navbar
 - [x] start a few articles for testing content / display
 - [x] use spa router library
 - [x] add images
 - [x] host on github.io
+- [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
+- [x] make `<Image>` srcset to scale images better, particularly on mobile
+- [ ] refine head metadata
 
-### Backend Todo
+### Backend
 - [x] setup basic axum server
 - [x] route frontend to compiled svelte dir
 - [x] enable routing to more yew in addition to svelte
 - [x] send route to frontend to enable page routing: 404s under blog reroute to blog index page
-
-## Release 0.2.0: Backend
 
 ### Content
 - [x] add textual descriptions, comments, etc to the articles
@@ -112,16 +113,10 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 - [ ] write a blog about working at Redjack
 - [x] use github tickets
 
-### Frontend
-- [x] re-style BlogCardGrid to show cards vertically in the articles/projects pages Frontend
-- [x] make `<Image>` srcset to scale images better, particularly on mobile
-- [ ] refine head metadata
-
 ### Devops
-- [x] Integ / unit testing
+- [x] Frontend Integ / unit testing
 - [x] code scanner
 - [x] deployment pipeline: github actions
-
 
 ### Bugs
 - [x] related posts have wrong link

@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n\t\t\tINSERT INTO blogs_comments (blog_id, comment_id)\n\t\t\tVALUES ((SELECT id FROM blogs WHERE blogs.slug = $1), $2);\n\t\t",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "a30683f5a885b5484d6012c36a59065a068dda21319c682de0110946cc9766b9"
+}

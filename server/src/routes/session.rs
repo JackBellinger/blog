@@ -1,21 +1,26 @@
 // print out session
-
-use axum::{response::IntoResponse, Json};
+use crate::auth::users::AuthSession;
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Json, Router};
+use serde::Serialize;
 use serde_json::json;
-use tower_sessions::Session;
 
-/// output entire session object
-pub fn handler(session: Session) -> impl IntoResponse {
-	tracing::info!("Seeking session info");
-	Json(json!({ "session": format!("{:?}", session) }))
+#[allow(dead_code)]
+#[derive(Debug, Serialize)]
+struct Session {
+	username: String,
 }
 
-/// output session data in json
-pub fn data_handler(session: Session) -> impl IntoResponse {
-	tracing::info!("Seeking session data");
-	let user_id: String = session
-		.get("user_id")
-		.expect("Could not deserialize.")
-		.unwrap_or_default();
-	Json(json!({ "user_id": user_id }))
+pub fn router() -> Router { Router::new().route("/session", get(self::get::session)) }
+mod get {
+	use super::*;
+
+	pub async fn session(auth_session: AuthSession) -> impl IntoResponse {
+		match auth_session.user {
+			Some(user) => Json(json!(Session {
+				username: user.username
+			}))
+			.into_response(),
+			None => StatusCode::UNAUTHORIZED.into_response(),
+		}
+	}
 }

@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"bundle": "./bundle-for-axum.sh",
+		"bundle": "vite build && ./bundle-for-axum.sh",
 		"preview": "vite preview",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",

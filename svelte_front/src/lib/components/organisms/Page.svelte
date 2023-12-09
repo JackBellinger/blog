@@ -15,7 +15,7 @@
 			<Header {logoText} />
 			<Toast />
 		{/if}
-		<slot name="header-post" />
+		<slot name="header-after" />
 	</header>
 	<section class="left-sidebar">
 		<slot name="left-sidebar" />

@@ -3,6 +3,7 @@ title: How Blog Posts Work
 coverImage: /blog/assets/images/blogs/mdsvex.avif
 date: 2023-09-26T02:32:00.000Z
 excerpt: How to manage existing blog posts and create new ones
+hidden: false
 tags:
   - Documentation
   - Blog
@@ -52,6 +53,47 @@ tags:
 ---
 ```
 </CodeBlock>
+
+## Components
+
+The components are organized following the [Atomic Design](https://medium.com/@WeAreMobile1st/atomic-design-getting-started-916bc81bad0e) principles, albeit somewhat simplified. Components are in the `src/lib/components` folder, and are organized in the following way:
+
+### Atoms
+
+Atoms are the most basic components, which can be seen as building blocks for other components. They're small and self-contained, and do only one thing. Examples of atoms are buttons, inputs, and tags.
+
+### Molecules
+
+Molecules are groups of atoms that work together to form a more complex component. Examples of molecules are cards, groups of links, or an alert callout.
+
+### Organisms
+
+Organisms, in this project, are code blocks that represent a section of a page, such as the header, footer and hero section. They can be used directly in a page as a sort of building block, so the page's code can be as simple as this:
+
+```html:Page.svelte
+<Page>
+	<div slot="header-after" />
+	<div slot="left-sidebar" />
+	<div slot="right-sidebar" />
+	<main slot="main-content">
+    <Hero>
+      <h1 class="hello">Hello, I'm Jack Bellinger</h1>
+      <p>I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
+      <div class="intro">
+        Send me a message!
+        <Socials />
+      </div>
+    </Hero>
+    <BlogCardGrid
+      posts={projects.filter((proj) => !proj.hidden)}
+      title={'Projects'}
+      description={"Here's what I'm working on!"}
+      numToShow={howManyRecent}
+    />
+    <BlogCardGrid posts={posts.filter((post) => !post.hidden)} title={'Articles'} numToShow={howManyRecent} />
+  </main>
+</Page>
+```
 
 ## Managing blog posts
 

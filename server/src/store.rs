@@ -10,7 +10,5 @@ impl Store {
 		}
 	}
 
-	pub fn api_token_check(&self, auth_header: &str) -> bool {
-		auth_header == format!("Bearer {}", self.api_token)
-	}
+	pub fn api_token_check(&self, auth_header: &str) -> bool { auth_header == format!("Bearer {}", self.api_token) }
 }
