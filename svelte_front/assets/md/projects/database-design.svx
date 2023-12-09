@@ -9,49 +9,6 @@ tags:
   - Database
 ---
 
-<script lang="ts">
-  import Comment from "@lib/components/molecules/Comment.svelte";
-  let comment0: Comment = {
-    comment_id: 0,
-    timestamp: new Date("2023-12-03T19:06:14.000Z"),
-    username: "JackBellinger",
-    text: "Hello World",
-    upvotes: 0,
-    reply_to: 0,
-    replies: [2, 3]
-  }
-  let comment1: Comment = {
-    comment_id: 1,
-    timestamp: new Date("2023-12-03T18:06:14.000Z"),
-    username: "JackBellinger",
-    text: "Hello World: blahblahblahblah blah doodoodoodododododododododod hihi textHello World: blahblahblahblah blah doodoodoodododododododododod hihi text",
-    upvotes: 1,
-    reply_to: undefined,
-    replies: [2, 3]
-  }
-  let comment2: Comment = {
-    comment_id: 2,
-    timestamp: new Date("2023-12-03T19:06:14.000Z"),
-    username: "JackBellinger",
-    text: "Hello World: blahblahblahblah blah doodoodoodododododododododod hihi text",
-    upvotes: 2,
-    reply_to: 1,
-    replies: [2, 3]
-  }
-  let comment3: Comment = {
-    comment_id: 3,
-    timestamp: new Date("2023-12-03T19:06:14.000Z"),
-    username: "JackBellinger",
-    text: "Hello World: blahblahblahblah blah doodoodoodododododododododod hihi text",
-    upvotes: 2,
-    reply_to: 1,
-    replies: [2, 3]
-  }
-</script>
-
-<Comment comment={comment0}/>
-<Comment comment={comment1}/>
-
 # Database
 In this devlog I will document the various features which store data, how I design the tables and query patterns, and what technologies I try for each.
 
