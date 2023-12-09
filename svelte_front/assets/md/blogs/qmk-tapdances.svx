@@ -1,6 +1,6 @@
 ---
 title: Adding tap dance in my QMK keyboard
-coverImage: /blog/assets/images/projects/ikki-aurora.webp
+coverImage: /blog/assets/images/blogs/qmk-tapdance.webp
 date: 2023-11-19T21:09:21.000Z
 updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the tap dances on my keyboard with QMK

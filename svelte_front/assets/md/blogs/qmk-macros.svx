@@ -1,6 +1,6 @@
 ---
 title: Adding macros in my QMK keyboard
-coverImage: /blog/assets/images/projects/ikki-aurora.webp
+coverImage: /blog/assets/images/blogs/qmk-layers.webp
 date: 2023-11-10T04:53:49.000Z
 updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the macros on my keyboard with QMK
