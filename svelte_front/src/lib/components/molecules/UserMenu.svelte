@@ -17,7 +17,7 @@
 				<p><a href="/signup?next={encodedUrl}">SignUp</a></p>
 			{/if}
 		{:else}
-			<p>Status: <br>offline</p>
+			<p>Status: <br />offline</p>
 		{/if}
 	{:catch error}
 		<p style="color: red">{error.message}</p>
