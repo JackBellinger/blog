@@ -21,7 +21,7 @@ In this devlog I will document the various features which store data, how I desi
 
 # Todo
 - [x] Comments data design
-- [ ] Comments API 
+- [x] Comments API 
 - [x] Blog data design
 - [ ] Blog API 
 - [x] Music data design
