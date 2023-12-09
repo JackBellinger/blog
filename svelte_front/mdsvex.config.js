@@ -1,5 +1,4 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-import remarkBreaks from 'remark-breaks';
 import remarkCodeTitles from 'remark-flexible-code-titles';
 import remarkGfm from 'remark-gfm';
 import stringWidth from 'string-width';
@@ -27,8 +26,7 @@ const config = defineConfig({
 				//handleMissingLanguageAs: string, // optional, default is undefined
 			}
 		],
-		[remarkGfm, { stringLength: stringWidth }],
-		remarkBreaks
+		[remarkGfm, { stringLength: stringWidth }]
 	]
 });
 
