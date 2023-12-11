@@ -12,7 +12,7 @@ serde = "1"
 serde_derive = "1"
 yew = { version = "0.21.0", features = ["csr"] }
 #yew = { path = "/home/user/code/yew/packages/yew", features = ["csr"] }
-gloo = "0.10"
+gloo = "0.11"
 
 [dependencies.web-sys]
 version = "0.3"
