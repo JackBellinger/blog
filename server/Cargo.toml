@@ -13,7 +13,7 @@ axum = {version = "0.7.1" }
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 async-trait = "0.1.74"
-axum-login = "0.10.1"
+axum-login = "0.11.3"
 # axum-extra = { version = "*", features = ["spa"] }
 clap = { version = "4.4.10", features = ["derive", "env"] }
 chrono = { version = "0.4", features = ["serde"] }
