@@ -2,7 +2,7 @@
 	import { HttpRegex } from '@lib/utils/regex';
 
 	export let additionalClass: string | undefined = undefined;
-	export let imageUrl: string = '';
+	export let imageUrl: string = 'https://picsum.photos/200';
 	export let href: string | undefined = undefined;
 	const isExternalLink = !!href && HttpRegex.test(href);
 	//export let target: '_self' | '_blank' = isExternalLink ? '_blank' : '_self';
@@ -61,7 +61,7 @@
 		position: relative;
 		transition: transform 1000ms ease;
 		.card-content {
-			padding: 0.3rem 0.3rem 0.1rem 0.3rem;
+			padding: 0.3rem 0.3rem 1.1rem 1.3rem;
 		}
 		a {
 			overflow: hidden;

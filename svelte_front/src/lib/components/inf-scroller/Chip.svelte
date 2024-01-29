@@ -1,14 +1,15 @@
-<script>
+<script lang='ts'>
 	let active = false;
-	export let handler;
+	export let handler: (is_selected: boolean, ...args: any[]) => void; // Adjust type as needed
+	export let value: any = undefined;
 </script>
 
 <button
 	tabindex="0"
 	aria-pressed="false"
 	on:click={() => {
-		handler();
 		active = !active;
+		handler(active, value);
 	}}
 	class:active
 >

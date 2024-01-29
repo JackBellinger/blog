@@ -2,7 +2,7 @@
 	import { type Comment } from '@lib/utils/types';
 	import { getDurationSince } from '@lib/utils/time';
 	import Callout from '../atoms/Callout.svelte';
-	import Chip from '../atoms/Chip.svelte';
+	import Chip from '../inf-scroller/Chip.svelte';
 	import Button from '../atoms/Button.svelte';
 	export let comment: Comment;
 	export let reply_to = 0;

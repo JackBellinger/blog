@@ -2,20 +2,21 @@ import type { BlogPost } from '@lib/utils/types';
 
 export async function importProjects(render = true) {
 	//https://vitejs.dev/guide/projects.html#glob-import
-	const projectImports = import.meta.glob('@assets/md/projects/*.svx', { eager: true });
+	const projectImports = import.meta.glob('@assets/*.mdx', { eager: true });
 
 	const projects: BlogPost[] = [];
 	for (const path in projectImports) {
 		let filename = path.split('/').at(-1).split('.')[0];
 		//console.log("aaa", filename)
 		const project = projectImports[path] as any;
+		console.log("proj: ", project)
 		if (project) {
 			projects.push({
 				...project.metadata,
 				slug: filename,
-				tags: project.metadata.tags.map((tag) => tag.toLowerCase()),
+				tags: project.metadata.tags,//?.map((tag) => tag.toLowerCase()),
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
-				module: project
+				component: project.default
 			});
 		}
 	}
@@ -68,7 +69,7 @@ const getRelatedPosts = (projects: BlogPost[], project: BlogPost) => {
 //export async function importProjects(render = true) {
 //  const blogImports = import.meta.glob("@assets/images/*", { eager: true });
 //  //https://vitejs.dev/guide/projects.html#glob-import
-//  //const images = import.meta.glob("@assets/images/*.svx", { eager: true });
+//  //const images = import.meta.glob("@assets/images/*.mdx", { eager: true });
 //  //const projects: Project[] = [];
 //  for (const proj of projectDB) {
 //    proj.imagePath = new URL(proj.imagePath, import.meta.url).href;

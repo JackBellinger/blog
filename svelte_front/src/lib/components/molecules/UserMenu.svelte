@@ -13,11 +13,11 @@
 				<p><a href="/comments/user/{session.username}">{session.username}</a></p>
 				<p><a href="/logout?next={encodedUrl}">Log out</a></p>
 			{:else}
-				<p><a href="/login?next={encodedUrl}">Login/</a></p>
+				<p><a href="/login?next={encodedUrl}">Login</a></p>
 				<p><a href="/signup?next={encodedUrl}">SignUp</a></p>
 			{/if}
 		{:else}
-			<p>Status: <br />offline</p>
+			<p>Backend: <br />offline</p>
 		{/if}
 	{:catch error}
 		<p style="color: red">{error.message}</p>

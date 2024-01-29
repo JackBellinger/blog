@@ -9,11 +9,15 @@
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
 	import { postStores } from '@lib/utils/store';
-	import { projectStores } from '@lib/utils/store';
 	import Page from '@lib/components/organisms/Page.svelte';
 	import Socials from '@lib/components/molecules/Socials.svelte';
+	import type { BlogPost } from '@lib/utils/types';
 
 	let howManyRecent = 4;
+	let features_posts: BlogPost[];
+	postStores.then(store => store.items.subscribe(posts => {
+		features_posts = posts.filter((post) => !post.hidden)
+	}))
 </script>
 
 <Page>
@@ -32,7 +36,7 @@
 			</Hero>
 		</div>
 
-		{#await projectStores.items.load()}
+		<!-- {#await projectStores.items.load()}
 			<p>...parsing projects</p>
 		{:then projects}
 			<BlogCardGrid
@@ -43,14 +47,12 @@
 			/>
 		{:catch error}
 			<p style="color: red">{error.message}</p>
-		{/await}
+		{/await} -->
 
-		{#await postStores.items.load()}
-			<p>...parsing markdown</p>
-		{:then posts}
-			<BlogCardGrid posts={posts.filter((post) => !post.hidden)} title={'Articles'} numToShow={howManyRecent} />
-		{:catch error}
-			<p style="color: red">{error.message}</p>
+		{#await postStores}
+			<p>...checking for backend connectivity</p>
+		{:then postStores}
+				<BlogCardGrid posts={features_posts} title={'Articles'} numToShow={howManyRecent} />
 		{/await}
 	</main>
 </Page>

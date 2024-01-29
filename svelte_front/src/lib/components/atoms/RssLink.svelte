@@ -5,14 +5,12 @@
 	import { postStores } from '@lib/utils/store';
 </script>
 
-{#await postStores.items.load()}
-	<p>...parsing markdown</p>
-{:then posts}
+{#await postStores}
+	<p>...checking for backend connectivity</p>
+{:then postStores}
 	<button on:click={() => notifications.warning('Not implemented!', 1000)} title="Subscribe to my RSS Feed">
 		<RssIcon />
 	</button>
-{:catch error}
-	<p style="color: red">{error.message}</p>
 {/await}
 
 <!--<a href="/rss.xml" target="_blank" rel="noopener noreferrer" title="Subscribe to my RSS Feed">

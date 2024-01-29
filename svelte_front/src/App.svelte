@@ -6,9 +6,8 @@
 	import { onMount } from 'svelte';
 	import '@lib/scss/global.scss';
 	import type { Page, SyncReadable } from '@lib/utils/types';
+	import { pageStore } from '@lib/utils/store';
 	import { theme } from '@lib/utils/store';
-
-	export let pageStore: SyncReadable = undefined;
 
 	let savestore = false;
 	$: if (savestore && $theme) {

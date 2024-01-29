@@ -1,14 +1,13 @@
 <script lang="ts">
-	import BlogPostCard from '@lib/components/molecules/BlogPostCard.svelte';
+	import BlogPostCard from '@lib/components/inf-scroller/BlogPostCard.svelte';
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
 	import type { BlogPost } from '@lib/utils/types';
 	import Button from '../atoms/Button.svelte';
 
-	export let posts: BlogPost[];
+	export let posts: BlogPost[] = [];
 	export let title: string;
 	let title_Lower = title.toLocaleLowerCase();
 	export let numToShow: number = undefined;
-	export let showImages = true;
 
 	let locations = ['articles', 'projects'];
 	let location = '';
@@ -35,15 +34,7 @@
 	</svelte:fragment>
 	<div class="grid">
 		{#each posts.slice(0, numToShow) as post}
-			<BlogPostCard
-				slug={post.slug}
-				title={post.title}
-				excerpt={post.excerpt}
-				tags={post.tags}
-				readingTime={post.readingTime}
-				coverImage={post.coverImage}
-				showImage={showImages}
-				href_prefix={'/blog/' + location}
+			<BlogPostCard item={post} displayProps={{href_prefix: '/blog/articles'}}
 			/>
 		{/each}
 	</div>
