@@ -1,5 +1,5 @@
 use crate::auth::users::{AuthBackend, AuthSession};
-use askama::Template;
+use askama_axum::Template;
 use axum::{http::StatusCode, response::IntoResponse, routing::get, Router};
 use axum_login::permission_required;
 

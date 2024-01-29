@@ -1,5 +1,5 @@
--- # Entity schema.
--- id BIGINT PRIMARY KEY GENERATED{BY DEFAULT} AS IDENTITY,
+-- # Init schema for Auth and Comments
+
 -- Create `users` table.
 CREATE TABLE IF NOT EXISTS users (
     id integer PRIMARY KEY autoincrement,
@@ -57,10 +57,14 @@ VALUES ('superusers');
 
 -- Insert individual permissions.
 INSERT OR IGNORE INTO permissions (name)
-VALUES ('protected.read');
+VALUES ('login.read');
+INSERT OR IGNORE INTO permissions (name)
+VALUES ('login.write');
 
 INSERT OR IGNORE INTO permissions (name)
-VALUES ('restricted.read');
+VALUES ('admin.read');
+INSERT OR IGNORE INTO permissions (name)
+VALUES ('admin.write');
 
 -- Insert group permissions.
 INSERT OR IGNORE INTO groups_permissions (group_id, permission_id)
@@ -73,7 +77,7 @@ VALUES (
         (
             SELECT id
             FROM permissions
-            WHERE name = 'protected.read'
+            WHERE name = 'login.read'
         )
     ),
     (
@@ -85,7 +89,31 @@ VALUES (
         (
             SELECT id
             FROM permissions
-            WHERE name = 'restricted.read'
+            WHERE name = 'login.write'
+        )
+    ),
+    (
+        (
+            SELECT id
+            FROM groups
+            WHERE name = 'superusers'
+        ),
+        (
+            SELECT id
+            FROM permissions
+            WHERE name = 'admin.read'
+        )
+    ),
+    (
+        (
+            SELECT id
+            FROM groups
+            WHERE name = 'superusers'
+        ),
+        (
+            SELECT id
+            FROM permissions
+            WHERE name = 'admin.write'
         )
     );
 
@@ -134,27 +162,9 @@ VALUES (
 -- when swapping to postgrsql replace: s/ IDENTITY / GENERATED { BY DEFAULT } AS IDENTITY /g
 CREATE TABLE IF NOT EXISTS blogs (
     id integer PRIMARY KEY autoincrement,
-    slug varchar(20) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    excerpt TEXT NOT NULL,
-    timestamp DATETIME NOT NULL,
-    updated DATETIME NOT NULL,
-    hidden BOOLEAN NOT NULL DEFAULT FALSE -- uri varchar(100) NOT NULL
+    slug varchar(20) NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_blogs_slug ON blogs (slug);
-
-CREATE TABLE if not exists tags (
-    id integer PRIMARY KEY autoincrement,
-    name VARCHAR(255) NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS blogs_tags (
-    blog_id integer NOT NULL,
-    tag_id integer NOT NULL,
-    PRIMARY KEY (blog_id, tag_id),
-    FOREIGN KEY (blog_id) REFERENCES blogs(id),
-    FOREIGN KEY (tag_id) REFERENCES tags(id)
-);
 
 CREATE TABLE IF NOT EXISTS comments (
     id integer PRIMARY KEY autoincrement,

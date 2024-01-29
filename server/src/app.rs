@@ -1,14 +1,14 @@
-use super::{protected, restricted};
 use crate::{
 	auth::{self, users::AuthBackend},
-	routes::{comments, frontend, session},
+	routes::{backend, frontend},
 };
 use axum::{error_handling::HandleErrorLayer, http::StatusCode, middleware, BoxError, Router};
 use axum_login::{
 	tower_sessions::{Expiry, MemoryStore, SessionManagerLayer},
 	AuthManagerLayerBuilder,
 };
-use sqlx::SqlitePool;
+use log::LevelFilter;
+use sqlx::{pool::PoolOptions, sqlite::SqliteConnectOptions, ConnectOptions, Sqlite, SqlitePool};
 use std::net::SocketAddr;
 use tower::ServiceBuilder;
 use tower_http::{add_extension::AddExtensionLayer, trace::TraceLayer};
@@ -26,9 +26,11 @@ pub struct ApiContext {
 
 impl App {
 	pub async fn new() -> Result<Self, Box<dyn std::error::Error>> {
-		let db = SqlitePool::connect("./server/db/blog.db").await?;
-		sqlx::migrate!("db/migrations").run(&db).await?;
-
+		// let db_opts = PoolOptions::<Sqlite>::new();
+		let mut sqlite_opts: SqliteConnectOptions = "./db/blog.db".parse()?;
+		sqlite_opts = sqlite_opts.log_statements(LevelFilter::Debug);
+		let db = SqlitePool::connect_with(sqlite_opts).await?;
+		// sqlx::migrate!().run(&db).await?;
 		Ok(Self { db })
 	}
 
@@ -57,15 +59,11 @@ impl App {
 
 		let app = Router::new()
 			// === Must be logged into a superuser account ===
-			.merge(restricted::router())
 			// === Must be logged in ===
-			.merge(protected::router())
-			.merge(comments::route_posts())
 			// === Public routes ===
 			.merge(auth::login::router())
-			.merge(comments::route_gets())
+			.merge(backend::router())
 			.merge(frontend::router())
-			.merge(session::router())
 			.layer(AddExtensionLayer::new(ApiContext { db: self.db.clone() }))
 			.layer(auth_service)
 			.layer(middleware::from_fn(print_request_body))

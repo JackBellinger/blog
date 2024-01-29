@@ -5,6 +5,7 @@ use std::{
 };
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
+mod app;
 mod auth;
 mod routes;
 mod store;
@@ -12,7 +13,6 @@ mod utils {
 	pub mod workspace;
 }
 
-use crate::routes::App;
 // SETUP Constants
 const FRONT_SVELTE_PUBLIC: &str = "./svelte_front/dist";
 const FRONT_YEW_PUBLIC: &str = "/yew_front/dist";
@@ -61,5 +61,5 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 	tracing::debug!("Options: {:#?}", opt);
 	let addr = SocketAddr::new(IpAddr::from_str(&opt.addr).expect("Invalid ip address"), opt.port);
-	App::new().await?.serve(addr).await
+	app::App::new().await?.serve(addr).await
 }
