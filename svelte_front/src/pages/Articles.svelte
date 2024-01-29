@@ -15,10 +15,12 @@
 
 	export let blogid: string = '';
 	let posts: BlogPost[] = [];
-	$: opened_article = posts.find((post) => post.slug == blogid)
-	postStores.then(store => store.items.subscribe(sub_posts => {
-		posts = sub_posts
-	}))
+	$: opened_article = posts.find((post) => post.slug == blogid);
+	postStores.then((store) =>
+		store.items.subscribe((sub_posts) => {
+			posts = sub_posts;
+		})
+	);
 </script>
 
 <Page>
@@ -31,7 +33,12 @@
 			{#if opened_article}
 				<svelte:component this={MarkdownPage} post={opened_article} />
 			{:else}
-				<svelte:component this={BlogCardScroller} store={postStores} displayComponent={BlogPostCard} displayProps={{href_prefix: '/blog/articles'}}/>	
+				<svelte:component
+					this={BlogCardScroller}
+					store={postStores}
+					displayComponent={BlogPostCard}
+					displayProps={{ href_prefix: '/blog/articles' }}
+				/>
 			{/if}
 		{/await}
 	</main>

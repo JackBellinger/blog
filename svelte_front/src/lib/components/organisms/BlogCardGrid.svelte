@@ -34,8 +34,7 @@
 	</svelte:fragment>
 	<div class="grid">
 		{#each posts.slice(0, numToShow) as post}
-			<BlogPostCard item={post} displayProps={{href_prefix: '/blog/articles'}}
-			/>
+			<BlogPostCard item={post} displayProps={{ href_prefix: '/blog/articles' }} />
 		{/each}
 	</div>
 </ContentSection>

@@ -15,9 +15,11 @@
 
 	let howManyRecent = 4;
 	let features_posts: BlogPost[];
-	postStores.then(store => store.items.subscribe(posts => {
-		features_posts = posts.filter((post) => !post.hidden)
-	}))
+	postStores.then((store) =>
+		store.items.subscribe((posts) => {
+			features_posts = posts.filter((post) => !post.hidden);
+		})
+	);
 </script>
 
 <Page>
@@ -52,7 +54,7 @@
 		{#await postStores}
 			<p>...checking for backend connectivity</p>
 		{:then postStores}
-				<BlogCardGrid posts={features_posts} title={'Articles'} numToShow={howManyRecent} />
+			<BlogCardGrid posts={features_posts} title={'Articles'} numToShow={howManyRecent} />
 		{/await}
 	</main>
 </Page>

@@ -1,5 +1,5 @@
 import { derived, get, readable, writable } from 'svelte/store';
-import { asyncDerived, asyncReadable, asyncWritable} from 'svelte-store'
+import { asyncDerived, asyncReadable, asyncWritable } from 'svelte-store';
 import type { BlogPost, BlogSearch, SyncReadable, QueryStore, FilterableAsyncStore } from './types';
 import { type Page } from '@lib/utils/types';
 import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts';
@@ -38,26 +38,32 @@ function createQueryStore(
 	const download = asyncDerived([filter, pagination], async ([$filter, $pagination]) => {
 		// console.log("downloading")
 		let query_params = storesToApiParams($filter, $pagination);
-		let download = await itemQueryFunction(query_params)
+		let download = await itemQueryFunction(query_params);
 		// console.log("downloaded items: ", download)
 		if (download.length > 0) {
-			items.update((items) => [...items, ...download.filter(dl => items.every(ite => ite.slug != dl.slug))])
-		} 
+			items.update((items) => [...items, ...download.filter((dl) => items.every((ite) => ite.slug != dl.slug))]);
+		}
 		// else {
 		// 	pagination.update((pag) => ({page: pag.page-1, per_page: pag.per_page}))
 		// }
 		return download;
 	});
-	pagination.subscribe(pag => download.load())
-	const filteredItems = asyncDerived([items, filter], async ([$items, $filter]) => {
-		// console.log("filtering ", $items, $filter)
-		let searched = searchArticles($items, $filter);
-		// console.log("there are ", searched.filter(post => !post.hidden).length, " !hidden posts")
-		return searched
-	}, { reloadable: true })
-	items.subscribe(ite => filteredItems.reload())
-	filter.subscribe(filt => {filteredItems.reload()})
-	
+	pagination.subscribe((pag) => download.load());
+	const filteredItems = asyncDerived(
+		[items, filter],
+		async ([$items, $filter]) => {
+			// console.log("filtering ", $items, $filter)
+			let searched = searchArticles($items, $filter);
+			// console.log("there are ", searched.filter(post => !post.hidden).length, " !hidden posts")
+			return searched;
+		},
+		{ reloadable: true }
+	);
+	items.subscribe((ite) => filteredItems.reload());
+	filter.subscribe((filt) => {
+		filteredItems.reload();
+	});
+
 	let stores = {
 		filter,
 		pagination,
@@ -110,7 +116,11 @@ function createPages() {
 export const theme = createTheme();
 export const user = writable('');
 
-export const sessionStore = asyncReadable({ backend_connected: false,logged_in: false, username: null }, fetchSession,{ reloadable: true });
+export const sessionStore = asyncReadable(
+	{ backend_connected: false, logged_in: false, username: null },
+	fetchSession,
+	{ reloadable: true }
+);
 // export const postStores = createFilterableAsyncStore(importPosts);
 export const postStores = postFetchMethod().then((postFetchFunc) =>
 	createQueryStore(postFetchFunc, blogApiParamsFromFilterAndPage)

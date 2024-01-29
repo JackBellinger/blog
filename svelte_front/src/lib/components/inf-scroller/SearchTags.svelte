@@ -10,16 +10,13 @@
 	//	return (dec >>> 0).toString(2);
 	//}
 	function selectTag(tag: string) {
-		
 		let x = tagMap.get(tag);
 		let selector = 1 << x;
 		tagSerial = tagSerial ^ selector;
 	}
 </script>
 
-<div>
-	
-</div>
+<div></div>
 
 <style>
 	div {

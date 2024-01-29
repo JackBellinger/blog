@@ -3,10 +3,11 @@
 	import Tag from '@lib/components/inf-scroller/Tag.svelte';
 	import Image from '../atoms/Image.svelte';
 	import type { BlogPost } from '@lib/utils/types';
-	export let item: BlogPost
-	export let displayProps: {href_prefix: string};
+	export let item: BlogPost;
+	export let displayProps: { href_prefix: string };
 	//	target="_self"
 </script>
+
 {@debug item}
 
 <Card
@@ -48,7 +49,7 @@
 		display: inline-flex;
 		flex-direction: row;
 		overflow: hidden;
-	}	
+	}
 	.image {
 		width: 100%;
 		height: auto;

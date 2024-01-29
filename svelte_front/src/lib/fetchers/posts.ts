@@ -3,7 +3,7 @@ import { sessionStore } from '@lib/utils/store';
 
 export async function postFetchMethod() {
 	return sessionStore.reload().then((session) => {
-		console.log("user session: ", session);
+		console.log('user session: ', session);
 		return session.backend_connected ? queryPosts : importPosts;
 	});
 }
@@ -21,7 +21,7 @@ export async function importPosts() {
 			posts.push({
 				...post.metadata,
 				slug: filename,
-				tags: post.metadata.tags,//?.map((tag) => tag.toLowerCase()),
+				tags: post.metadata.tags, //?.map((tag) => tag.toLowerCase()),
 				component: post.default
 			});
 		}
@@ -40,8 +40,8 @@ export const sortAndRelatePosts = (posts: BlogPost[]) => {
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
 				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
-				  ? 1
-				  : 0
+					? 1
+					: 0
 		)
 		.map((post) => {
 			const relatedPosts = getRelatedPosts(posts, post);
@@ -53,25 +53,25 @@ export const sortAndRelatePosts = (posts: BlogPost[]) => {
 		});
 };
 
-export function searchArticles(posts, search: {searchTerm: string, selectedTags: Set<string>}): BlogPost[] {
-	let title = search.searchTerm
-	let selectedTags = search.selectedTags;//new Set([...search.selectedTags].reduce((p, c, n) => c.toLowerCase()));
+export function searchArticles(posts, search: { searchTerm: string; selectedTags: Set<string> }): BlogPost[] {
+	let title = search.searchTerm;
+	let selectedTags = search.selectedTags; //new Set([...search.selectedTags].reduce((p, c, n) => c.toLowerCase()));
 	// console.log("searching for ", title, ", ", selectedTags)
 	return posts
 		.sort((a, b) =>
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
 				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
-				  ? 1
-				  : 0
-		).filter((post) => {
-			let title_match =
-				(title?? '').length == 0 || post.title.toLowerCase().includes(title.toLowerCase());
+					? 1
+					: 0
+		)
+		.filter((post) => {
+			let title_match = (title ?? '').length == 0 || post.title.toLowerCase().includes(title.toLowerCase());
 			// console.log("selected tags", selectedTags, " post: ", post.tags)
 			let tag_match = selectedTags.size == 0 || post.tags?.some((tag) => selectedTags.has(tag));
 			// console.log("post: ", post.slug, "matches: title =", title_match, "tags =", tag_match)
 			return title_match && tag_match;
-		})
+		});
 }
 
 // Import URLSearchParams for query string creation
@@ -154,7 +154,7 @@ export async function queryTags() {
 	// console.log("text", text)
 	try {
 		const tags_objects = JSON.parse(text);
-		const tags = tags_objects.map((tag) => (tag.name));
+		const tags = tags_objects.map((tag) => tag.name);
 		// console.log('tags', tags);
 		return tags;
 	} catch (error) {

@@ -9,12 +9,12 @@ export async function importProjects(render = true) {
 		let filename = path.split('/').at(-1).split('.')[0];
 		//console.log("aaa", filename)
 		const project = projectImports[path] as any;
-		console.log("proj: ", project)
+		console.log('proj: ', project);
 		if (project) {
 			projects.push({
 				...project.metadata,
 				slug: filename,
-				tags: project.metadata.tags,//?.map((tag) => tag.toLowerCase()),
+				tags: project.metadata.tags, //?.map((tag) => tag.toLowerCase()),
 				//html: render && project.default.render ? project.default.render()?.html : undefined,
 				component: project.default
 			});
@@ -34,8 +34,8 @@ export const sortAndRelateProjects = (projects: BlogPost[]) => {
 			new Date(a.updated ?? a.date).getTime() > new Date(b.updated ?? b.date).getTime()
 				? -1
 				: new Date(a.updated ?? a.date).getTime() < new Date(b.updated ?? b.date).getTime()
-				  ? 1
-				  : 0
+					? 1
+					: 0
 		)
 		.map((project) => {
 			const relatedPosts = getRelatedPosts(projects, project);

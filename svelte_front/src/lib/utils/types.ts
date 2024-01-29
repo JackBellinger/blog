@@ -1,6 +1,6 @@
 import type { SvelteComponent } from 'svelte';
 import type { Invalidator, Subscriber, Unsubscriber, Writable } from 'svelte/store';
-import { asyncReadable, type Loadable, type WritableLoadable} from 'svelte-store'
+import { asyncReadable, type Loadable, type WritableLoadable } from 'svelte-store';
 
 export type Page = {
 	name: string;
@@ -59,18 +59,18 @@ export const defaultBlogPost: BlogPost = {
 	excerpt: '',
 	readingTime: '',
 	coverImage: undefined
-}
+};
 export function defPost({
 	tags = [],
 	keywords = [],
-	hidden =  true,
-	slug= '',
-	title= '',
-	date= '',
-	updated= '',
-	excerpt= '',
-	readingTime= '',
-	coverImage = undefined,
+	hidden = true,
+	slug = '',
+	title = '',
+	date = '',
+	updated = '',
+	excerpt = '',
+	readingTime = '',
+	coverImage = undefined
 }: BlogPost): BlogPost {
 	return {
 		tags,
@@ -82,7 +82,7 @@ export function defPost({
 		updated,
 		excerpt,
 		readingTime,
-		coverImage,
+		coverImage
 	};
 }
 

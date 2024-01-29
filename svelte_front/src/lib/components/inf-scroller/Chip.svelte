@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 	let active = false;
 	export let handler: (is_selected: boolean, ...args: any[]) => void; // Adjust type as needed
 	export let value: any = undefined;

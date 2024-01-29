@@ -16,38 +16,49 @@ tags:
 
 # Design Goals
 
-
 I want to make an infinite scrolling container for a list of items that can search by title and filter by tags. Ideally it would take as params the data source (a list of items or a database) and a component to display that data in (which needs to take that data as a prop); something like `<InfiniteScroller dataSource={BlogAsyncStore} displayComponent={BlogPostCard} />`. I'll have to think more about whether it should require the data items to have a tags object or to make tag filtering optional.
 
-
 ## Scrolling cards
+
 The component should display a list of clickable cards with an image, title, and excerpt.
 
 ## Intuitive
+
 Scrolling will be the only means of interaction.
+
 ##### Interaction
+
 The user shouldn't have to click to to pages or select how many items to display at once.
 I may add a grid view that displays smaller items in multiple columns, but it will still be controlled with scrolling only.
+
 ##### Accessible
-For accessibility concerns, the arrow keys must be able to control scrolling. For users that have reduce-motion enabled, I will implement a page-scroll feature that instantly scrolls down enough the entire window height so new articles appear with no motion. 
+
+For accessibility concerns, the arrow keys must be able to control scrolling. For users that have reduce-motion enabled, I will implement a page-scroll feature that instantly scrolls down enough the entire window height so new articles appear with no motion.
 
 ## Filterable
+
 The user should be able to see only what interests them.
+
 ##### Title Search
+
 There will be a search bar that can filter the items by a title search term, which filters the items to only those that contain the search term anywhere in the title. Future releases will enable regex searching, because regex is fun.
+
 ##### Tag Search
+
 The items will also be filterable by tags. Each item has a number of tags, which will display next to the title search input as a horizontally scrolling list of 'chips'. When there are many tags, this may need to be a dropdown or expandable list.
 
 ## Minimal Downloads
+
 The frontend must have the ability to specify which articles to download the metadata for.
 Additionally, the article should only download when the user opens the page.
 This will slow the page load slightly when opening an article, however it should speed up the initial page load, as there will be more available bandwidth to dowload the images and such.
-While the article files are not huge, I hope to post many more. 
-Not filtering the what content is downloaded (even just metadata) to what the user wants to read is simply untennable. 
+While the article files are not huge, I hope to post many more.
+Not filtering the what content is downloaded (even just metadata) to what the user wants to read is simply untennable.
 
 ## Fetching new items should be seamless
+
 The user should not see any buffering.
-This is pretty much unavoidalbe on slow internet, or if the user scrolls to the bottom as fast as possible. 
+This is pretty much unavoidalbe on slow internet, or if the user scrolls to the bottom as fast as possible.
 However, with reasonable download speeds the subsequent pages should download faster than the user can read them.
 
 An engineer at Square created a really good example of asynchronous derived stores, and I extended this for my use case. Check out the full version at [square/svelte-store](https://github.com/square/svelte-store). He also posted an explanation of a simplified version on [youtube](https://www.youtube.com/watch?v=Rz8Ah1y2hJM), which is the version I extended. I wanted to learn how it works, and to write it myself so I could modify it to my needs. Hopefully there will be something like this in the stable release of Svelte 5.
@@ -82,7 +93,9 @@ Make the list scrollable and listen to the scroll events to load more content
 		</ul>
 	</section>
 ```
+
 When the user scrolls, it debounces the call to prevent jitter
+
 ```javascript:BlogCardScroller.svelte
 let scrollTimeout = null;
 function debounce_scroll(func) {
@@ -90,7 +103,9 @@ function debounce_scroll(func) {
 	scrollTimeout = setTimeout(checkScroll, 250); // Adjust delay as needed
 }
 ```
+
 Then it checks if the user has scrolled sufficiently near to the end of the current page.
+
 ```javascript:BlogCardScroller.svelte
 	let previousScrollTop = 0;
 	const loadThreshold = 50;
@@ -108,7 +123,9 @@ Then it checks if the user has scrolled sufficiently near to the end of the curr
 		previousScrollTop = currentScrollTop;
 	}
 ```
+
 and if so, it increments the pagination store. There is a bit of complexity here, as I currently support both static distribution via Github Pages, and distribution from my own backend. FilterableAsyncStore is for static page dist, and QueryStore is for dynamically downloading from the backend. See the [repo](https://github.com/JackBellinger/blog/blob/main/svelte_front/src/lib/components/organisms/BlogCardSearchBar.svelte) for more details.
+
 ```javascript:BlogCardScroller.svelte
 function isQueryStore(store: FilterableAsyncStore | QueryStore): store is QueryStore {
 		// Implement logic to check if store is a QueryStore instance

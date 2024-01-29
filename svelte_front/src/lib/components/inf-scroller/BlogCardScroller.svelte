@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
-	import { type BlogPost, type FilterableAsyncStore, type FilteredStore, type QueryStore} from '@lib/utils/types';
+	import { type BlogPost, type FilterableAsyncStore, type FilteredStore, type QueryStore } from '@lib/utils/types';
 	import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts';
 	import BlogCardSearchBar from './BlogCardSearchBar.svelte';
 	import type { ComponentType, SvelteComponent } from 'svelte';
@@ -11,10 +11,12 @@
 		slug: string;
 	};
 	export let displayProps: any;
-	export let displayComponent: ComponentType<SvelteComponent<{item: itemType<GT>, displayProps: typeof displayProps}>>;
+	export let displayComponent: ComponentType<
+		SvelteComponent<{ item: itemType<GT>; displayProps: typeof displayProps }>
+	>;
 	let querySource;
 	let itemDownloader;
-	
+
 	export let store: QueryStore;
 	// store.items.subscribe(fi => console.log("items: ", fi));
 	// store.filter.subscribe(fi => console.log("filter: ", fi));
@@ -28,11 +30,11 @@
 		}));
 	}
 	let filteredItems: itemType<GT>[] = [];
-	store.filteredItems.subscribe(items => {
+	store.filteredItems.subscribe((items) => {
 		// Trigger a re-render when the store updates
 		filteredItems = items ?? []; // Assuming `items` is a reactive declaration
-  });
-	
+	});
+
 	let listElement;
 	let previousScrollTop = 0;
 	const loadThreshold = 50;
@@ -56,12 +58,7 @@
 	}
 </script>
 
-<ContentSection
-	id={'infinite-scroller'}
-	title={"Articles"}
-	description=""
-	align={'top'}
->
+<ContentSection id={'infinite-scroller'} title={'Articles'} description="" align={'top'}>
 	<section id="search-bar">
 		<svelte:component this={BlogCardSearchBar} {store} />
 	</section>
@@ -70,7 +67,7 @@
 			<!-- {console.log("items ", items)} -->
 			{#each filteredItems.filter((item) => !item.hidden) as post (post.slug)}
 				<li class="scroll-item">
-					<svelte:component this={displayComponent} item={post} displayProps={displayProps}/>
+					<svelte:component this={displayComponent} item={post} {displayProps} />
 				</li>
 			{/each}
 		</ul>
@@ -123,6 +120,6 @@
 		flex-direction: column; /* Arrange items vertically */
 		justify-content: center; /* Center items horizontally */
 		align-items: center; /* Center items vertically within each row (optional) */
-		overflow-x:visible;
+		overflow-x: visible;
 	}
 </style>

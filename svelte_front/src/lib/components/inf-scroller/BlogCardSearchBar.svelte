@@ -12,31 +12,29 @@
 
 	async function getTags() {
 		let tags;
-		let session = await sessionStore.load()
+		let session = await sessionStore.load();
 		if (session.backend_connected) {
 			tags = queryTags();
 		} else {
 			store.items.subscribe((posts) => {
-				tags? tags.clear(): tags = new Set();
-				posts.filter((post) => !post.hidden)
-					.forEach((post) => post.tags
-						.forEach((tag) => tags.add(tag)));
+				tags ? tags.clear() : (tags = new Set());
+				posts.filter((post) => !post.hidden).forEach((post) => post.tags.forEach((tag) => tags.add(tag)));
 			});
 		}
 		// console.log(tags)
-		return tags
+		return tags;
 	}
-	 
+
 	let selectedTags: Set<string> = new Set();
 	function selectTag(tag: string, is_selected: boolean) {
 		// console.log("selecting? ", is_selected, " ", tag)
-		const already_selected = selectedTags.has(tag)
+		const already_selected = selectedTags.has(tag);
 		if (is_selected != already_selected) {
-			is_selected? selectedTags.add(tag) : selectedTags.delete(tag);
+			is_selected ? selectedTags.add(tag) : selectedTags.delete(tag);
 			// console.log("updating filter ", selectedTags)
 			store.filter.update((filter) => ({
 				...filter,
-				selectedTags,
+				selectedTags
 			}));
 			// if (isQueryStore(store)){
 			// 	(store as QueryStore).filteredItems.load(); // Re-trigger download
@@ -49,7 +47,7 @@
 		selectTimeout = setTimeout(selectTag.bind(null, is_selected, tag), 250); // Adjust delay as needed
 	}
 	$: {
-		store.filter.update((filter) => ({...filter, searchTerm: searchTerm}))
+		store.filter.update((filter) => ({ ...filter, searchTerm: searchTerm }));
 	}
 	// store.filter.subscribe(filter => console.log(filter))
 	//postStores.filteredItems.subscribe(x => console.log(x))
