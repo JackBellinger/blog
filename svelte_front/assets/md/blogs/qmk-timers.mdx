@@ -1,30 +1,32 @@
 ---
 title: Adding timers in my QMK keyboard
-coverImage: /blog/assets/images/blogs/qmk-stopwatch.webp
+coverImage: /blog/assets/images/qmk-stopwatch.webp
 date: 2023-11-10T04:53:49.000Z
 updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the macros on my keyboard with QMK
 hidden: false
 tags:
-- Workspace
-- QMK
-- C
+  - Workspace
+  - C
 ---
 
 # Timers
+
 A timer can be used for many things. The example that gave me the idea was a stretch timer, to remind me to get up and move around every once in a while. The basic idea is that I press a button and the keyboard starts counting seconds. After however long it does something. My initial implementation sets some leds to orange and incrementally changes them to green until the timer is over and it flashes the whole underglow red as an alert, but there's no speaker on board.
 One could argue that since I already have a timer on my phone and my computer, it's not particularly useful. I try not to use my phone while I'm at my computer, and any app is not going to be as convenient as clicking a button. Also it's pretty cool to make the underglow leds do something useful. I would like to add a speaker to my keyboard if there's an extra pwm pin, but I also plan on building or designing a split keyboard with one.
 
 ## My Timers
+
 The first timer I implemented is a simple timer than counts each second until 5 minutes and shows progress with the 4 leds behind the logo on my keyboard. I added 3 more than count to 10 minutes, 30m, and an hour. All of them are started from a tapdance, more taps for a longer timer. When the timer completes, it switches the rgb mode to 'alternate' which alternates flashing the front and back row of leds in red. If I had (or add) an on board speaker I'll add an audio que.
 
 I used a similar x-macro setup in timer.h as I did in macro.h.
+
 ```c:timer.h
 #pragma once
 #include "quantum.h"
 #include "macro.h"
 
-/* Define the timers 
+/* Define the timers
 (timer name, function to call on alert, color to make the alert flash, and the duration of th e timer) */
 #define TIMER_TABLE \
 	TIMER(TMR_FIVE,	logo,	Blue,	300)\
@@ -84,6 +86,7 @@ struct timers_struct {
 };
 
 ```
+
 With all of that, we can generate the state struct, and get some timers timing!
 
 ```c:timer.c
@@ -133,7 +136,7 @@ void reset_timer(int timer) {
 
 void logo(int timer){ // Set one of the 4 logo leds for each quarter of the duration
 	if(timers.status[timer] == Alerting){
-		// Setting alert color this way does not work 
+		// Setting alert color this way does not work
 		// I think I'll have to make a custom rgbmode
 		switch (timers.alertColor[timer]) {
 			case Purple: rgblight_sethsv_noeeprom(HSV_PURPLE);
@@ -160,7 +163,7 @@ void logo(int timer){ // Set one of the 4 logo leds for each quarter of the dura
 			case 3: rgblight_sethsv_at(HSV_GREEN, 16); break;
 			case 4: timers.status[timer] = Alerting;
 		}
-	}  
+	}
 	else if(timers.status[timer] == Init){
 		//set the rgb mode to static so it doesn't change the leds outside the timer
 		//can only some leds be static for timer and the rest be animated?
@@ -175,7 +178,7 @@ void logo(int timer){ // Set one of the 4 logo leds for each quarter of the dura
 
 void matrix_scan_user(void) {
 	//for each running timer, increment it each second
-	// not sure on the call rate of this function 
+	// not sure on the call rate of this function
 	//but it's probably not going to be off by more than a ms or 2 each second
 	for(int i=0; i < NUM_TIMERS; i++){
 		if(timers.status[i] > 0){
@@ -189,8 +192,8 @@ void matrix_scan_user(void) {
 }
 
 void send_timer(int timer) {
-	reset_timer(timer); 
-	timers.status[timer] = Init; 
+	reset_timer(timer);
+	timers.status[timer] = Init;
 	timers.elapsed_ms[timer] = timer_read();
 }
 ```

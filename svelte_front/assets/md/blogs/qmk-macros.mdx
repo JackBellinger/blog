@@ -1,20 +1,21 @@
 ---
 title: Adding macros in my QMK keyboard
-coverImage: /blog/assets/images/blogs/qmk-layers.webp
+coverImage: /blog/assets/images/qmk-layers.webp
 date: 2023-11-10T04:53:49.000Z
 updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the macros on my keyboard with QMK
 hidden: false
 tags:
-- Workspace
-- QMK
-- C
+  - Workspace
+  - C
 ---
 
 # Macros
+
 Macros are sequences of keypresses that are run all at once automatically. Usually they're triggered by a single keypress, for example, you could make a macro to send your favorite website url when you press function + w, and your keyboard would send the string "www.url.com" as if you had typed it. Remember, you can program a macro to type any key. As you'll see shortly, there are a lot of possibilities with this simple pattern.
 
 ## My macros:
+
 So far, I've made only a few macros:
 I made a search macro to emulate the 'highlight > right click > search web for x' behavior browsers give you, but from anywhere. It copies highlighted text, opens my browser, targets the address bar, pastes, and enters to search the string.
 
@@ -23,11 +24,13 @@ I made macros to open my terminal, text editor, and browser.
 I also made a macro to take a screenshot of the window and paste it into paint.
 
 ### Macros
+
 After my initial experimentation, I decided that I wanted to be able to define macros seperately from how they are invoked.
 Initially, I was putting the effect of the macros, ie `SEND_STRING(macro keys)`, in the `process_record_user` as in the [examples](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_macros.md#using-macros-in-c-keymaps).
 
 However, once I started looking into tap dance, combos, and other features, I thought it would be usefule to define the macro functions in their own map so I can call them from various places without copying code.
 First, I made a map from the keycodes enum to function pointers
+
 ```c:keymap.c
 typedef enum {
     LLOCK = SAFE_RANGE,
@@ -67,6 +70,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 ```
+
 This solition seems like it needs edits in a lot of places to add new macros, doesn't it?
 Having debugged mistakes caused by forgetting to change a part of something like this, I know that it can reduce errors and cognitive load to code in such a way that extending functionality requires as few changes as possible. With this in mind, I came up with a solution using x-macros.
 
@@ -88,14 +92,18 @@ First, I made a macro table to define the macro keycode names, the uint16_t valu
 #define KEYCODES_TABLE \
 	KEYCODE(LLOCK,			SAFE_RANGE + 5)
 ```
+
 Then I wrote a macro to generate the function prototypes from the macro functions' names.
+
 ```c: macro.h
 /* Generate function prototypes */
 #define MACRO(a, b, c) void c(void);
     MACRO_TABLE
 #undef MACRO
 ```
+
 Then The enum gets generated from the keycode names and values.
+
 ```c: macro.h
 typedef enum {
 	#define MACRO(a, b, c) a = b,
@@ -106,8 +114,10 @@ typedef enum {
 	#undef KEYCODE
 } custom_keycodes;
 ```
+
 Then the struct that holds the array mapping from keycode values to function pointers.
 The keycodes start from SAFE_RANGE, which is the qmk export that defines the max value of the default keycodes.
+
 ```c: macro.h
 typedef void (*operate)(void);
 struct action {
@@ -115,14 +125,18 @@ struct action {
 };
 struct action macros;
 ```
+
 Then the prototypes for functions to check if a keycode is a macro and to call the associated functions.
+
 ```c: macro.h
 int KC_isMacro(uint16_t keycode);
 
 void send_macro(uint16_t keycode);
 ```
+
 In the source file I define the macro functions.
 Search copies highlighted text
+
 ```c:macro.c
 #include "macro.h"
 void search(void) {
@@ -165,20 +179,21 @@ void send_macro(uint16_t keycode) {
     macros.map[keycode - SAFE_RANGE]();
 }
 ```
+
 ### Tap Dance
 
 ### Combos
 
 ### RBG Underglow
+
 RGB ideas:
 layer indication
 timer, stopwatch, loading
 minigame
 typing reactive
 
-
-
 #### Links, inspiration, etc
+
 github.com/jackbellinger/dotfiles/keymap.c
 
 ### Learnings

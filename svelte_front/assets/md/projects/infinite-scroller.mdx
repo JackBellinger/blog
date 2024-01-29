@@ -1,0 +1,244 @@
+---
+title: Infinite Scroller
+coverImage: /blog/assets/images/inf-scroll.webp
+date: 2023-10-29T16:02:03.000Z
+updated: 2024-01-17T18:12:46.000Z
+excerpt: The design and implementation of this blog's infinite scroller component.
+hidden: false
+tags:
+  - Blog
+  - Projects
+---
+
+<script>
+	import Image from "@lib/components/atoms/Image.svelte"; import Callout from "@lib/components/atoms/Callout.svelte";
+</script>
+
+# Design Goals
+
+
+I want to make an infinite scrolling container for a list of items that can search by title and filter by tags. Ideally it would take as params the data source (a list of items or a database) and a component to display that data in (which needs to take that data as a prop); something like `<InfiniteScroller dataSource={BlogAsyncStore} displayComponent={BlogPostCard} />`. I'll have to think more about whether it should require the data items to have a tags object or to make tag filtering optional.
+
+
+## Scrolling cards
+The component should display a list of clickable cards with an image, title, and excerpt.
+
+## Intuitive
+Scrolling will be the only means of interaction.
+##### Interaction
+The user shouldn't have to click to to pages or select how many items to display at once.
+I may add a grid view that displays smaller items in multiple columns, but it will still be controlled with scrolling only.
+##### Accessible
+For accessibility concerns, the arrow keys must be able to control scrolling. For users that have reduce-motion enabled, I will implement a page-scroll feature that instantly scrolls down enough the entire window height so new articles appear with no motion. 
+
+## Filterable
+The user should be able to see only what interests them.
+##### Title Search
+There will be a search bar that can filter the items by a title search term, which filters the items to only those that contain the search term anywhere in the title. Future releases will enable regex searching, because regex is fun.
+##### Tag Search
+The items will also be filterable by tags. Each item has a number of tags, which will display next to the title search input as a horizontally scrolling list of 'chips'. When there are many tags, this may need to be a dropdown or expandable list.
+
+## Minimal Downloads
+The frontend must have the ability to specify which articles to download the metadata for.
+Additionally, the article should only download when the user opens the page.
+This will slow the page load slightly when opening an article, however it should speed up the initial page load, as there will be more available bandwidth to dowload the images and such.
+While the article files are not huge, I hope to post many more. 
+Not filtering the what content is downloaded (even just metadata) to what the user wants to read is simply untennable. 
+
+## Fetching new items should be seamless
+The user should not see any buffering.
+This is pretty much unavoidalbe on slow internet, or if the user scrolls to the bottom as fast as possible. 
+However, with reasonable download speeds the subsequent pages should download faster than the user can read them.
+
+An engineer at Square created a really good example of asynchronous derived stores, and I extended this for my use case. Check out the full version at [square/svelte-store](https://github.com/square/svelte-store). He also posted an explanation of a simplified version on [youtube](https://www.youtube.com/watch?v=Rz8Ah1y2hJM), which is the version I extended. I wanted to learn how it works, and to write it myself so I could modify it to my needs. Hopefully there will be something like this in the stable release of Svelte 5.
+
+# Frontend Implementation
+
+## Make the scrolling container
+
+Make the list scrollable and listen to the scroll events to load more content
+
+```javascript:BlogCardScroller.svelte
+<section id="blog-posts" bind:this={listElement} on:scroll={debounce_scroll}>
+		<ul id="scroller">
+			{#await $filteredItems}
+				<p>...sorting and filtering articles</p>
+			{:then items}
+				{#each items.filter((item) => !item.hidden) as post (post.slug)}
+					<li class="scroll-item">
+						<BlogPostCard
+							slug={post.slug}
+							title={post.title}
+							excerpt={post.excerpt}
+							tags={post.tags}
+							coverImage={post.coverImage}
+							href_prefix={'/blog/' + location}
+						/>
+					</li>
+				{/each}
+			{:catch error}
+				<p style="color: red">{error.message}</p>
+			{/await}
+		</ul>
+	</section>
+```
+When the user scrolls, it debounces the call to prevent jitter
+```javascript:BlogCardScroller.svelte
+let scrollTimeout = null;
+function debounce_scroll(func) {
+	clearTimeout(scrollTimeout);
+	scrollTimeout = setTimeout(checkScroll, 250); // Adjust delay as needed
+}
+```
+Then it checks if the user has scrolled sufficiently near to the end of the current page.
+```javascript:BlogCardScroller.svelte
+	let previousScrollTop = 0;
+	const loadThreshold = 50;
+	let currentScrollTop = 0;
+	function checkScroll() {
+		currentScrollTop = listElement.scrollTop;
+		// console.log("prev: ",previousScrollTop ,"current: ", currentScrollTop)
+		if (
+			currentScrollTop > previousScrollTop &&
+			currentScrollTop + listElement.clientHeight + loadThreshold >= listElement.scrollHeight
+		) {
+			loadMore();
+			listElement.scrollTop = currentScrollTop; // Restore scroll position
+		}
+		previousScrollTop = currentScrollTop;
+	}
+```
+and if so, it increments the pagination store. There is a bit of complexity here, as I currently support both static distribution via Github Pages, and distribution from my own backend. FilterableAsyncStore is for static page dist, and QueryStore is for dynamically downloading from the backend. See the [repo](https://github.com/JackBellinger/blog/blob/main/svelte_front/src/lib/components/organisms/BlogCardSearchBar.svelte) for more details.
+```javascript:BlogCardScroller.svelte
+function isQueryStore(store: FilterableAsyncStore | QueryStore): store is QueryStore {
+		// Implement logic to check if store is a QueryStore instance
+		return (store as QueryStore).pagination !== undefined;
+	}
+	function loadMore() {
+		console.log('Loading more!!');
+		if (isQueryStore(store)) {
+			(store as QueryStore).pagination.update(($pagination) => ({
+				...$pagination,//per_page: $pagination.per_page,
+				page: $pagination.page + 1
+			}));
+			(store as QueryStore).download.load();
+		}
+	}
+```
+
+## Stores
+
+I understand why Svelte 5 is changing the store syntax. It was challenging to use stores for complex features. The first difficulty I had to overcome was that the stores only update on an assignment. Subscribed components don't react to adding an element to a store.
+The hardest part was making stores asynchronous so that when the api returns the articles, it adds them to the scroller. I suppose I could have used the regular svelte stores and added the items from the infinite scroller component's script, but I wanted the fetching, sorting, and display logic to be encapsulated.
+
+```javascript:store.ts
+function createQueryStore(
+	itemQueryFunction: (...args: any[]) => Promise<Array<any>>,
+	storesToApiParams: (...args: any[]) => any
+): QueryStore {
+```
+
+[Store.ts](https://github.com/JackBellinger/blog/blob/main/svelte_front/src/lib/utils/store.ts) contains the store definitions that appends the downloaded items, and updates the filtered items, which are the ones displayed in the component, when either the filter or items stores change.
+
+### Search Filter
+
+```javascript:store.ts
+	const filter = writable({ searchTerm: '', selectedTags: new Set<string>() });
+```
+
+The search filter is collected from the [BlogCardSearchBar](https://github.com/JackBellinger/blog/blob/main/svelte_front/src/lib/components/organisms/BlogCardSearchBar.svelte). As articles are downloaded, the tags are updated and fill into chips, which have an onclick that updates the selected tags set. I plan to query all the tags in the database on-mount. It might even be ideal to hard-code the tags at compile time when an article is published.
+
+### Pagination
+
+```javascript:store.ts
+	const pagination = writable({page: 0, per_page: 10});
+```
+
+I also added a store for the pagination. When the scroller gets scrolled, it checks if it needs to load more, and if so it updates the pagination store, which the download store is derived from, so it reactively updates when the filter or the pagination changes. When it updates, it calls the blogs api to download the next n articles.
+
+### Posts
+
+When either the filter or the pagination changes, the
+
+```javascript:store.ts
+	const items = asyncReadable([], itemQueryFunction);
+	const download = loadableDerived([filter, pagination], async ([$filter, $pagination]) => {
+		let query_params = storesToApiParams(filter, pagination);
+		let download = itemQueryFunction(query_params).then((download) => {
+			// console.log("Downloaded Items: ", download);
+			if (download.length > 0) items.update((items) => [...items, ...download]);
+			return download;
+		});
+		return download;
+	});
+```
+
+[Posts.ts](https://github.com/JackBellinger/blog/blob/main/svelte_front/src/lib/fetchers/posts.ts) contains the api calls that retrieve the posts.
+
+```javascript:store.ts
+	const filteredItems = loadableDerived([items, filter], async ([$items, $filter]) => {
+		let result = $items.filter((post) => {
+			let title_match =
+				$filter.searchTerm.length == 0 || post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
+
+			let tag_match = $filter.selectedTags.size == 0 || post.tags.some((tag) => $filter.selectedTags.has(tag)); //.toLowerCase()));
+			//console.log("post: ", post, "filtered by", filter, "is ", x&&y)
+			return title_match && tag_match;
+		});
+		// console.log("filter result: ", result)
+		return result;
+	});
+
+	let stores = {
+		filter,
+		pagination,
+		items,
+		download,
+		filteredItems
+	};
+	return stores;
+}
+```
+
+# Backend Implementation
+
+## Adding blogs to the schema
+
+## Parsing Frontmatter
+
+Next, I need to parse the metadata into the blogs db table and add an API so that I can query them.
+
+## Blogs api
+
+The api needed to accept the title search term, selected tags, page number, and items per page query params.
+
+## Database queries
+
+I first wrote a simple query to retrieve blogs. Then I added pagination, and finally I added title and tag filters.
+
+### Learning!
+
+If it gets an empty response, it doesn't update the items store. This is important to prevent needless re-renders. I don't disable the query api, although it should probably be rate limited and cached to prevent needless db load, because I want the user to be able to get new articles when they're posted. Although blog articles aren't posted very often, refresh should be seamless, and this component may be reusable for other item types, like tweets etc, in which case getting new updates as fast as possible is a design requirement.
+
+Then, I need to change the frontend so it first requests the top x or featured blogs, and queries whatever the user scrolls to.
+
+#### Links, inspiration, etc
+
+### Learnings
+
+### Todo
+
+- [x] Add scrolling list of blog summary cards
+- [x] Add title search and tag filter for cards
+- [x] Add reactive async store to implement the filter logic
+- [x] Add blog database
+- [x] Add Blogs api
+- [x] Add filter terms to query params
+- [x] Parse blog metadata into db
+- [x] pre-render blog html on server
+- [x] add offline mode that downloads all blogs
+- [ ] Make sure the api is abstract to handle any data and list display component
+- [ ] Fine tune when to query for more items
+- [ ] Dynamically remove and add tags of filtered items instead of always displaying all items' tags
+- [ ] Publish component as seperate repo
+- [ ] Maybe add title search autocompletion?

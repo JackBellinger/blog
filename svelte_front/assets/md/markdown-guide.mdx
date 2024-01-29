@@ -1,25 +1,26 @@
 ---
-title: How Blog Posts Work
-coverImage: /assets/images/Boulder.png
+title: Markdown Guide
+coverImage: /blog/assets/images/Boulder.png
 date: 2023-04-22T21:55:15.361Z
-excerpt: How to manage existing blog posts and create new ones
+excerpt: Markdown Guide
 tags:
-  - Documentation
+  - Markdown
 ---
 
 <script>
-  import Callout from "@lib/components/atoms/Callout.svelte";
-  import Image from "@lib/components/atoms/Image.svelte";
+	import Callout from "@lib/components/atoms/Callout.svelte"; import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
 ## Header
+
 All posts are Markdown files, which means you can use the [Markdown syntax](https://www.markdownguide.org/basic-syntax) in them, and it will work out of the box. However, since this projects uses [MDsveX](https://mdsvex.pngwn.io/) to parse Markdown, you can also use Svelte components inside them! This means that the components used in other pages can also be used in blog posts.
 
-<Callout type="info">
-  This is a Svelte component inside a Markdown file!
-</Callout>
+<Callout type="info">This is a Svelte component inside a Markdown file!</Callout>
 
-<Image src="/images/posts/frontmatter-preview-dashboard.png" alt="Screenshot of the Front Matter VS Code extension, showing the dashboard with all posts" />
+<Image
+	src="/images/frontmatter-preview-dashboard.png"
+	alt="Screenshot of the Front Matter VS Code extension, showing the dashboard with all posts"
+/>
 
 # Markdown Cheat Sheet
 
@@ -34,7 +35,9 @@ These are the elements outlined in John Gruber's original design document. All M
 ### Heading
 
 # H1
+
 ## H2
+
 ### H3
 
 ### Bold
@@ -43,7 +46,7 @@ These are the elements outlined in John Gruber's original design document. All M
 
 ### Italic
 
-*italicized text*
+_italicized text_
 
 ### Blockquote
 
@@ -83,10 +86,10 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 ### Table
 
-| Syntax | Description |
-| ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 
 ### Fenced Code Block
 

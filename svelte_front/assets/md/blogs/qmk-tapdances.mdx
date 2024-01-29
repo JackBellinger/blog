@@ -1,32 +1,37 @@
 ---
 title: Adding tap dance in my QMK keyboard
-coverImage: /blog/assets/images/blogs/qmk-tapdance.webp
+coverImage: /blog/assets/images/qmk-tapdance.webp
 date: 2023-11-19T21:09:21.000Z
 updated: 2023-12-06T17:53:00.000Z
 excerpt: How I programmed the tap dances on my keyboard with QMK
 hidden: false
 tags:
-- Workspace
-- QMK
-- C
+  - Workspace
+  - C
 ---
 
 # Tapdance
+
 Tap dance is a feature that lets one key do many things. One tap sends a certain keycode, 2 taps sends another, 2 taps and a hold sends yet a different one, and so on.
 
 ## My tap dances:
+
 So far, I've made only a few tap dances:
 
 ### Media control
+
 I made a play/pause button that behaves like an earbud with media controls: first tap is play/ pause, second is skip to next track, third is skip to previous track, fourth tap is toggle mute.
 
 ### Taskbar
+
 I made a tapdance to trigger the macro that opens my text editor, terminal, and browser on one, two, and 3 taps.
 
 ### Macros
+
 I made a tapdance for the rest of my miscelaneous macros, one tap searches a highlighted string, and two taps does a screenshot.
 
 ### Timers
+
 My fn + t button is bound to the timers tapdance.
 
 ```c:tapdance.h

@@ -1,49 +1,57 @@
 ---
 title: Database Design
-coverImage: /blog/assets/images/projects/db-diagram.webp
+coverImage: /blog/assets/images/db-diagram.webp
 date: 2023-12-02T16:10:00.000Z
 updated: 2023-12-05T19:18:34.000Z
 excerpt: The SQL table schemas for the backend and planned features.
 hidden: false
 tags:
   - Database
+  - Projects
 ---
 
 # Database
+
 In this devlog I will document the various features which store data, how I design the tables and query patterns, and what technologies I try for each.
 
 ## Data features
-* comments
-* blog post metadata
-* music lookup
-* map locations
-* analytics
+
+- comments
+- blog post metadata
+- music lookup
+- map locations
+- analytics
 
 # Todo
-- [x] Comments data design
-- [x] Comments API 
-- [x] Blog data design
-- [ ] Blog API 
-- [x] Music data design
-- [ ] Music API 
-- [x] Map data design
-- [ ] Map API 
-- [x] Analytics data design
-- [ ] Analytics API 
-&nbsp;&nbsp;<br>
 
-[//]: # ( ========== Auth ========== )
+- [x] Comments data design
+- [x] Comments API
+- [x] Blog data design
+- [ ] Blog API
+- [x] Music data design
+- [ ] Music API
+- [x] Map data design
+- [ ] Map API
+- [x] Analytics data design
+- [ ] Analytics API
+  <br>  <br>
+
+[//]: # ' ========== Auth ========== '
+
 # Authentication
 
 ### Requirements
-* users can post comments
-* users can sign up for email notifications on posts + comments
-* users can access map features: post locations, services, comments
+
+- users can post comments
+- users can sign up for email notifications on posts + comments
+- users can access map features: post locations, services, comments
 
 ### Query Patterns / Usage
+
 user id -> authorizations
 
 ### Entities
+
 ```erd
 [Users]
 *'id: int'
@@ -66,17 +74,20 @@ Users *--+ Groups
 Groups *--+ Permissions
 ```
 
-[//]: # ( ========== Comments ========== )
+[//]: # ' ========== Comments ========== '
+
 # Comments
 
 ### Requirements
-* comment on a blog
-* vote on comments?
-* reply to comments
-* sort comments by votes or timestamp
-* search user's comments
+
+- comment on a blog
+- vote on comments?
+- reply to comments
+- sort comments by votes or timestamp
+- search user's comments
 
 ### Query Patterns / Usage
+
 load blog page: blog id -> comments
 load user page: user -> comments + replies
 
@@ -94,22 +105,26 @@ load user page: user -> comments + replies
 Users 1--* Comments
 Blogs 1--* Comments
 ```
+
 ### API
+
 The 2 places we need to be able to get comments for are on articles and on a user page. I guess it would be nice to be able to have comments on any page if I ever want to refactor the same comments system into a forum. Maybe I'll call the blog_id
 
+[//]: # ' ========== Blog ========== '
 
-[//]: # ( ========== Blog ========== )
 # Blog
 
 ### Requirements
-* To enable infinite scroller
-* initial load should download only featured blogs 
-* scrolling loads next n blogs
-* when a filter is applied only relevant blogs are queried
+
+- To enable infinite scroller
+- initial load should download only featured blogs
+- scrolling loads next n blogs
+- when a filter is applied only relevant blogs are queried
 
 ### Query Patterns / Usage
 
 ### Entites
+
 ```erd:Blogs
 [Blogs]
 *'id: int'
@@ -129,24 +144,28 @@ Blogs +--+ Tags
 Users 1--* Blogs
 ```
 
-[//]: # ( ========== Music ========== )
+[//]: # ' ========== Music ========== '
+
 # Music
 
 ### Requirements
-* similar songs have similar embeddings
-* similar playlists have similar embeddings
-* liking a song modifies user's preference embedding
-* playlists can be automatically generated from a user's embedding
-* find n songs which produce a playlist with a nearby embedding
-* each user can have n music preference 'modes' which adjust to a task
+
+- similar songs have similar embeddings
+- similar playlists have similar embeddings
+- liking a song modifies user's preference embedding
+- playlists can be automatically generated from a user's embedding
+- find n songs which produce a playlist with a nearby embedding
+- each user can have n music preference 'modes' which adjust to a task
 
 ### Query Patterns / Usage
+
 song id -> song
 playlist id -> playlist
 embedding -> similar song or playlist
 embedding -> new playlist
 
 ### Entites
+
 ```erd
 [Songs]
 *'id: int'
@@ -177,28 +196,33 @@ Song +--* Playlist
 User 1--* MusicPref
 ```
 
-[//]: # ( ========== Map ========== )
+[//]: # ' ========== Map ========== '
+
 # Map
 
 ### Requirements
+
 Stick closely to the OpenMaps spec
 Locations
-* mark a point on a map
-Services
-* describe a service offered at a location
-users can
-* post a location
-* post a service
-* comment on location or service
-* purchase service
+
+- mark a point on a map
+  Services
+- describe a service offered at a location
+  users can
+- post a location
+- post a service
+- comment on location or service
+- purchase service
 
 ### Query Patterns / Usage
+
 Location -> Nearby locations
 Location -> Services
 Location -> Comments
 Service -> Comments
 
 ### Entites
+
 ```erd
 [Locations]
 *'id: int'
@@ -222,16 +246,20 @@ Location 1--* Comment
 Service 1--* Comment
 ```
 
-[//]: # ( ========== Analytics ========== )
+[//]: # ' ========== Analytics ========== '
+
 # Analytics
 
 ### Requirements
+
 To enable usage insights, prediction-prefetching, ad data, and dashboards
 
 ### Query Patterns / Usage
+
 location -> nearby points of interest``
 
 ### Entites
+
 ```erd
 [Logs]
 *'id: int'
@@ -247,13 +275,10 @@ location -> nearby points of interest``
 Logs +--* Analytics
 ```
 
-
 <!--
 ### Requirements
 ### Query Patterns / Usage
 ### Entites
 -->
 
-
 # Learnings
-

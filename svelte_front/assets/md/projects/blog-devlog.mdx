@@ -1,25 +1,23 @@
 ---
 title: Blog Development Log
-coverImage: /blog/assets/images/projects/app-architectures.webp
+coverImage: /blog/assets/images/app-architectures.webp
 date: 2023-09-26T02:32:00.000Z
 updated: 2023-11-22T21:45:39.000Z
 excerpt: How I created this blog
 hidden: false
 tags:
   - Blog
-  - Rust
-  - Svelte
+  - Projects
 ---
 
-<script>
-  import Image from "@lib/components/atoms/Image.svelte";
-</script>
+<script>import Image from "@lib/components/atoms/Image.svelte";</script>
 
 # Release 2.0
 
 ## Infrastructure design
 
 ### Serverless
+
 I'd like to test if an application can be designed firstly, so that it can run on serverless without being stuck on it, and secondly so that it's efficient.
 
 Put your frontend files (HTML, CSS, JS) in S3
@@ -29,14 +27,18 @@ Use API gateway to call the Lambdas
 The DB can be Aurora Serverless or DynamoDB On-Demand
 
 ### Cluster
+
 Classic horizontally scaled backend.
 
 ### Self Hosted
+
 Vertically scale
 do some performance testing to see how much traffic I could squeeze out of a basic server.
 
 ## Todos
+
 ### Backend
+
 - [x] figure out how to match the frontend routes with axum: ` nested routes cannot contain wildcards (*)` | 404 redirect worked for Github, axum?
 - [x] minimize dependencies
 - [x] Database for users, comments
@@ -45,51 +47,75 @@ do some performance testing to see how much traffic I could squeeze out of a bas
 - [ ] get a domain name & certificate
 - [ ] bot / dos prevention, cloudflare?
 - [ ] host backend somewhere
+
 ### Devops
+
 - [ ] performance testing
 - [ ] logging + dashboard
 - [ ] fuzzing
 
 ## Challenges & learnings
+
 having `target: '_self'` in the blog card and nav menu anchors caused the whole page to rerender
 
+### Comments
+
+To enable the comments feature, the initial verion needed 3 things. A frontend component to display the each comment, a database to store the data, and an authentication system to associate comments with a username.
+
+### Blogs DB
+
+The blog datatype needed a custom deserializer, as there isn't a standard query param string representation of a list.
+
+### Signup flow
+
+When I was making the signup flow, I had a few hurdles. The first thing I tried was to copy the login logic, but replace the authenticate call with a call to generate the password_hash.
 
 # Release 1.0 Frontend Rough Draft
 
 ### Blog template
+
 To get started I wanted to find an example with good enough styling that I wouldn't mind being live while I refine it. I searched around for a bit and found a good looking, simply organized template and found [Mat Fantaniel's](https://github.com/matfantinel/sveltekit-static-blog-template). I had to re-organize the whole project to remove the SvelteKit stuff, but doing that gave me a good understanding of Vite.
 
 #### Links, inspiration, etc
+
 blog template: https://github.com/matfantinel/sveltekit-static-blog-template
 \[1\]: https://sveltekit-static-blog-template.vercel.app/
 \[2\]: https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/
 
 ### Questions:
+
 How will the backend scale? If I build something and want more capacity, when will I add seperate infrastructure for that project instead of hosting it on the blog?
 
 ## Challenges & learnings
+
 ### Exporting the pageid from the page components
+
 I ended up just renaming the blog page to articles so the menu is currently in alphabetical order, but I wanted to be able to control the order of the menu while still dynamically generating it from whatever components are in the [`src/pages`](https://github.com/JackBellinger/blog/tree/main/svelte_front/src/pages) directory.<br>
 I didn't want to encode them in the file name or restrict the order to alphabetical, so I tried
 variables exported from the script section but those are only available to use with `export let` bindings. Eventually I figured out that I needed to export the values from the module script to access from an instance.
 
 ### Flexbox stuff
+
 When a flexbox flexs, it doesn't re-calculate the element size after the initial load, scaleX() just changes the display and not the element size, so I needed to set the width of the menu elements to actually move adjacent dom elements. This isn't visible right now, but I'm thinking about adding some content to the middle of the header and I want it to move when the pages expand.
 
 ### Bundling
-I'm using path aliases from the Vite bundler for everything except the paths in the Markdown.svx files. Mdsvex doesn't use the same aliases and Vite doesn't process those for some reason. Since all the blog assets are hosted in the same dist directory (although I guess I could change this), I had to add a base url to the Vite config so it prepends blog to all the links and add a bundling script that moves the files out of the auto generated baseurl directory. The /blog part of the url is handled by the Axum server, since the route serves the file directory from the frontend root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie blog.domainname.com and yew-wasm-app.domainname.com, which might make more sense in the future, but I'm glad I figured out how to do it this way in case
+
+I'm using path aliases from the Vite bundler for everything except the paths in the Markdown.mdx files. Mdsvex doesn't use the same aliases and Vite doesn't process those for some reason. Since all the blog assets are hosted in the same dist directory (although I guess I could change this), I had to add a base url to the Vite config so it prepends blog to all the links and add a bundling script that moves the files out of the auto generated baseurl directory. The /blog part of the url is handled by the Axum server, since the route serves the file directory from the frontend root, but passes the whole url route, so each request has the prefix on it. I could use hostname urls ie blog.domainname.com and yew-wasm-app.domainname.com, which might make more sense in the future, but I'm glad I figured out how to do it this way in case
 
 ### Backend routing 2 frontends
+
 It was pretty tricky to figure out which combination of handling, nesting, and fallback services would let me serve the svelte and wasm frontends from a [Tower::ServeDir](https://docs.rs/tower-http/latest/tower_http/services/struct.ServeDir.html). Initially I read to use a fallback service, which only worked for one. Thankfully, there's also an [example](https://github.com/tokio-rs/axum/blob/main/examples/static-file-server/src/main.rs#L80C9-L80C9) for using 2 serve dirs.
 
 ### Frontend routing with a 'prefix'
+
 Using this added a bit of extra complexity to the frontend though. Since I made the frontend a simple SPA, the routes I wanted to use weren't actual directories in the compiled bundle. This caused issues with ergonomic / logical asset hrefs, reloading to the same page, and I wouldn't be able to link to a page without route handling.
 I considered going back to SvelteKit with adapter-static. I might try it out or build another frontend to try out some SvelteKit features, but I like using Vite directly and customizing things. I looked into a few spa router options, and decided on [Navaid](https://github.com/lukeed/navaid) for it's simple API and back and forward button enabling history integration.
 It took some trickery to get the 404 to redirect to the main page when a route doesn't exist as a file, but then it get's handled by Navaid routing.
 
 ## Release 0.1.0
 
-### Frontend 
+### Frontend
+
 - [x] Adapt Sveltekit blog template to svelte/vite served by axum backend
 - [x] create a cool styled navbar
 - [x] start a few articles for testing content / display
@@ -101,12 +127,14 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 - [ ] refine head metadata
 
 ### Backend
+
 - [x] setup basic axum server
 - [x] route frontend to compiled svelte dir
 - [x] enable routing to more yew in addition to svelte
 - [x] send route to frontend to enable page routing: 404s under blog reroute to blog index page
 
 ### Content
+
 - [x] add textual descriptions, comments, etc to the articles
 - [x] add a resume component with skills, experience, etc
 - [ ] write a blog about working at Amazon
@@ -114,11 +142,13 @@ It took some trickery to get the 404 to redirect to the main page when a route d
 - [x] use github tickets
 
 ### Devops
+
 - [x] Frontend Integ / unit testing
 - [x] code scanner
 - [x] deployment pipeline: github actions
 
 ### Bugs
+
 - [x] related posts have wrong link
 - [x] theme toggle resets on page load
 - [x] footer waves are clipped

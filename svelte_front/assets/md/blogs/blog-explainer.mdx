@@ -1,28 +1,24 @@
 ---
 title: How Blog Posts Work
-coverImage: /blog/assets/images/blogs/mdsvex.avif
+coverImage: /blog/assets/images/mdsvex.avif
 date: 2023-09-26T02:32:00.000Z
 excerpt: How to manage existing blog posts and create new ones
 hidden: false
 tags:
-  - Documentation
   - Blog
-  - Svelte
+  - Documentation
 ---
 
 <script>
-  import Callout from "@lib/components/atoms/Callout.svelte";
-  import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
-  import Image from "@lib/components/atoms/Image.svelte";
+	import Callout from "@lib/components/atoms/Callout.svelte"; import CodeBlock from
+	"@lib/components/molecules/CodeBlock.svelte"; import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
-All posts are located inside the `assets/md/[blogs or projects]` folder. Each folder has markdown files that describe a blog article or project devlog.
+All posts are located inside the `assets/md` folder. Each folder has markdown files that describe a blog article or project devlog.
 
 All posts are Markdown files, which means you can use the [Markdown syntax](https://www.markdownguide.org/basic-syntax) in them, and it will work out of the box. However, since this projects uses [MDsveX](https://mdsvex.pngwn.io/) to parse Markdown, you can also use Svelte components inside them! This means that the components used in other pages can also be used in blog posts.
 
-<Callout type="info">
-  This is a Svelte component inside a Markdown file!
-</Callout>
+<Callout type="info">This is a Svelte component inside a Markdown file!</Callout>
 
 ## Processing
 
@@ -35,23 +31,24 @@ The posts have metadata defined in the frontmatter header, which contains things
 
 ## Creating a new post
 
-To create a new post, create a new folder inside the `assets/md/[blogs or projects]` folders, and inside it, create an `article.svx` file. The blog's url page name, under `blog/[articles or projects]`, is defined in the frontmatter.
+To create a new post, create a new folder inside the `assets/md` folders, and inside it, create an `article.mdx` file. The blog's url page name, under `blog/[articles or projects]`, is defined in the frontmatter.
 
 The markdown files begin with a frontmatter header, which is a YAML-like syntax that is used to define metadata for the post, separated from the rest of the content by three dashes (`---`). An example of a front matter is:
 
-<CodeBlock filename="article.svx" lang="markdown">
+<CodeBlock filename="article.mdx" lang="markdown">
 
 ```md
 ---
 title: My New Blog Post
 date: 2023-04-22T20:45:25.350Z
 excerpt: A short description of the post
-coverImage: /images/posts/cover-image.jpg
+coverImage: /images/cover-image.jpg
 hidden: true
 tags:
   - Example
 ---
 ```
+
 </CodeBlock>
 
 ## Components

@@ -1,47 +1,53 @@
 ---
 title: My Keyboard
-coverImage: /blog/assets/images/projects/ikki-aurora.webp
+coverImage: /blog/assets/images/ikki-aurora.webp
 date: 2023-11-10T04:53:49.000Z
 updated: 2023-11-10T04:53:49.000Z
 excerpt: How I bought and built my keyboard.
 hidden: false
 tags:
-- Workspace
-- QMK
-- C
+  - Workspace
+  - C
 ---
 
-<script>
-import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";
-</script>
+<script>import CodeBlock from "@lib/components/molecules/CodeBlock.svelte";</script>
 
 ### Why not use an off-the-shelf keyboard?
+
 Mainly, I just wanted to make a keyboard. I had a mechanical keyboard from Amazon for years that typed well, but it was too clicky. I also wanted to program some macros and RGB effects.
 
 ## Build goals
+
 My goals for this keyboard were to make something quiet, smooth typing, and compact.
 I also wanted something beginner friendly that works with QMK/VIA so that I could get it assembled and running without too much work and leave myself room to add functionality later.
 
-
 ### Group buy
+
 I joined the wuque studios ikki68 aurora group buy, and recieved it a year later. My gmk keycaps took even longer to arrive 😅.
 I got the switches pretty easily, and I pulled the keycaps off my old board to use until my new set arrived.
 
 ### Switches
-I went with Boba linear switches, and I really enjoy the sounds they make. 
+
+I went with Boba linear switches, and I really enjoy the sounds they make.
 
 ## Features
+
 After I had been using the keyboard for a while, I decided to try out some of the more advanced features.
 I've found a few of the many advanced features to be super useful: macros, tap-dance, and combos. Fiddling with the RGB underglow has been fun as well.
-I added some code snippets to explain how things work, but you can find the source code in my [dotfiles repo](https://github.com/jackbellinger/dotfiles/ikki68_aurora)
+I added some code snippets to explain how things work, but you can find the source code in my [dotfiles repo](https://github.com/JackBellinger/dotfiles/tree/master/ikki68_aurora)
 
 ### Macros
+
 You can read the full implementation of my macros in my [dotfiles repo](https://github.com/JackBellinger/dotfiles/blob/master/ikki68_aurora/keymaps/ikki_km/features/macro.c)
 Check out my [macros](https://jackbellinger.github.io/blog/articles/qmk-macros) blog article for a full explanation of my macros.
+
 ### Tap Dance
+
 You can read the full implementation of my tapdances in my [dotfiles repo](https://github.com/JackBellinger/dotfiles/blob/master/ikki68_aurora/keymaps/ikki_km/features/tapdance.c)
 Check out my [macros](https://jackbellinger.github.io/blog/articles/qmk-tapdances) blog article for a full explanation of my tap dances.
+
 ### Combos
+
 I haven't added any combos yet, but here's my ideas:
 backspace + ` = backspace, for fatfingering
 backspace + the macro button on the other side of backspace = backspace, for fatfingering
@@ -49,16 +55,16 @@ backspace + the macro button on the other side of backspace = backspace, for fat
 a + c = ctrl + a, ctrl + c, for all-copy
 
 ### RBG Underglow
+
 RGB ideas:
 timer, stopwatch
 layer indication
 minigame
 typing reactive
 
-
-
 #### Links, inspiration, etc
-github.com/jackbellinger/dotfiles/keymap.c
+
+https://github.com/JackBellinger/dotfiles/blob/master/ikki68_aurora/
 
 ### Learnings
 
