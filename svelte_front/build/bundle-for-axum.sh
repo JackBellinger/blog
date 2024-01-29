@@ -7,4 +7,5 @@ set -euo pipefail
 #mkdir -p ./dist/blog
 #mv ./dist/assets ./dist/blog
 cp -r ./assets/* ./dist/assets
+find ./dist/assets/md -type f -exec mv '{}' ./dist/assets/md \;
 cp ./404.html ./dist/404.html

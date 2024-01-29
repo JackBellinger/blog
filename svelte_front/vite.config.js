@@ -26,7 +26,8 @@ export default {
 	base: `blog`,
 	build: {
 		outDir: 'dist',
-		assetsDir: 'assets'
+		assetsDir: 'assets',
+		sourcemap: true
 	},
 	resolve: {
 		alias: {

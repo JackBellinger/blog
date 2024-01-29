@@ -1,6 +1,7 @@
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import mdsvexConfig from './mdsvex.config.js';
+mdsvex(mdsvexConfig);
 import sveltePreprocess from 'svelte-preprocess';
 
 export default {
@@ -18,13 +19,11 @@ export default {
 	},
 	// Consult https://svelte.dev/docs#compile-time-svelte-preprocess
 	// for more information about preprocessors
-	// Consult https://svelte.dev/docs#compile-time-svelte-preprocess
-	// for more information about preprocessors
 	preprocess: [
 		//sveltePreprocess({
 		//  //postcss: true
 		//}),
-		vitePreprocess(),
-		mdsvex(mdsvexConfig)
+		mdsvex(mdsvexConfig),
+		vitePreprocess()
 	]
 };
