@@ -42,7 +42,7 @@
 		"vitest": "0.34.6"
 	},
 	"dependencies": {
-		"@fontsource/fira-code": "^5.0.15",
+		"@fontsource/fira-code": "^5.0.16",
 		"@fontsource/mononoki": "^5.0.7"
 	}
 }
