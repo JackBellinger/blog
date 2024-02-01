@@ -43,39 +43,20 @@ jobs:
           pwd && ls
           echo "Directories in build-directory and subdirectories:"
           find ${{ env.BUILD_PATH }} -type d -print
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ env.BUILD_PATH }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ env.BUILD_PATH }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: install npm & yarn
+        uses: bahmutov/npm-install@v1
         with:
-          node-version: "16"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
-      - name: Install yarn
-        uses: borales/actions-yarn@v4
-      - name: Build Svelte-store
+          working-directory: ${{ env.BUILD_PATH }}
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: ${{ env.BUILD_PATH }}/svelte-store
+
+      - name: App1 tests
         run: |
-          yarn install && yarn build
+          yarn install
+          yarn build
         working-directory: ${{ env.BUILD_PATH }}/svelte-store
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-        working-directory: ${{ env.BUILD_PATH }}
-      - name: Build js, bundle assets, and compile markdown
+      - name: Run app2
         run: |
           npm ci
           npm run compile
