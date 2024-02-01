@@ -9,7 +9,7 @@ workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = {version = "0.7.1" }
+axum = {version = "0.7.3", features = ["query"] }
 askama = { version = "0.12.1", features = ["with-axum"] }
 askama_axum = "0.4.0"
 async-trait = "0.1.74"
@@ -18,11 +18,11 @@ axum-login = "0.11.3"
 clap = { version = "4.4.10", features = ["derive", "env"] }
 chrono = { version = "0.4", features = ["serde"] }
 hyper = "1.0.1"
-# log = "*"
+log = "0.4.20"
 password-auth = "1.0.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-sqlx = { version = "0.7.3", features = ["runtime-tokio", "sqlite", "chrono"] }
+sqlx = { version = "0.7.3", features = ["runtime-tokio", "sqlite", "chrono", "macros"] }
 tokio = { version = "1.34.0", features = ["full"] }
 tower = "0.4.13"
 tower-sessions = "0.8.2"

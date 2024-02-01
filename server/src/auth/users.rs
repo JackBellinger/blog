@@ -1,10 +1,9 @@
 use async_trait::async_trait;
-use axum::Json;
 use axum_login::{AuthUser, AuthnBackend, AuthzBackend, UserId};
 use password_auth::{generate_hash, verify_password};
 use serde::{Deserialize, Serialize};
 use sqlx::{FromRow, SqlitePool};
-use std::{collections::HashSet, error::Error};
+use std::collections::HashSet;
 
 #[derive(Clone, Serialize, Deserialize, FromRow)]
 pub struct User {

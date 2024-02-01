@@ -1,5 +1,4 @@
-use super::app::ApiContext;
-use crate::auth::users::AuthBackend;
+use crate::{app::ApiContext, auth::users::AuthBackend};
 use axum::{
 	extract::Path,
 	http::StatusCode,
@@ -10,7 +9,6 @@ use axum::{
 use axum_login::permission_required;
 use chrono::serde::ts_milliseconds;
 use serde::{Deserialize, Serialize};
-use serde_json::json;
 use sqlx::{
 	types::chrono::{DateTime, Utc},
 	FromRow, Sqlite,
@@ -64,9 +62,56 @@ async fn users_comments_show(
 	.map(axum::Json)
 	.map_err(|e: sqlx::Error| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))
 }
-async fn users_comments_create(Path(UserCommentsParams { username }): Path<UserCommentsParams>) -> impl IntoResponse {
+async fn users_comments_create(
+	Path(UserCommentsParams { username }): Path<UserCommentsParams>,
+	ctx: Extension<ApiContext>,
+	form: Form<Comment>,
+) -> impl IntoResponse {
 	tracing::info!("Posting comment for user#{}", username);
-	Json(json!({"result": "ok", "message": "You've reached the backend API by using a valid token."}))
+	let comment = form.0;
+	let commentcl = comment.clone();
+	let mut transaction = ctx.db.begin().await.ok().unwrap();
+
+	let username = comment.username;
+	let reply_to = comment.reply_to;
+	let text = comment.text;
+
+	let query_result1 = sqlx::query!(
+		r#"
+			INSERT INTO comments (user_id, reply_to, timestamp, text)
+			VALUES ((SELECT id FROM users WHERE users.username = $1), $2, CURRENT_TIMESTAMP, $3);
+		"#,
+		username,
+		reply_to,
+		text
+	)
+	.execute(&mut *transaction)
+	.await
+	.ok()
+	.unwrap();
+	let rows_affected = query_result1.rows_affected();
+
+	match transaction.commit().await {
+		Ok(_) => {
+			tracing::debug!("posted {}'s comment successfully", commentcl.username);
+			match rows_affected {
+				1 => Ok(Json("Your comment was successfully posted.")),
+				0 => Err((StatusCode::BAD_REQUEST, "Failed to post comment.".to_string())),
+				_ => Err((
+					StatusCode::INTERNAL_SERVER_ERROR,
+					"Error: Unexpected number of rows.".to_string(),
+				)),
+			}
+		}
+		Err(e) => {
+			tracing::error!("unable to post comment: {:#?} b/c error: {}", commentcl, e);
+			Err((
+				StatusCode::INTERNAL_SERVER_ERROR,
+				"Posting comment had no result".to_string(),
+			))
+		}
+	}
+	// Ok(Json(json!("ok ")))
 }
 async fn blog_comments_show(
 	Path(BlogCommentsParams { blog_slug }): Path<BlogCommentsParams>,
@@ -101,7 +146,6 @@ async fn blog_comments_create(
 	tracing::info!("Posting comment on blog#{}", blog_slug);
 	let comment = form.0;
 	let commentcl = comment.clone();
-	tracing::debug!("got blog post: {:#?}", comment);
 	let mut transaction = ctx.db.begin().await.ok().unwrap();
 
 	let username = comment.username;

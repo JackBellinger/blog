@@ -1,7 +1,8 @@
 import { derived, get, readable, writable } from 'svelte/store';
-import { importPosts } from '@lib/fetchers/posts';
-import type { BlogPost, Session, SyncReadable } from './types';
+import { asyncDerived, asyncReadable, asyncWritable } from 'svelte-store';
+import type { BlogPost, BlogSearch, SyncReadable, QueryStore, FilterableAsyncStore } from './types';
 import { type Page } from '@lib/utils/types';
+import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts';
 import { importPages } from '../fetchers/pages';
 import { importProjects } from '../fetchers/projects';
 import { fetchSession } from '@lib/fetchers/session';
@@ -27,95 +28,77 @@ function createTheme() {
 	};
 }
 
-const loadAll = async (stores) => {
-	const loadPromises = stores.map((store) => {
-		if (Object.prototype.hasOwnProperty.call(store, 'load')) {
-			let x = store.load();
-			//console.log("loaded: ", x)
-			return x;
-		} else {
-			//console.log("no load, getting ", get(store))
-			return get(store);
-		}
-	});
-	const storeValues = await Promise.all(loadPromises);
-	//console.log("store values: ", storeValues)
-	return storeValues;
-};
-
-const loadableDerived = (stores, mappingFunction) => {
-	const loadValue = async () => {
-		//console.log("loading: ", stores, " with functiuon: ", mappingFunction)
-		const parentValues = await loadAll(stores);
-		let x = mappingFunction(parentValues);
-		//console.log(x)
-		return x;
-	};
-	const { subscribe } = derived(stores, mappingFunction);
-	return {
-		subscribe,
-		load: loadValue
-	};
-};
-
-const asyncReadable = (initial, loadFunction) => {
-	let loadPromise;
-	const loadValue = async (set, reload?) => {
-		if (!loadPromise || reload) {
-			loadPromise = loadFunction();
-		}
-		const storeValue = await loadPromise;
-		set(storeValue);
-		return storeValue;
-	};
-	const { subscribe, set } = writable(initial, (set) => {
-		loadValue(set);
-	});
-	return {
-		subscribe,
-		load: () => loadValue(set),
-		reload: () => loadValue(set, true)
-	};
-};
-
-function createFilterableAsyncStore(itemInitializationFunction) {
-	const items = asyncReadable([], itemInitializationFunction);
+function createQueryStore(
+	itemQueryFunction: (...args: any[]) => Promise<Array<any>>,
+	storesToApiParams: (...args: any[]) => any
+): QueryStore {
 	const filter = writable({ searchTerm: '', selectedTags: new Set<string>() });
-	const filteredItems = loadableDerived([items, filter], async ([$items, $filter]) => {
-		let result = $items.filter((post) => {
-			let title_match =
-				$filter.searchTerm.length == 0 || post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
-
-			let tag_match = $filter.selectedTags.size == 0 || post.tags.some((tag) => $filter.selectedTags.has(tag)); //.toLowerCase()));
-			//console.log("post: ", post, "filtered by", filter, "is ", x&&y)
-			return title_match && tag_match;
-		});
-		//console.log("filter result: ", result)
-		return result;
+	const pagination = writable({ page: 0, per_page: 10 });
+	const items = writable([]);
+	const download = asyncDerived([filter, pagination], async ([$filter, $pagination]) => {
+		// console.log("downloading")
+		let query_params = storesToApiParams($filter, $pagination);
+		let download = await itemQueryFunction(query_params);
+		// console.log("downloaded items: ", download)
+		if (download.length > 0) {
+			items.update((items) => [...items, ...download.filter((dl) => items.every((ite) => ite.slug != dl.slug))]);
+		}
+		// else {
+		// 	pagination.update((pag) => ({page: pag.page-1, per_page: pag.per_page}))
+		// }
+		return download;
+	});
+	pagination.subscribe((pag) => download.load());
+	const filteredItems = asyncDerived(
+		[items, filter],
+		async ([$items, $filter]) => {
+			// console.log("filtering ", $items, $filter)
+			let searched = searchArticles($items, $filter);
+			// console.log("there are ", searched.filter(post => !post.hidden).length, " !hidden posts")
+			return searched;
+		},
+		{ reloadable: true }
+	);
+	items.subscribe((ite) => filteredItems.reload());
+	filter.subscribe((filt) => {
+		filteredItems.reload();
 	});
 
-	let x = {
-		items,
+	let stores = {
 		filter,
+		pagination,
+		items,
+		download,
 		filteredItems
 	};
-	//console.log("type of ", Object.getPrototypeOf(x))
-	return x;
+	return stores;
 }
 
-function createProjects() {
-	let projects: BlogPost[];
+// function createFilterableAsyncStore(itemInitializationFunction): FilterableAsyncStore {
+// 	const items = writable([], itemInitializationFunction);
+// 	const filter = writable({ searchTerm: '', selectedTags: new Set<string>() });
+// 	const filteredItems = asyncDerived([items, filter], async ([$items, $filter]) => {
+// 		console.log("downloading bleh items")
+// 		let result = $items.filter((post) => {
+// 			let title_match =
+// 				$filter.searchTerm.length == 0 || post.title.toLowerCase().includes($filter.searchTerm.toLowerCase());
 
-	const { subscribe, set } = writable<BlogPost[]>(projects);
+// 			let tag_match = $filter.selectedTags.size == 0 || (post.tags && post.tags.some((tag) => $filter.selectedTags.has(tag))); //.toLowerCase()));
+// 			//console.log("post: ", post, "filtered by", filter, "is ", x&&y)
+// 			return title_match && tag_match;
+// 		});
+// 		console.log("filter result: ", result)
+// 		return result;
+// 	}, { reloadable: true });
 
-	return {
-		subscribe,
-		init: importProjects(),
-		set: (value: BlogPost[]) => {
-			set(value);
-		}
-	};
-}
+// 	let x = {
+// 		items,
+// 		filter,
+// 		filteredItems
+// 	};
+// 	//console.log("type of ", Object.getPrototypeOf(x))
+// 	return x;
+// }
 
 function createPages() {
 	let pages: Page[];
@@ -133,10 +116,18 @@ function createPages() {
 export const theme = createTheme();
 export const user = writable('');
 
-export const postStores = createFilterableAsyncStore(importPosts);
+export const sessionStore = asyncReadable(
+	{ backend_connected: false, logged_in: false, username: null },
+	fetchSession,
+	{ reloadable: true }
+);
+// export const postStores = createFilterableAsyncStore(importPosts);
+export const postStores = postFetchMethod().then((postFetchFunc) =>
+	createQueryStore(postFetchFunc, blogApiParamsFromFilterAndPage)
+);
+
 export const pageStore: SyncReadable = createPages();
-export const projectStores = createFilterableAsyncStore(importProjects);
-export const sessionStore = asyncReadable({ logged_in: false, username: null }, fetchSession);
+// export const projectStores = createFilterableAsyncStore(importProjects);
 //return {
 //	subscribe,
 //	set: (newList) => {

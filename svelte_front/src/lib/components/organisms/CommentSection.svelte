@@ -19,10 +19,10 @@
 	}
 	importComments();
 	const append_comment = (event) => {
-		console.log('appending: ', event);
+		// console.log('appending: ', event);
 		comments = [...comments, event.detail];
 	};
-	$: comments, console.log('got new comments: ', comments);
+	// $: comments, console.log('got new comments: ', comments);
 </script>
 
 {#await sessionStore.load()}

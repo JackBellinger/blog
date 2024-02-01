@@ -1,0 +1,37 @@
+---
+slug: design-tradeoffs
+title: Common Software Design Considerations
+coverImage: https://picsum.photos/200
+date: 2024-01-21T21:45:49.000Z
+updated: 2024-01-21T21:45:49.000Z
+excerpt:
+hidden: true
+tags:
+  - Design
+  - SDLC
+---
+
+# Common Software Design Considerations
+
+Software Design is all about tradeoffs.
+There are some common axes along which we must decide where to sit.
+
+## Time and Space
+
+Most of the time, we think about the speed of a program. Faster is better. But this is often at the cost of memory space.
+
+One of the easiest ways to speed up a program is a technique called memoization.
+Memoization is basically the idea that we can save our work to avoid re-calculating things.
+
+To speed up finding what webpages to display when searching 'brownie recipie' Google stores a keyword index.
+To speed up a webserver we can cache the public pages on edge servers.
+To speed up routing, a map can pre-calculate common paths.
+
+Bubblesort is O(n^2) so it's slow for large inputs. However, it is O(1) in space, which contributes to it's low constant factor. For small inputs it can be the fastest algorithm. Heapsort has a high constant factor, so while it might not be the fastest algorithm for 10 elements, it will be much faster for a million.
+
+## Latency and Throughput
+
+Similarly, throughput gains often cost latency concesions.
+A service might use a load balancer to distribute user requests among a number of servers, but calculating which server to send each request to (especially if it needs to be consistent) adds to the latency.
+A database might need to have multiple shards to support all of the concurrent users, but when a user wants to know data about other people it takes more time to query the other shards.
+Like finding a book in your backpack is fast, but you can't store many books. It takes a bit longer to find one at the library, but they can store more.

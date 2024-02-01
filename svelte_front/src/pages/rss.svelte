@@ -65,7 +65,7 @@
 				</strong>
 				</div>
 
-				${post.html}
+				${post.component}
 			]]></content:encoded>
 			${
 				post.coverImage
@@ -85,10 +85,14 @@
 	</rss>`;
 </script>
 
-{#await postStores.items.load()}
-	<p>...parsing markdown</p>
-{:then posts}
-	{rssXml(posts)}
-{:catch error}
-	<p style="color: red">{error.message}</p>
+{#await postStores}
+	<p>...checking for backend connectivity</p>
+{:then postStores}
+	{#await postStores.items.load()}
+		<p>...parsing markdown</p>
+	{:then posts}
+		{rssXml(posts)}
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 {/await}
