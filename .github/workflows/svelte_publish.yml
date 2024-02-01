@@ -66,20 +66,22 @@ jobs:
           node-version: "16"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
+      - name: Install yarn
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install # will run `yarn install` command
+        working-directory: ${{ env.BUILD_PATH }}/svelte-store
+      - name: Build Svelte-store
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build # will run `yarn build` command
+        working-directory: ${{ env.BUILD_PATH }}/svelte-store
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
-      - name: Setup pnpm & install deps
-        uses: pnpm/action-setup@v2.4.0
-        with:
-          package_json_file: ${{ env.BUILD_PATH }}/package.json
-          version: latest
-          run_install: true
-      # - name: Install svelte-store from local path
-      #   run: pnpm install ./svelte-store
-      #   working-directory: ${{ env.BUILD_PATH }}
       - name: Build js, bundle assets, and compile markdown
         run: |
+          npm ci
           npm run compile
         working-directory: ${{ env.BUILD_PATH }}
       - name: Setup Pages
