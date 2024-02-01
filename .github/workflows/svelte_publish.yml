@@ -34,7 +34,7 @@ jobs:
       - name: Clone forked svelte-store repository
         uses: actions/checkout@v3
         with:
-          repository: jackbellinger/svelte-store
+          repository: JackBellinger/svelte-store
           path: svelte-store
           ref: jb-dev1
       - name: Detect package manager
