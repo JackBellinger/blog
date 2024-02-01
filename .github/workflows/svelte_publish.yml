@@ -72,9 +72,8 @@ jobs:
           cmd: install # will run `yarn install` command
         working-directory: ${{ env.BUILD_PATH }}/svelte-store
       - name: Build Svelte-store
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build # will run `yarn build` command
+        run: |
+          yarn build
         working-directory: ${{ env.BUILD_PATH }}/svelte-store
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
