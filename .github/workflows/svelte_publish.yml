@@ -40,6 +40,7 @@ jobs:
           ref: jb-dev
       - name: Print directories in build-directory and subdirectories
         run: |
+          pwd && ls
           echo "Directories in build-directory and subdirectories:"
           find ${{ env.BUILD_PATH }} -type d -print
       - name: Detect package manager
