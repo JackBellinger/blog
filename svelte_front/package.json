@@ -36,7 +36,7 @@
 		"striptags": "^3.2.0",
 		"svelte": "^4.2.8",
 		"svelte-preprocess": "5.0.4",
-		"svelte-store": "file:./svelte_store",
+		"svelte-store": "file:./node_modules/svelte_store",
 		"typescript": "^5.2.2",
 		"vite": "^4.5.2",
 		"vitest": "0.34.6"

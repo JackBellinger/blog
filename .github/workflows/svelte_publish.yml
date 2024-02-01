@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: JackBellinger/svelte-store
-          path: ./svelte_front/svelte-store/
+          path: ./svelte_front/node_modules/svelte-store/
           ref: jb-dev
       - name: Print directories in build-directory and subdirectories
         run: |
