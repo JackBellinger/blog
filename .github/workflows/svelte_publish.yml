@@ -71,6 +71,7 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Install svelte-store from local path
         run: pnpm install ./svelte-store
         working-directory: ${{ env.BUILD_PATH }}
