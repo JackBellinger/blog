@@ -31,6 +31,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Clone forked svelte-store repository
+        uses: actions/checkout@v3
+        with:
+          repository: jackbellinger/svelte-store
+          path: svelte-store
+          ref: jb-dev1
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -60,11 +66,13 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Install svelte-store from local path
+        run: npm install svelte-store/
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Install, Build, and move assets
         run: |
           npm ci
-          npm run build
-          npm run bundle
+          npm run compile
         working-directory: ${{ env.BUILD_PATH }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -72,7 +80,7 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: ${{ env.BUILD_PATH }}/dist
-
+  
   deploy:
     name: Deploy
     environment:
