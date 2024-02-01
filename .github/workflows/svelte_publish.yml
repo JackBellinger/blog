@@ -38,6 +38,10 @@ jobs:
           repository: JackBellinger/svelte-store
           path: ./svelte-store/
           ref: jb-dev
+      - name: Print directories in build-directory and subdirectories
+        run: |
+          echo "Directories in build-directory and subdirectories:"
+          find ${{ env.BUILD_PATH }} -type d -print
       - name: Detect package manager
         id: detect-package-manager
         run: |
