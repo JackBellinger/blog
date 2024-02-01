@@ -67,7 +67,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
       - name: Install svelte-store from local path
-        run: npm install svelte-store/
+        run: npm install ./blog/svelte_front/svelte-store
         working-directory: ${{ env.BUILD_PATH }}
       - name: Install, Build, and move assets
         run: |
