@@ -1,6 +1,6 @@
 import type { SvelteComponent } from 'svelte';
 import type { Invalidator, Subscriber, Unsubscriber, Writable } from 'svelte/store';
-import { asyncReadable, type Loadable, type WritableLoadable } from 'svelte-store';
+import { asyncReadable, type Loadable, type WritableLoadable } from '@square/svelte-store';
 
 export type Page = {
 	name: string;

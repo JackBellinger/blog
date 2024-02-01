@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: JackBellinger/svelte-store
-          path: ./svelte_front/node_modules/svelte-store/
+          path: ./svelte_front/svelte-store/
           ref: jb-dev
       - name: Print directories in build-directory and subdirectories
         run: |
@@ -69,8 +69,10 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
       - name: Install svelte-store from local path
-        run: npm install ./svelte-store/
+        run: pnpm install ./svelte-store
         working-directory: ${{ env.BUILD_PATH }}
       - name: Install, Build, and move assets
         run: |
