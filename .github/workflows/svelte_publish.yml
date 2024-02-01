@@ -31,11 +31,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        
       - name: Clone forked svelte-store repository
         uses: actions/checkout@v3
         with:
           repository: JackBellinger/svelte-store
-          path: ./blog/svelte_front/svelte_store
+          path: ${{ env.BUILD_PATH }}/svelte-store/
           ref: jb-dev
       - name: Detect package manager
         id: detect-package-manager
@@ -67,7 +68,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
       - name: Install svelte-store from local path
-        run: npm install ./blog/svelte_front/svelte-store
+        run: npm install ${{ env.BUILD_PATH }}/svelte-store/
         working-directory: ${{ env.BUILD_PATH }}
       - name: Install, Build, and move assets
         run: |
