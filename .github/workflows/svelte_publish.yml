@@ -36,7 +36,7 @@ jobs:
         with:
           repository: JackBellinger/svelte-store
           path: svelte-store
-          ref: jb-dev1
+          ref: jb-dev
       - name: Detect package manager
         id: detect-package-manager
         run: |
