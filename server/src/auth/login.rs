@@ -1,5 +1,5 @@
 use crate::auth::users::{AuthSession, Credentials};
-use askama::Template;
+use askama_axum::Template;
 use axum::{
 	extract::Query,
 	http::StatusCode,

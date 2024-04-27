@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import stringWidth from 'string-width';
 
 const config = defineConfig({
-	extensions: ['.svelte.md', '.md', '.svx'],
+	extensions: ['.svelte.md', '.md', '.mdx'],
 
 	smartypants: {
 		dashes: 'oldschool'

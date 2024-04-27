@@ -40,8 +40,7 @@ excerpt {label: "text"}
 date {label: "datetime"}
 updated {label: "datetime"}
 hidden {label: "boolean"}
-views {label: "int"}
-uri {label: "varchar"}
+coverImage {label: "varchar"}
 
 [Tags]
 *id {label: "int"}

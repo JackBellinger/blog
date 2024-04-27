@@ -1,17 +1,18 @@
 <script lang="ts">
-	import Tag from '@lib/components/atoms/Tag.svelte';
+	import Tag from '@lib/components/inf-scroller/Tag.svelte';
 	import dateformat from 'dateformat';
 
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
-	import { CommentSource, type BlogPost } from '@lib/utils/types';
+	import { CommentSource, type BlogPost, defaultBlogPost } from '@lib/utils/types';
 	import Image from '@lib/components/atoms/Image.svelte';
 	import BlogCardGrid from './BlogCardGrid.svelte';
 	import CommentSection from './CommentSection.svelte';
+	import { sessionStore } from '@lib/utils/store';
+	import { onMount } from 'svelte';
 
 	export let post: BlogPost;
 	//console.log("making page for ", post)
 	let metaKeywords = keywords;
-
 	$: {
 		if (post?.tags?.length) {
 			metaKeywords = post.tags.concat(metaKeywords);
@@ -20,6 +21,36 @@
 			metaKeywords = post.keywords.concat(metaKeywords);
 		}
 	}
+
+	let markdownContent;
+
+	// let markdownComponent;
+	let loadMarkdown = async () => {
+		return await sessionStore.load().then(async (session) => {
+			let raw_html = true;
+			if (session.backend_connected) {
+				const response = await fetch(`/api/articles/${post.slug}.html`).then((res) => {
+					// console.log(res);
+					return res;
+				});
+				markdownContent = await response.text();
+
+				const tempElement = document.createElement('div'); // Create a temporary element
+				tempElement.innerHTML = markdownContent; // Set its innerHTML to the HTML content
+
+				const fragment = document.createDocumentFragment();
+				fragment.appendChild(tempElement); // Append the parsed content to the fragment
+
+				const element = document.getElementById('content');
+				element.appendChild(fragment); // Append the fragment to the target element
+			} else {
+				raw_html = false;
+				markdownContent = post.component;
+			}
+			// console.log('markdown content: ', markdownContent);
+			return [raw_html, markdownContent];
+		});
+	};
 </script>
 
 <svelte:head>
@@ -45,8 +76,8 @@
 <div class="article-layout">
 	<main>
 		<article id="article-content">
-			<div class="header">
-				{#if post}
+			{#if post}
+				<div class="header">
 					<h1>{post.title}</h1>
 					<div class="note">Published on {dateformat(post.date, 'UTC:dd mmmm yyyy')}</div>
 					{#if post.updated}
@@ -62,29 +93,36 @@
 							{/each}
 						</div>
 					{/if}
+				</div>
+				{#if post.coverImage}
+					<div class="cover-image">
+						<Image src={post.coverImage} alt={post.title} />
+					</div>
 				{/if}
-			</div>
-			{#if post && post.coverImage}
-				<div class="cover-image">
-					<Image src={post.coverImage} alt={post.title} />
+				<div class="content" id="content">
+					<div id="markdown-content"></div>
+					{#await loadMarkdown()}
+						<p>...loading article</p>
+					{:then [is_raw_html, markdownContent]}
+						{#if !is_raw_html}
+							<svelte:component this={markdownContent} />
+						{/if}
+					{/await}
 				</div>
 			{/if}
-			<div class="content">
-				<svelte:component this={post.module.default} />
-			</div>
 		</article>
-
-		{#if post.relatedPosts && post.relatedPosts.length > 0}
-			<div class="container">
-				<BlogCardGrid
-					posts={post.relatedPosts}
-					numToShow={4}
-					showImages={false}
-					title={'Related ' + window.location.href.split('/').splice(-2)[0]}
-				/>
-			</div>
+		{#if post}
+			{#if post.relatedPosts && post.relatedPosts.length > 0}
+				<div class="container">
+					<BlogCardGrid
+						posts={post.relatedPosts}
+						numToShow={4}
+						title={'Related ' + window.location.href.split('/').splice(-2)[0]}
+					/>
+				</div>
+			{/if}
+			<CommentSection source={CommentSource.Blog} identifier={post.slug} />
 		{/if}
-		<CommentSection source={CommentSource.Blog} identifier={post.slug} />
 	</main>
 </div>
 

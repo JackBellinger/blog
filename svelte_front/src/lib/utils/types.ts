@@ -1,7 +1,6 @@
-import type Image from '@lib/components/atoms/Image.svelte';
-import * as fs from 'fs';
 import type { SvelteComponent } from 'svelte';
 import type { Invalidator, Subscriber, Unsubscriber, Writable } from 'svelte/store';
+import { asyncReadable, type Loadable, type WritableLoadable } from '@square/svelte-store';
 
 export type Page = {
 	name: string;
@@ -28,6 +27,65 @@ export type Session = {
 	username?: string;
 };
 
+export type BlogSearch = {
+	title: string;
+	tags: string[];
+	page: number;
+	per_page: number;
+};
+
+export type BlogPost = {
+	tags: string[];
+	keywords: string[];
+	hidden: boolean;
+	slug: string;
+	title: string;
+	date: string;
+	updated: string;
+	excerpt: string;
+	component?: SvelteComponent<any, any, any>;
+	readingTime: string;
+	relatedPosts?: BlogPost[];
+	coverImage: string | undefined;
+};
+export const defaultBlogPost: BlogPost = {
+	tags: [],
+	keywords: [],
+	hidden: true,
+	slug: '',
+	title: '',
+	date: '',
+	updated: '',
+	excerpt: '',
+	readingTime: '',
+	coverImage: undefined
+};
+export function defPost({
+	tags = [],
+	keywords = [],
+	hidden = true,
+	slug = '',
+	title = '',
+	date = '',
+	updated = '',
+	excerpt = '',
+	readingTime = '',
+	coverImage = undefined
+}: BlogPost): BlogPost {
+	return {
+		tags,
+		keywords,
+		hidden,
+		slug,
+		title,
+		date,
+		updated,
+		excerpt,
+		readingTime,
+		coverImage
+	};
+}
+
 export type Comment = {
 	id?: number;
 	username: string;
@@ -46,15 +104,7 @@ export function defComment({
 	upvotes = 0,
 	hidden = false,
 	text = ''
-}: {
-	id?: number;
-	username: string;
-	reply_to: number;
-	timestamp?: number;
-	upvotes?: number;
-	hidden?: boolean;
-	text: string;
-}): Comment {
+}: Comment): Comment {
 	return {
 		id,
 		username: username ?? 'guest',
@@ -73,44 +123,36 @@ export enum CommentSource {
 	Song
 }
 
-export type BlogPost = {
-	tags: string[];
-	keywords: string[];
-	hidden: boolean;
-	slug: string;
-	title: string;
-	date: string;
-	updated: string;
-	excerpt: string;
-	html: string | undefined;
-	module: SvelteComponent;
-	readingTime: string;
-	relatedPosts: BlogPost[];
-	coverImage: string | undefined;
-};
-
 export type SyncReadable = {
 	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
 	init: any;
 	set: (value: any) => void;
 };
 
-export type AsyncReadable = {
-	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
-	load: () => Promise<any>;
-	reload: () => Promise<any>;
-};
-
 export type StoreFilter = Writable<{ searchTerm: string; selectedTags: Set<string> }>;
+export type StorePagination = Writable<{ page: number; per_page: number }>;
 
 export type FilteredStore = {
 	subscribe: (this: void, run: Subscriber<any>, invalidate?: Invalidator<any>) => Unsubscriber;
 	load: () => Promise<any>;
 };
 export type FilterableAsyncStore = {
-	items: AsyncReadable;
 	filter: StoreFilter;
-	filteredItems: FilteredStore;
+	items: Writable<any[]>;
+	filteredItems: Loadable<any>;
+};
+
+export function isQueryStore(store: FilterableAsyncStore | QueryStore): store is QueryStore {
+	// Implement logic to check if store is a QueryStore instance
+	return (store as QueryStore).pagination !== undefined;
+}
+
+export type QueryStore = {
+	filter: StoreFilter;
+	pagination: StorePagination;
+	items: Writable<any[]>;
+	download: Loadable<any>;
+	filteredItems: Loadable<any>;
 };
 
 type MergedType<T extends object, U extends Partial<T>> = { [K in keyof U]: U[K] } & {
