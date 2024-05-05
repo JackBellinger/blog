@@ -14,15 +14,18 @@ export function importPages(render = true) {
 		if (pageModule) {
 			let filename = path.replace(/^.*[\\\/]/, '').replace(/\.svelte$/, '');
 			let pagePriority = pageModule.pagePriority ?? -1;
-			pagePriority == -1 ? console.log('you should add a pagePriority to ', filename.toLowerCase()) : null;
-			pages2d[pagePriority].push({
-				name: filename.toLowerCase(),
-				id: pagePriority,
-				hidden: pageModule.hidden,
-				subpages: pageModule.subpages ?? [],
-				routeParam: pageModule.routeParam ?? '',
-				module: pageModule
-			} as Page);
+			if (pagePriority == -1) {
+				console.log('you should add a pagePriority to ', filename.toLowerCase());
+			} else {
+				pages2d[pagePriority].push({
+					name: filename.toLowerCase(),
+					id: pagePriority,
+					hidden: pageModule.hidden,
+					subpages: pageModule.subpages ?? [],
+					routeParam: pageModule.routeParam ?? '',
+					module: pageModule
+				} as Page);
+			}
 		}
 	}
 	let pages = pages2d.flat();

@@ -250,9 +250,9 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 
 [[package]]
 name = "axum"
-version = "0.7.1"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "810a80b128d70e6ed2bdf3fe8ed72c0ae56f5f5948d01c2753282dd92a84fce8"
+checksum = "d09dbe0e490df5da9d69b36dca48a76635288a82f92eca90024883a56202026d"
 dependencies = [
  "async-trait",
  "axum-core",
@@ -279,13 +279,14 @@ dependencies = [
  "tower",
  "tower-layer",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]
 name = "axum-core"
-version = "0.4.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de0ddc355eab88f4955090a823715df47acf0b7660aab7a69ad5ce6301ee3b73"
+checksum = "e87c8503f93e6d144ee5690907ba22db7ba79ab001a932ab99034f0fe836b3df"
 dependencies = [
  "async-trait",
  "bytes",
@@ -299,16 +300,18 @@ dependencies = [
  "sync_wrapper",
  "tower-layer",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]
 name = "axum-login"
-version = "0.10.2"
+version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61b018d073eea48729e2309c8ecd7198e1eea90e132d99a5e1cc7e952053c8d6"
+checksum = "d18e5b44cbb5815db20bc18b2d178cd4fe5e942a5f1faad026f1cd5e53833f4d"
 dependencies = [
  "async-trait",
  "axum",
+ "form_urlencoded",
  "ring",
  "serde",
  "thiserror",
@@ -1379,9 +1382,9 @@ dependencies = [
 
 [[package]]
 name = "hyper"
-version = "1.0.1"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "403f9214f3e703236b221f1a9cd88ec8b4adfa5296de01ab96216361f4692f56"
+checksum = "fb5aa53871fc917b1a9ed87b683a5d86db645e23acb32c2e0785a353e522fb75"
 dependencies = [
  "bytes",
  "futures-channel",
@@ -1398,9 +1401,9 @@ dependencies = [
 
 [[package]]
 name = "hyper-util"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ca339002caeb0d159cc6e023dff48e199f081e42fa039895c7c6f38b37f2e9d"
+checksum = "bdea9aac0dbe5a9240d68cfd9501e2db94222c6dc06843e06640b9e07f0fdc67"
 dependencies = [
  "bytes",
  "futures-channel",
@@ -1411,8 +1414,6 @@ dependencies = [
  "pin-project-lite",
  "socket2",
  "tokio",
- "tower",
- "tower-service",
  "tracing",
 ]
 
@@ -2230,6 +2231,7 @@ dependencies = [
  "clap",
  "http-body-util",
  "hyper",
+ "log",
  "password-auth",
  "serde",
  "serde_json",
@@ -2860,9 +2862,9 @@ checksum = "b6bc1c9ce2b5135ac7f93c72918fc37feb872bdc6a5533a8b85eb4b86bfdae52"
 
 [[package]]
 name = "tower-sessions"
-version = "0.7.0"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce23a9827d593712d471a19d3cb1334e57a97e5b34a9f02b4eef2114b7405dcd"
+checksum = "645170f7fa7975a65ccb4a14ba2271c4df9598afc2755c2bfe05f294cda3a556"
 dependencies = [
  "tower-sessions-core",
  "tower-sessions-memory-store",
@@ -2870,9 +2872,9 @@ dependencies = [
 
 [[package]]
 name = "tower-sessions-core"
-version = "0.7.0"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1d733b3ae4a6a4cb80cd585e87ffe1a1a7011174581785039c83c4cd63ee61c"
+checksum = "2f01972091af543726f9a48afb73efcd6b142699f1bc743975c774117db4bba2"
 dependencies = [
  "async-trait",
  "axum-core",
@@ -2883,6 +2885,7 @@ dependencies = [
  "serde_json",
  "thiserror",
  "time",
+ "tokio",
  "tower-cookies",
  "tower-layer",
  "tower-service",
@@ -2892,13 +2895,13 @@ dependencies = [
 
 [[package]]
 name = "tower-sessions-memory-store"
-version = "0.7.0"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "78d855ef8feaef2382c6df2cf4c4b6651dce890019ceaf0ec70c8af2516a1ce9"
+checksum = "2a09281f8b4d3a847b9479658bafc2dab1224f76f03e877c8eca354ed42fb2c3"
 dependencies = [
  "async-trait",
- "parking_lot",
  "time",
+ "tokio",
  "tower-sessions-core",
 ]
 
@@ -3384,18 +3387,18 @@ dependencies = [
 
 [[package]]
 name = "zerocopy"
-version = "0.7.26"
+version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e97e415490559a91254a2979b4829267a57d2fcd741a98eee8b722fb57289aa0"
+checksum = "74d4d3961e53fa4c9a25a8637fc2bfaf2595b3d3ae34875568a5cf64787716be"
 dependencies = [
  "zerocopy-derive",
 ]
 
 [[package]]
 name = "zerocopy-derive"
-version = "0.7.26"
+version = "0.7.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd7e48ccf166952882ca8bd778a43502c64f33bf94c12ebe2a7f08e5a0f6689f"
+checksum = "9ce1b18ccd8e73a9321186f97e46f9f04b778851177567b1975109d26a08d2a6"
 dependencies = [
  "proc-macro2",
  "quote",

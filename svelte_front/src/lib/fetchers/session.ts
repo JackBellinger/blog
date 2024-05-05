@@ -1,8 +1,11 @@
 import { type Session } from '@lib/utils/types';
-
+let check_backend = false;
 export async function fetchSession(): Promise<Session> {
-	const response = await fetch('/session').then((data) => {
-		console.log('res', data);
+	if (!check_backend) {
+		return { backend_connected: false, logged_in: false, username: null };
+	}
+	const response = await fetch('/api/session').then((data) => {
+		// console.log('res', data);
 		return data;
 	});
 

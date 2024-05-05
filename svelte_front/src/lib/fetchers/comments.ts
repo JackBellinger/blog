@@ -10,7 +10,7 @@ export async function queryComments(source: CommentSource, identifier: string) {
 }
 
 async function queryUserComments(username: string) {
-	let res = await fetch(`/comments/user/${username}`, {
+	let res = await fetch(`/api/comments/user/${username}`, {
 		method: 'GET',
 		credentials: 'same-origin'
 	});
@@ -38,7 +38,7 @@ async function queryUserComments(username: string) {
 
 async function queryBlogComments(blog_slug: string): Promise<any> {
 	//console.log("querying blog#", blog_slug)
-	let res = await fetch(`/comments/blog/${blog_slug}`, {
+	let res = await fetch(`/api/comments/blog/${blog_slug}`, {
 		method: 'GET',
 		credentials: 'same-origin'
 	});
@@ -64,7 +64,7 @@ export async function postComment(source: CommentSource, identifier: string, com
 		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
 		.join('&');
 	//console.log('posting ', encodedData);
-	return fetch(`/comments/${blog_or_user}/${identifier}`, {
+	return fetch(`/api/comments/${blog_or_user}/${identifier}`, {
 		method: 'POST',
 		body: encodedData,
 		headers: {
