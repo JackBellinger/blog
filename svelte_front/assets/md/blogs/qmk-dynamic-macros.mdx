@@ -2,7 +2,7 @@
 title: Temporal Dynamic Macros design and implementation
 coverImage: /blog/assets/images/qmk-replay.webp
 date: 2024-02-18T04:47:09.000Z
-updated: 2024-04-21T15:28:16.000Z
+updated: 2024-05-27T19:05:06.000Z
 excerpt: The design and implementation of temporal dynamic macros in QMK.
 hidden: false
 tags:
@@ -97,7 +97,7 @@ Once began conceptualizing this as a state machine, I built the rest of the stat
 
 The state machine manages the overall behavior of the TDM implementation. It ensures that the system transitions between different states seamlessly and handles control keys such as record, play, and loop. Each state represents a distinct phase of operation, such as recording, playing, or selecting macros. By enforcing state transitions, the state machine maintains the integrity of the TDM workflow and prevents invalid operations. 
 
-<Image src="../../images/tdm_state_machine_diagram.webp" />
+<Image src="../images/tdm_state_machine_diagram.webp" />
 
 I simply defined a matrix of transition functions from one state to another, and call those functions on a transition. If there isn't a function for one state to another (like if you press the add delay key: TDM_DELAY while in the idle state) then the state machine does not transition.
 

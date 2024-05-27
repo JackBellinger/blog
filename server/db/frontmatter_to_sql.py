@@ -38,7 +38,7 @@ def convert_article(article_path):
 
 	# Extract other attributes
 	timestamp = datetime.datetime.strptime(frontmatter["date"],"%Y-%m-%dT%H:%M:%S.%fZ")
-	updated = timestamp.isoformat()
+	updated = datetime.datetime.strptime(frontmatter["updated"],"%Y-%m-%dT%H:%M:%S.%fZ") if "updated" in frontmatter else timestamp.isoformat()
 	excerpt = frontmatter["excerpt"]
 	hidden = str2bool(frontmatter.get("hidden", False))
 	coverImage = frontmatter["coverImage"]
@@ -46,8 +46,9 @@ def convert_article(article_path):
 
 	# Build insert statements for blogs and tags
 	blog_insert = f"""
-		INSERT OR REPLACE INTO blogs (title, slug, timestamp, updated, excerpt, hidden, coverImage)
+		INSERT OR REPLACE INTO blogs (id, title, slug, timestamp, updated, excerpt, hidden, coverImage)
 		VALUES (
+			(select id from blogs where title = '{title}'),
 			"{title}",
 			"{slug}",
 			"{timestamp}",

@@ -18,7 +18,8 @@ sqlite3 "$database_name" ".quit"	# SQLite command to create a new database
 
 # run all migrations
 echo "Running all migrations"
-python ./update_db.py --date "00000000000000"
+python3 ./update_db.py --date "20200101000000" -f "./migrations/"
+python3 ./update_db.py --date "20200101000000" -f "./data/"
 
 
 # # Run migrations with timestamps before the target_timestamp (if provided)

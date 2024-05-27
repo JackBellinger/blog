@@ -92,7 +92,7 @@ async fn blogs_meta_show(
 	} else {
 		tracing::debug!("blog {:#?} has no tags", blog_search.tags);
 	}
-	query_builder.push(" GROUP BY blogs.id ORDER BY timestamp DESC LIMIT ");
+	query_builder.push(" GROUP BY blogs.id ORDER BY updated DESC LIMIT ");
 	query_builder.push_bind(blog_search.per_page);
 	query_builder.push(" OFFSET ");
 	query_builder.push_bind(blog_search.page * blog_search.per_page);
