@@ -72,7 +72,7 @@ async fn blogs_meta_show(
 		// query_builder.push("%' ");
 	}
 	if !(blog_search.tags.is_empty()
-		|| (blog_search.tags.len() == 1 && blog_search.tags.first().expect("no first").eq_ignore_ascii_case("")))
+		|| (blog_search.tags.len() == 1 && blog_search.tags.first().expect("no first tag").eq_ignore_ascii_case("")))
 	{
 		tracing::debug!("tags not empty: {:#?}", blog_search.tags);
 		query_builder.push(
@@ -89,6 +89,8 @@ async fn blogs_meta_show(
 			separated.push_bind(tag);
 		}
 		separated.push_unseparated(") )");
+	} else {
+		tracing::debug!("blog {:#?} has no tags", blog_search.tags);
 	}
 	query_builder.push(" GROUP BY blogs.id ORDER BY timestamp DESC LIMIT ");
 	query_builder.push_bind(blog_search.per_page);

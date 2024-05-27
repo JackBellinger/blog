@@ -21,7 +21,7 @@ export async function importPosts() {
 			posts.push({
 				...post.metadata,
 				slug: filename,
-				tags: post.metadata.tags, //?.map((tag) => tag.toLowerCase()),
+				tags: post.metadata?.tags, //?.map((tag) => tag.toLowerCase()),
 				component: post.default
 			});
 		}
@@ -119,7 +119,7 @@ export async function queryPosts(
 	// fetch('/api/blogs?' + queryString) // Attach query string to API request
 	// 	.then(response => response.json())
 	// 	.then(data => {});
-
+	console.log(queryString)
 	let res = await fetch('/api/blogs?' + queryString, {
 		// Attach query string to API request
 		method: 'GET',

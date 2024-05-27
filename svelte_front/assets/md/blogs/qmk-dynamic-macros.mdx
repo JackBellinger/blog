@@ -1,0 +1,274 @@
+---
+title: Temporal Dynamic Macros design and implementation
+coverImage: /blog/assets/images/qmk-replay.webp
+date: 2024-02-18T04:47:09.000Z
+updated: 2024-04-21T15:28:16.000Z
+excerpt: The design and implementation of temporal dynamic macros in QMK.
+hidden: false
+tags:
+  - Workspace
+  - C
+---
+<script>
+	import Image from "@lib/components/atoms/Image.svelte";
+</script>
+
+# Motivation & Idea
+I had this idea while playing minecraft. I was digging out a tunnel, and thought how nice it would be to have my keyboard do all the repetitive clicking for me.
+I found a code snippet for a turbo click feature on [Pascal Getreuer's blog](https://getreuer.info/posts/keyboards/mouse-turbo-click). It just sends a click event every so often.
+After using it to dig out the tunnel, I thought it might be useful to be able to turbo click the right mouse button to place blocks.
+
+I also considered other tasks, like building a repeating pattern so I thought it might be useful to make some macros with keypresses and arrow keys and such. This gave me the idea to record macros on the fly with specific delays. This would allow me to do things like wait for the game to update before doing something, hold an arrow key down for x seconds, etc. 
+It would also be good for automating tasks like filling out forms. I recently did my taxes, and I had to paste in my stock purchases & sales. I could record a macro (starting with a cursor in the statement from my broker) copy a value, alt tab to get to the tax form, arrow keys to get to the right spot, paste the field, alt tab to get back to the statement, use the arrow keys to get to the next value, and repeat. 
+I could even use this feature for some medium complexity software testing! The use-cases are only limited by your keyboard's onboard memory :D
+QMK has a feature similar to this called dynamic macros, but it doesn't support looping the playback, and you can't add any delay between the keypresses. Sometimes the thing you want to automate takes some time, so I decided to build it myself.
+
+Programs and systems sometimes need a breather to register inputs. Delays ensure your macro doesn't overwhelm the system with commands, leading to missed keypresses or errors. This refined timing makes your macro more reliable and adaptable.
+
+# Features
+The Temporal Dynamic Macro (TDM) module provides users with the ability to record and play back sequences of keystrokes, known as macros, on their keyboards.
+- **Recording and Playback**: Users can record a sequence of keystrokes and play them back at any time.
+- **Delay Insertion**: The ability to insert delays between keystrokes allows for precise timing and synchronization with other actions.
+- **Looping**: Macros can be set to loop continuously, useful for tasks that require repetitive execution.
+- **Macro Selection**: Support for multiple macros, with the ability to select and play back specific ones.
+
+# Usage
+
+## Step 1: Add the Temporal Dynamic Macros feature code
+In the directory containing your keymap.c, create a features subdirectory and copy `temporal_dynamic_macro.h` and `temporal_dynamic_macro.c` there.
+
+## Step 2: Create the custom keycodes
+Add the custom keycodes for activating the TDM features and use the new keycode somewhere in your keymap. If you'd like to rename these keys, you'll need to update the names in the source code as well.
+
+```c:custom_keycodes.h
+typedef enum {
+	TDM_RECORD = SAFE_RANGE,
+	TDM_DELAY,
+	TDM_END,
+	TDM_PLAY,
+	TDM_LOOP,
+	TDM_SELECT,
+	... any other custom keys you want to
+} custom_keycodes;
+```
+I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of `temporal_dynamic_macro.h`
+
+## Step 3: Handle TDM related keystrokes in process_record_user()
+This will pass the key presses to the TDM code to check if it should process the key, and do the TDM stuff if so.
+
+```c:keymap.c
+#include "features/temporal_dynamic_macro.h"
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	if (!process_temporal_dynamic_macro(keycode, record)) { return false; }
+	//The rest of the function
+}
+```
+## Step 4: Compile the sources!
+In your rules.mk file, add
+```c:rules.mk
+SRC += features/temporal_dynamic_macro.c
+
+DEFERRED_EXEC_ENABLE = yes
+```
+
+
+# Design Process
+
+Usually my ideas aren't too revolutionary~. So when I design something, I first check if there are any similar things I can adapt. In this case, I kind of just smashed the ideas of using a buffer to store keypresses from dynamic macros, and the idea of using the deferred execution api from turbo click, orchestrated by a state machine, and viola! Seven hundred lines of medium quality C code 😅 with a fun strategy pattern and a bit of iterator state juggling. Good stuff! 
+
+## User input
+So the basic idea to record the macros, is that once the user presses the record button, it will save the keypresses into the buffer. That much is pretty simple, but when the user presses the button to record a *delay*, then the keyboard has to remember both that it's recording, so it knows to let TDM process the key presses, as well as remembering that the user is trying to record a delay, so it accepts numeric keys into the delay register. 
+
+Following the example of the QMK dynamic macros implementation, I started with nested switch statements: one on the control keys which is nested in a switch on the current state. However, when I started adding the delay feature it introduced too much spagetti. Having only 2 states, it's manageable to write the state manangement, validations, and transitions all together in one function. But having 5 states, I needed a better system to manage state.
+
+The states in TDM are
+1. Idle, not processing keypresses
+2. selecting which macro to record/play
+3. recording a macro
+4. adding delay between keypresses
+5. playing / looping a macro
+
+All of these states need assinged keycodes to enter. But consider: each control key does different things based on the current state. The TDM_END key needs to wrap up the macro recording if is was just recording, but if it's selecting a macro it needs to get ready to record, and if it's playing it needs to reset the iterator and play state. I am a strategy pattern enjoyer, so that came to mind for figuring out which of the functions to run based on the current state. And when I wrote it out, I realized that a strategy pattern with 2 inputs [which state are we currently in] and [which control key was pressed] essentially is a state machine.
+Once began conceptualizing this as a state machine, I built the rest of the state management code around that idea. I was able to encapsulate most of the state mutation into start_{state} and end_{state} functions. 
+
+
+## State Machine
+
+The state machine manages the overall behavior of the TDM implementation. It ensures that the system transitions between different states seamlessly and handles control keys such as record, play, and loop. Each state represents a distinct phase of operation, such as recording, playing, or selecting macros. By enforcing state transitions, the state machine maintains the integrity of the TDM workflow and prevents invalid operations. 
+
+<Image src="../../images/tdm_state_machine_diagram.webp" />
+
+I simply defined a matrix of transition functions from one state to another, and call those functions on a transition. If there isn't a function for one state to another (like if you press the add delay key: TDM_DELAY while in the idle state) then the state machine does not transition.
+
+```c:state_machine
+typedef void (*TransitionFunction)(void);
+// Define the transition matrix
+TransitionFunction transition_matrix[STATE_idle+1][STATE_idle+1];
+
+void tdm_init_state_machine(void){
+	transition_matrix[STATE_idle][STATE_recording] = tdm_record_start;
+	transition_matrix[STATE_recording][STATE_recording_delay] = tdm_record_delay_start;
+	transition_matrix[STATE_recording_delay][STATE_recording] = tdm_record_delay_end;
+	transition_matrix[STATE_recording][STATE_idle] = tdm_record_end;
+	transition_matrix[STATE_idle][STATE_playing] = tdm_play_start;
+	transition_matrix[STATE_playing][STATE_idle] = tdm_play_stop;
+	transition_matrix[STATE_idle][STATE_looping] = tdm_loop_start;
+	transition_matrix[STATE_looping][STATE_looping] = tdm_loop_start;
+	transition_matrix[STATE_looping][STATE_idle] = tdm_play_stop;
+	transition_matrix[STATE_idle][STATE_selecting] = tdm_select_start;
+	transition_matrix[STATE_selecting][STATE_idle] = tdm_select_end;
+}
+
+bool tdm_state_transition(State next_state) {
+	bool valid_transition = true;
+	TransitionFunction transition = transition_matrix[MACRO_current_state][next_state];
+	if (transition == NULL) {
+		tdm_invalid_transition(next_state);
+		valid_transition = false;
+	} else {
+		dprintf("transitioning to state: %d\n", next_state);
+		MACRO_current_state = next_state;
+		transition();
+	}
+	return valid_transition;
+}
+
+void tdm_invalid_transition(State next_state){
+	dprintf("temporal dynamic macro: invalid transition: %d to %d\n", MACRO_current_state, next_state);
+}
+```
+
+#### Multiple macros
+
+```c:helper_functions
+#define DIRECTION(M_id) ((M_id & 1) * -2 + 1)
+#define NEIGHBOR(x) ((x) + 1 - 2 * ((x) % 2))
+#define TDM_BUFFER_START(M_id) (&MACRO_buffers[M_id / 2][0])
+#define TDM_CURRENT_START(M_id) (TDM_BUFFER_START(M_id) + ((M_id & 1) * TDM_BUFFER_SIZE))
+#define TDM_CURRENT_LENGTH(POINTER) (DIRECTION(MACRO_id) * (POINTER - TDM_CURRENT_START(MACRO_id)))
+#define TDM_CURRENT_CAPACITY(M_id) (DIRECTION(M_id) * (MACRO_ends[NEIGHBOR(M_id)] - TDM_CURRENT_START(M_id)))
+#define TDM_ITERATOR_AT_START() (MACRO_iterator == MACRO_start)
+```
+
+## Storage
+To store the keypresses, we obviously need some kind of storage, and often an array is best. If you read the QMK Dynamic macros code, you'll find a great idea to store multiple macros in one buffer.
+Since most macros will not be the entire length of the buffer, it makes sense to make full use of the reserved memory space by allowing users to record 2 macros into one buffer. This adds some additional complexity, but allows twice the number of macros to be recorded at no extra cost.
+```c
+ * +------------------------------------------------------------+
+ * |>>>>>> MACRO1 >>>>>>      <<<<<<<<<<<<< MACRO2 <<<<<<<<<<<<<|
+ * +------------------------------------------------------------+
+ ```
+See? once we record one macro into the buffer, there could be a lot of unused space depending on how big of a first macro we record.
+The default qmk dynamic macros uses a direction thing, but I encoded the direction of the macro in the macro_id with some inline functions.
+However, while I was building this system, I found that I was running out of memory, so I replaced the keyrecord struct with one optimized for this use case, which only stores the keycode, the delay, and some flags like whether the key is pressed.
+To save some memory and indirection, I put the potential flags into a bitmask. AVR doesn't have cache, but I think the word sizes are still larger than a boolean, so this is potentially putting 8 bools in the space of 1. This makes a bigger difference on boards like this which are memory constrained and when you want to store as large of macros as you can. In the current implementation, I'm only using one of the 8 bits in the flag bitmask, so I have some room for activities when I add support for things like tapdances, combos, and the likes.
+```c:keypress_struct
+typedef struct {
+	uint16_t keycode;
+	uint32_t delay_ms;
+	uint8_t flags; //bitmask set by tdm_key_flags
+} tdm_keypress_t;
+
+static inline void set_flag(tdm_keypress_t *keypress, uint8_t flag, bool is_set) {
+	keypress->flags ^= (flag & -is_set) ^ ((keypress->flags) & flag);
+}
+static inline bool is_set(tdm_keypress_t *keypress, uint8_t flag){
+	return (bool)(keypress->flags & flag);
+}
+```
+
+## Recording
+
+Now that we can tell when the user wants to record a macro, and we have a place to store the recorded keypresses, let's get recording!
+When in the recording state, the system captures keystrokes entered by the user and stores them in a buffer.
+
+
+First it ignores any key-up events which happen after recording. This commonly happens if your TDM keys are on a layer accessed by holding a function key.
+```c:tdm_record_keys
+void tdm_record_key(uint16_t keycode, keyrecord_t* record) {
+	/* If we've just started recording, ignore all the key releases. */
+	
+	static bool got_first_keydown = false;
+	if (!got_first_keydown && !record->event.pressed) {
+		dprintf("temporal dynamic macro: ignoring a leading key-up event\n");
+		return;
+	} else {
+		got_first_keydown = true;
+	}
+```
+Then it needs to make sure it hasn't used up all the space in the selected macro's buffer. The pointers in MACRO_ends point to the address one beyond the last in-used slot. If the iterator is on an empty space, there still could be old data left over from a previous macro. 
+```c:tdm_record_keys
+	if (MACRO_iterator - MACRO_direction == MACRO_ends[NEIGHBOR(MACRO_id)]) {
+		tdm_record_end();
+		return;
+	} else {
+		//clear any old data
+		MACRO_iterator->delay_ms = 0;
+		clear_flags(MACRO_iterator);
+	}
+```
+Then we can store the pressed keycode into the buffer at the current iterator, noting whether the key was pressed or released.
+```c:tdm_record_keys
+	MACRO_iterator->keycode = keycode;
+	set_flag(MACRO_iterator, FLAG_pressed, record->event.pressed);
+```
+Lastly, we move the iterator to the next slot and call the post-record user hook. This lets the user, oh hey that's you!, customize what happens on each recorded keypress. By default it just flashes the backlighting, but if you have per-key LEDs you could flash the recorded key, or play a sound if you have audio.
+```c:tdm_record_keys
+	MACRO_iterator += MACRO_direction;
+	tdm_record_key_user(MACRO_id, keycode);}
+```
+
+
+## Delays
+Delays are inserted between consecutive key presses to accommodate timing requirements for specific tasks. Users can input delays using a dedicated key, allowing for precise control over the timing of macro execution. 
+
+When the user clicks the TDM_DELAY button, it enters the record delay state. In that state, it only accepts number keys as if you were typing out a number. Each press multiplies the sum by 10 and adds the entered number. When TDM_END or a non-numeric key is pressed, it exits the delay recording state, and adds the delay to the next keypress.
+
+```c:tdm_record_delay
+void tdm_record_delay(uint16_t keycode) {
+	dprintf("recording delay: %d\n", keycode);
+	if (MACRO_delay_next_key_ms > 7200000) { //max delay is 2 hours (ms)
+		return;
+	}
+	int key_val = keycode_to_int(keycode);
+	if (key_val == -1) { 
+		dprintf("temporal dynamic macro: only numeric keys are valid during delay entry");
+		return;
+	}
+	MACRO_delay_next_key_ms *= 10;
+	MACRO_delay_next_key_ms += key_val;
+}
+```
+```c:tdm_record_delay_end
+void tdm_record_delay_end(void) {
+	print_macros();
+	//add delay to next key
+	dprintf("temporal dynamic macro: ending record delay : iter %d, kc %d, flags %d\n", MACRO_iterator, MACRO_iterator->keycode, MACRO_iterator->flags);
+	MACRO_iterator->delay_ms = MACRO_delay_next_key_ms;
+	MACRO_delay_next_key_ms = 0;
+}
+```
+
+
+#### Playing
+Then when the macro is played back, it will wait the difference between the times of each keyrecord (if there is any).
+The default dynamic macros implementation has a while loop that iterates over the buffer and outputs each key.
+I'm changing this to iterate over chunks of keys to be pressed without a delay, and then registering a deferred execution on the rest of the buffer when it encounters a delay. This will prevent it from blocking the keyboard excessively, especially when playing long macros or looping.
+
+
+# Design Questions
+
+
+#### Overwrite or Stop recording?
+The default dynamic macros stops recording when you reach the end of empty space. This prevents overwriting any macro you have previously stored.
+Although I haven't encountered this problem yet, since dynamic macros are in theory somewhat transient I think this design will favor the newest macro. To avoid having to pause recording, go back and re-record an empty macro for the second macro, and re-record the macro that ran out of length, I will opt to notify the user before overwriting and continue recording. Depending on what features the user's keyboard has, nearing the end of empty buffer space can trigger backlighting or some of the led matrix lights, can show a message on an integrated screen, can beep a speaker, can write out a notification character, or it can do nothing. This will default to the simplest method available on the board and will be configurable by the user.
+
+### Delays
+The main reason I'm creating this library is to enable specific delays between key presses.
+I want the design to be pretty similar to the standard QMK dynamic macros. In fact, besides adding some new keys I'd like this library to be fully backward compatible.
+QUESTION: Should I introduce a new structure that contains a keyrecord and a delay?
+I think I'll just use the same keyrecord array, and use the time field in the keyevent struct to track how long to wait for each keypress.
+
+we can delay the first keypress, so for each keypress, we need to
+each keypress has a time = the last key time + any delay

@@ -55,8 +55,6 @@ mod post {
 			Err(_) => return StatusCode::INTERNAL_SERVER_ERROR.into_response(),
 		};
 
-		tracing::debug!("wahwah wee wah{:#?}", auth_session);
-
 		if let Some(ref next) = creds.next {
 			tracing::debug!("going to next: {}", next);
 			Redirect::temporary(&format!("/login?next={}", next)).into_response()
@@ -102,7 +100,7 @@ mod get {
 	}
 
 	pub async fn logout(mut auth_session: AuthSession, Query(NextUrl { next }): Query<NextUrl>) -> impl IntoResponse {
-		match auth_session.logout() {
+		match auth_session.logout().await {
 			Ok(_) => {
 				if let Some(ref next) = next {
 					tracing::debug!("going to next: {}", next);

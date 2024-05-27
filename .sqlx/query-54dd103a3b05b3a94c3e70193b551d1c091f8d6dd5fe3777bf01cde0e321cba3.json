@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n\t\t UPDATE comments\n\t\t SET upvotes = upvotes + 1\n\t\t WHERE id = $1\n\t\t ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "54dd103a3b05b3a94c3e70193b551d1c091f8d6dd5fe3777bf01cde0e321cba3"
+}

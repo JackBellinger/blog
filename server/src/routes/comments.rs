@@ -23,6 +23,10 @@ struct BlogCommentsParams {
 struct UserCommentsParams {
 	username: String,
 }
+#[derive(Deserialize)]
+struct UpvoteCommentParams {
+	comment_id: i32,
+}
 #[derive(Debug, Clone, Eq, PartialEq, Hash, FromRow, Serialize, Deserialize)]
 pub struct Comment {
 	id: i32,
@@ -205,6 +209,63 @@ async fn blog_comments_create(
 	// Ok(Json(json!("ok ")))
 }
 
+fn transaction_err(
+	e: sqlx::Error,
+) -> Result<sqlx::Transaction<'static, Sqlite>, (axum::http::StatusCode, std::string::String)> {
+	tracing::error!("Failed to begin transaction for upvoting comment");
+	Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Transaction error: {}", e)))
+}
+
+async fn upvote_comment(
+	Path(UpvoteCommentParams { comment_id }): Path<UpvoteCommentParams>,
+	ctx: Extension<ApiContext>,
+) -> impl IntoResponse {
+	tracing::info!("Upvoting comment#{}", comment_id);
+
+	let mut transaction = ctx.db.begin().await.or_else(transaction_err)?;
+
+	let query_result = sqlx::query!(
+		r#"
+		 UPDATE comments
+		 SET upvotes = upvotes + 1
+		 WHERE id = $1
+		 "#,
+		comment_id
+	)
+	.execute(&mut *transaction)
+	.await;
+
+	let result = match query_result {
+		Ok(result) => {
+			if result.rows_affected() == 1 {
+				tracing::debug!("Upvoted comment#{} successfully", comment_id);
+				Ok(Json("Your comment was successfully upvoted."))
+			} else {
+				tracing::warn!("No comment found with id: {}", comment_id);
+				Err((StatusCode::BAD_REQUEST, "Comment not found.".to_string()))
+			}
+		}
+		Err(e) => {
+			tracing::error!("Error upvoting comment: {}", e);
+			Err((
+				StatusCode::INTERNAL_SERVER_ERROR,
+				"Failed to upvote comment.".to_string(),
+			))
+		}
+	};
+
+	match transaction.commit().await {
+		Ok(_) => result,
+		Err(e) => {
+			tracing::error!("Failed to commit transaction: {}", e);
+			Err((
+				StatusCode::INTERNAL_SERVER_ERROR,
+				"Upvoting comment had no result".to_string(),
+			))
+		}
+	}
+}
+
 pub fn route_gets() -> Router<()> {
 	Router::new()
 		.route("/comments/blog/:blog_slug", get(blog_comments_show))
@@ -215,6 +276,7 @@ pub fn route_posts() -> Router<()> {
 	Router::new()
 		.route("/comments/user/:username", post(users_comments_create))
 		.route("/comments/blog/:blog_slug", post(blog_comments_create))
+		.route("/comments/upvote/:comment_id", post(upvote_comment))
 		.route_layer(permission_required!(
 			AuthBackend,
 			login_url = "/login",

@@ -29,9 +29,10 @@ def convert_article(article_path):
 			elif "-" in line:
 				tag_value = line.split("-")[-1].strip()
 				frontmatter["tags"].append(tag_value)
-
+	else:
+		return
 	# Extract title and slug
-	# print(f"{frontmatter}")
+	print(f"\n\n parsed file {article_path} with md {frontmatter}")
 	title = frontmatter["title"]
 	slug = get_filename(article_path)
 
@@ -80,8 +81,13 @@ def process_directory(directory_path, output_file):
 				for name in files
 					if name.endswith(".mdx")]
 		for filepath in svx_files:
-			# print(f"processing file: {filename}")
-			blog_insert, tags_insert = convert_article(filepath)
+			print(f"\nprocessing file: {filepath}")
+			parsed_maybe = convert_article(filepath)
+			print(f"{parsed_maybe} is {not not parsed_maybe}")
+			if parsed_maybe:
+				blog_insert, tags_insert = parsed_maybe
+			else:
+				continue
 			outfile.write(blog_insert)
 			for insert in tags_insert:
 				outfile.write(insert)
