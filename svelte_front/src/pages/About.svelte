@@ -92,7 +92,7 @@
 				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports with Rapid Recap & Key Moments
 			</p>
 			<br />
-			For More details, check my blog articles, resume, or contact me with any questions.
+			For More details, check my blog articles, (resume)[https://docs.google.com/document/d/1h_74e5nV6S24-XasDMH4FX9NCzJX_4DI/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true], or contact me with any questions.
 		</div>
 	</main>
 </Page>

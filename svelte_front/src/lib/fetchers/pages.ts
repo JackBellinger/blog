@@ -14,9 +14,7 @@ export function importPages(render = true) {
 		if (pageModule) {
 			let filename = path.replace(/^.*[\\\/]/, '').replace(/\.svelte$/, '');
 			let pagePriority = pageModule.pagePriority ?? -1;
-			if (pagePriority == -1) {
-				console.log('you should add a pagePriority to ', filename.toLowerCase());
-			} else {
+			if (pagePriority != -1) {
 				pages2d[pagePriority].push({
 					name: filename.toLowerCase(),
 					id: pagePriority,
