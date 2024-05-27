@@ -1,5 +1,5 @@
 import { type Session } from '@lib/utils/types';
-let check_backend = true;
+let check_backend = false;
 export async function fetchSession(): Promise<Session> {
 	if (!check_backend) {
 		return { backend_connected: false, logged_in: false, username: null };
