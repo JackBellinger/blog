@@ -51,6 +51,7 @@ typedef enum {
 	... any other custom keys you want to
 } custom_keycodes;
 ```
+
 I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of `temporal_dynamic_macro.h`
 
 ## Step 3: Handle TDM related keystrokes in process_record_user()
@@ -64,6 +65,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	//The rest of the function
 }
 ```
+
 ## Step 4: Compile the sources!
 In your rules.mk file, add
 ```c:rules.mk
