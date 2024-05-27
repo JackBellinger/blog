@@ -35,7 +35,7 @@ The Temporal Dynamic Macro (TDM) module provides users with the ability to recor
 # Usage
 
 ## Step 1: Add the Temporal Dynamic Macros feature code
-In the directory containing your keymap.c, create a features subdirectory and copy `temporal_dynamic_macro.h` and `temporal_dynamic_macro.c` there.
+In the directory containing your keymap.c, create a features subdirectory and copy temporal_dynamic_macro.h and temporal_dynamic_macro.c there.
 
 ## Step 2: Create the custom keycodes
 Add the custom keycodes for activating the TDM features and use the new keycode somewhere in your keymap. If you'd like to rename these keys, you'll need to update the names in the source code as well.
@@ -52,7 +52,7 @@ typedef enum {
 } custom_keycodes;
 ```
 
-I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of `temporal_dynamic_macro.h`
+I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of temporal_dynamic_macro.h
 
 ## Step 3: Handle TDM related keystrokes in process_record_user()
 This will pass the key presses to the TDM code to check if it should process the key, and do the TDM stuff if so.
