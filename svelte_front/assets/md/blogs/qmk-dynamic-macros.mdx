@@ -10,7 +10,7 @@ tags:
   - C
 ---
 <script>
-	import Image from "@lib/components/atoms/Image.svelte";
+  import Image from "@lib/components/atoms/Image.svelte";
 </script>
 
 # Motivation & Idea
@@ -35,7 +35,7 @@ The Temporal Dynamic Macro (TDM) module provides users with the ability to recor
 # Usage
 
 ## Step 1: Add the Temporal Dynamic Macros feature code
-In the directory containing your keymap.c, create a features subdirectory and copy temporal_dynamic_macro.h and temporal_dynamic_macro.c there.
+In the directory containing your keymap.c, create a features subdirectory and copy `temporal_dynamic_macro.h` and `temporal_dynamic_macro.c` there.
 
 ## Step 2: Create the custom keycodes
 Add the custom keycodes for activating the TDM features and use the new keycode somewhere in your keymap. If you'd like to rename these keys, you'll need to update the names in the source code as well.
@@ -52,7 +52,7 @@ typedef enum {
 } custom_keycodes;
 ```
 
-I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of temporal_dynamic_macro.h
+I placed this enum in a separate file to include it in various places, but if you're not using any custom keycodes elsewhere, you can append this to the end of `temporal_dynamic_macro.h`
 
 ## Step 3: Handle TDM related keystrokes in process_record_user()
 This will pass the key presses to the TDM code to check if it should process the key, and do the TDM stuff if so.
@@ -92,14 +92,14 @@ The states in TDM are
 5. playing / looping a macro
 
 All of these states need assinged keycodes to enter. But consider: each control key does different things based on the current state. The TDM_END key needs to wrap up the macro recording if is was just recording, but if it's selecting a macro it needs to get ready to record, and if it's playing it needs to reset the iterator and play state. I am a strategy pattern enjoyer, so that came to mind for figuring out which of the functions to run based on the current state. And when I wrote it out, I realized that a strategy pattern with 2 inputs [which state are we currently in] and [which control key was pressed] essentially is a state machine.
-Once began conceptualizing this as a state machine, I built the rest of the state management code around that idea. I was able to encapsulate most of the state mutation into start_{state} and end_{state} functions. 
+Once began conceptualizing this as a state machine, I built the rest of the state management code around that idea. I was able to encapsulate most of the state mutation into start_state and end_state functions. 
 
 
 ## State Machine
 
-The state machine manages the overall behavior of the TDM implementation. It ensures that the system transitions between different states seamlessly and handles control keys such as record, play, and loop. Each state represents a distinct phase of operation, such as recording, playing, or selecting macros. By enforcing state transitions, the state machine maintains the integrity of the TDM workflow and prevents invalid operations. 
+<Image src="/blog/assets/images/tdm-state-machine-diagram.webp" />
 
-<Image src="../images/tdm_state_machine_diagram.webp" />
+The state machine manages the overall behavior of the TDM implementation. It ensures that the system transitions between different states seamlessly and handles control keys such as record, play, and loop. Each state represents a distinct phase of operation, such as recording, playing, or selecting macros. By enforcing state transitions, the state machine maintains the integrity of the TDM workflow and prevents invalid operations. 
 
 I simply defined a matrix of transition functions from one state to another, and call those functions on a transition. If there isn't a function for one state to another (like if you press the add delay key: TDM_DELAY while in the idle state) then the state machine does not transition.
 
