@@ -254,23 +254,80 @@ void tdm_record_delay_end(void) {
 
 
 #### Playing
-Then when the macro is played back, it will wait the difference between the times of each keyrecord (if there is any).
-The default dynamic macros implementation has a while loop that iterates over the buffer and outputs each key.
-I'm changing this to iterate over chunks of keys to be pressed without a delay, and then registering a deferred execution on the rest of the buffer when it encounters a delay. This will prevent it from blocking the keyboard excessively, especially when playing long macros or looping.
+The playback function iterates over the selected buffer. If there's a delay, it utilizes the deferred execution api. The nice thing about this is that it doesn't block the rest of the keyboard while it's waiting. Usually you wouldn't want to press keys while a macro is playing, unless you want to stop the macro, which is very important when looping. 
 
+```c:tdm_play
+void tdm_play_start(void) {
+	clear_keyboard();
+	layer_clear();
+	dprintf("SAFE_RANGE: %d\n", TURBO);
+	tdm_play_user(MACRO_id);
+	tdm_reset_iterator();
+	dprintf("play start: %d -> %d (Macro_iterator) %d\n", MACRO_start, MACRO_end, MACRO_iterator);
+	tdm_play();
+	if (play_finished){ //only go to idle if it's not waiting on a delay
+		dprintf("not in a delay\n");
+		tdm_clear_tokens();
+		tdm_state_transition(STATE_idle);
+	}
+}
+void tdm_play() {
+	dprintf("temporal dynamic macro: playing slot %d \n", MACRO_id);
+	dprintf("play start: %d -> %d (Macro_iterator) %d\n", MACRO_start, MACRO_end, MACRO_iterator);
+	
+	//iterates until the end of the macro or until there's a delay
+	while (MACRO_iterator != MACRO_end) {
+		dprintf("iter %d KC: %d, down? %d, delay: %d\n", MACRO_iterator, MACRO_iterator->keycode, (MACRO_iterator->flags)&FLAG_pressed, MACRO_iterator->delay_ms);
+		tdm_play_key(MACRO_iterator);
+		MACRO_iterator += MACRO_direction;
+		if(MACRO_iterator->delay_ms) {
+			dprintf("delaying: %d\n", MACRO_iterator->delay_ms);
+			//continue playing or looping the macro after delaying, but don't block TODO: profiling
+			// use defer exec instead of wait so it's possible to cancel play/loop
+			DeferCallback tdm_continue = MACRO_current_state == STATE_looping ? tdm_loop_callback : tdm_delay_callback;
+			delay_token = defer_exec(MACRO_iterator->delay_ms, tdm_continue, NULL);
+			return; //skip clearing the token
+		} 	
+	}
+	dprintf("play finished %d\n", play_finished);
+	play_finished = true;
+}
 
-# Design Questions
+static uint32_t tdm_delay_callback(uint32_t trigger_time, void* cb_arg) {
+	dprintf("play debounce\n");
+	tdm_play();
+	if (play_finished) { //only go to idle if it's not waiting on a delay
+		dprintf("done with delay\n");
+		tdm_state_transition(STATE_idle);
+		tdm_clear_tokens();
+	}
+	return 0;
+}
 
+```
+Looping uses a similar idea to repeat the playback. In case the user doesn't enter any delays, the callback that starts the loop over again waits a few ms to give time to exit the loop.
 
-#### Overwrite or Stop recording?
-The default dynamic macros stops recording when you reach the end of empty space. This prevents overwriting any macro you have previously stored.
-Although I haven't encountered this problem yet, since dynamic macros are in theory somewhat transient I think this design will favor the newest macro. To avoid having to pause recording, go back and re-record an empty macro for the second macro, and re-record the macro that ran out of length, I will opt to notify the user before overwriting and continue recording. Depending on what features the user's keyboard has, nearing the end of empty buffer space can trigger backlighting or some of the led matrix lights, can show a message on an integrated screen, can beep a speaker, can write out a notification character, or it can do nothing. This will default to the simplest method available on the board and will be configurable by the user.
+```c:tdm_loop
 
-### Delays
-The main reason I'm creating this library is to enable specific delays between key presses.
-I want the design to be pretty similar to the standard QMK dynamic macros. In fact, besides adding some new keys I'd like this library to be fully backward compatible.
-QUESTION: Should I introduce a new structure that contains a keyrecord and a delay?
-I think I'll just use the same keyrecord array, and use the time field in the keyevent struct to track how long to wait for each keypress.
+void tdm_loop_start(void) {
+	tdm_play_user(MACRO_id);
+	if (play_token != INVALID_DEFERRED_TOKEN) { //restart if already looping or delayed
+		tdm_clear_tokens();
+	}
+	tdm_reset_iterator();
+	dprintf("loop start: %d -> %d (Macro_iterator) %d\n", MACRO_start, MACRO_end, MACRO_iterator);
+	play_token = defer_exec(TDM_LOOP_DELAY, tdm_loop_callback, NULL);
+}
 
-we can delay the first keypress, so for each keypress, we need to
-each keypress has a time = the last key time + any delay
+static uint32_t tdm_loop_callback(uint32_t trigger_time, void* cb_arg) {
+	dprintf("play loop: t= %d\n", trigger_time);
+	tdm_play();
+	//since a delay ends tdm_play and schedules another one, looping needs to pause
+	if (play_finished) {
+		tdm_reset_iterator(); // start loop at beginning
+		return TDM_LOOP_DELAY;
+	} else {
+		return 0;
+	}
+}
+```
