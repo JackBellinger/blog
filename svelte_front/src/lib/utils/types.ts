@@ -35,7 +35,7 @@ export type BlogSearch = {
 };
 
 export type BlogPost = {
-	tags: string[];
+	tags?: string[];
 	keywords: string[];
 	hidden: boolean;
 	slug: string;

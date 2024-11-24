@@ -18,7 +18,7 @@
 		} else {
 			store.items.subscribe((posts) => {
 				tags ? tags.clear() : (tags = new Set());
-				posts.filter((post) => !post.hidden).forEach((post) => post.tags.forEach((tag) => tags.add(tag)));
+				posts.filter((post) => !post.hidden).forEach((post) => post.tags?.forEach((tag) => tags.add(tag)));
 			});
 		}
 		// console.log(tags)

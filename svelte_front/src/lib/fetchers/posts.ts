@@ -17,11 +17,11 @@ export async function importPosts() {
 		let filename = path.split('/').at(-1).split('.')[0];
 		const post = blogImports[path] as any;
 		if (post) {
-			// console.log('Parsing: ', post, post.default);
+			console.log('Parsing: ', post, post.default);
 			posts.push({
 				...post.metadata,
 				slug: filename,
-				tags: post.metadata.tags, //?.map((tag) => tag.toLowerCase()),
+				tags: post.metadata?.tags, //?.map((tag) => tag.toLowerCase()),
 				component: post.default
 			});
 		}
@@ -119,7 +119,7 @@ export async function queryPosts(
 	// fetch('/api/blogs?' + queryString) // Attach query string to API request
 	// 	.then(response => response.json())
 	// 	.then(data => {});
-
+	console.log(queryString)
 	let res = await fetch('/api/blogs?' + queryString, {
 		// Attach query string to API request
 		method: 'GET',
@@ -127,12 +127,13 @@ export async function queryPosts(
 	});
 	// await console.log(res);
 	const text = await res.text();
-	// console.log("text", text)
+	console.log("text", text)
 	try {
 		const blogs = JSON.parse(text);
 		const blogsWithTagArrays = blogs.map((blog) => ({
 			...blog, // Copy existing properties
 			// component: undefined,
+			date: blog.timestamp,
 			tags: blog.tags.split(',') // Split tags into an array
 		}));
 		// console.log('blogs', blogsWithTagArrays);

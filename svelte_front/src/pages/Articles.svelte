@@ -19,6 +19,7 @@
 	postStores.then((store) =>
 		store.items.subscribe((sub_posts) => {
 			posts = sub_posts;
+			console.log("posts", posts)
 		})
 	);
 </script>
