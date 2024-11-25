@@ -43,20 +43,21 @@ jobs:
           pwd && ls
           echo "Directories in build-directory and subdirectories:"
           find ${{ env.BUILD_PATH }} -type d -print
-      - name: install npm & yarn
+      - name: install npm
         uses: bahmutov/npm-install@v1
         with:
           working-directory: ${{ env.BUILD_PATH }}
-      - uses: bahmutov/npm-install@v1
+      - name: install yarn
+        uses: bahmutov/npm-install@v1
         with:
           working-directory: ${{ env.BUILD_PATH }}/svelte-store
 
-      - name: App1 tests
+      - name: Install & build svelte-store
         run: |
           yarn install
           yarn build
         working-directory: ${{ env.BUILD_PATH }}/svelte-store
-      - name: Run app2
+      - name: Install deps, build js, and compile markdown
         run: |
           npm ci
           npm run compile
