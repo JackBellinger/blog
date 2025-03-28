@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-strum = "0.25"
+strum = "0.26"
 strum_macros = "0.25"
 serde = "1"
 serde_derive = "1"
