@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
-	import { type BlogPost, type FilterableAsyncStore, type FilteredStore, type QueryStore } from '@lib/utils/types';
-	import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts';
+	import { type BlogPost, type FilterableAsyncStore, type FilteredStore, type QueryStore } from '@lib/utils/types.ts';
+	import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts.ts';
 	import BlogCardSearchBar from './BlogCardSearchBar.svelte';
 	import type { ComponentType, SvelteComponent } from 'svelte';
 

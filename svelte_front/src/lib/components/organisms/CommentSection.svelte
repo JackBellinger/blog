@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CommentBox from '../molecules/Comment.svelte';
-	import { CommentSource, type BlogPost, type Comment } from '@lib/utils/types';
+	import { CommentSource, type BlogPost, type Comment } from '@lib/utils/types.ts';
 	import { queryComments } from '@lib/fetchers/comments';
 	import CommentForm from '../molecules/CommentForm.svelte';
 	import { sessionStore } from '@lib/utils/store';

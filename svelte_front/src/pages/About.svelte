@@ -83,16 +83,18 @@
 			<h2>Work</h2>
 			<p>
 				I have 4 years of experience working on production backend systems. I have contributed designs and
-				implementations to a computer vision platform for live sports, a distributed data pipeline for backbone
-				network security, GIS webapps and tools for the army, and I'm currently working on this .
+				implementations to a computer vision platform for live sports, a distributed data pipeline for backbone network
+				security, GIS webapps and tools for the army, and I'm currently working on this .
 			</p>
 
 			<h3>Amazon</h3>
 			<p>
-				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports with Rapid Recap & Key Moments
+				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports
+				with Rapid Recap & Key Moments
 			</p>
 			<br />
-			For More details, check my blog articles, (resume)[https://docs.google.com/document/d/1h_74e5nV6S24-XasDMH4FX9NCzJX_4DI/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true], or contact me with any questions.
+			For More details, check my blog articles, (resume)[https://docs.google.com/document/d/1h_74e5nV6S24-XasDMH4FX9NCzJX_4DI/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true],
+			or contact me with any questions.
 		</div>
 	</main>
 </Page>

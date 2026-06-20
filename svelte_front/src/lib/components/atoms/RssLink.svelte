@@ -1,8 +1,8 @@
 <script lang="ts">
 	import RssIcon from '@assets/icons/rss.svelte';
-	import { notifications } from '@lib/utils/notifications';
-	import { GET_RSS } from '@lib/utils/rssGen';
-	import { postStores } from '@lib/utils/store';
+	import { notifications } from '@lib/utils/notifications.ts';
+	import { GET_RSS } from '@lib/utils/rssGen.ts';
+	import { postStores } from '@lib/utils/store.ts';
 </script>
 
 {#await postStores}

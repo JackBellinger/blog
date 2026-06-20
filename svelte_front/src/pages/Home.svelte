@@ -8,10 +8,11 @@
 <script lang="ts">
 	import Hero from '@lib/components/organisms/Hero.svelte';
 	import BlogCardGrid from '@lib/components/organisms/BlogCardGrid.svelte';
-	import { postStores } from '@lib/utils/store';
+	import { postStores } from '@lib/utils/store.ts';
 	import Page from '@lib/components/organisms/Page.svelte';
 	import Socials from '@lib/components/molecules/Socials.svelte';
-	import type { BlogPost } from '@lib/utils/types';
+	import type { BlogPost } from '@lib/utils/types.ts';
+	import Constellation from '@lib/components/organisms/Constellation.svelte';
 
 	let howManyRecent = 4;
 	let features_posts: BlogPost[];
@@ -22,7 +23,7 @@
 	);
 </script>
 
-<Page>
+<Page showBackground={false}>
 	<div slot="header-after" />
 	<div slot="left-sidebar" />
 	<div slot="right-sidebar" />
@@ -30,7 +31,7 @@
 		<div>
 			<Hero>
 				<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-				<p>I'm an ex-Amazon Software Engineer (Looking for a job!). I post my side projects here.</p>
+				<p>I'm an Software Engineer @ Wells Fargo. I'm also working on a startup!</p>
 				<div class="intro">
 					Send me a message!
 					<Socials />
@@ -54,6 +55,7 @@
 		{#await postStores}
 			<p>...checking for backend connectivity</p>
 		{:then postStores}
+			<Constellation articles={features_posts} />
 			<BlogCardGrid posts={features_posts} title={'Articles'} numToShow={howManyRecent} />
 		{/await}
 	</main>

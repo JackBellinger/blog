@@ -1,4 +1,4 @@
-import type { BlogPost, BlogSearch } from '@lib/utils/types';
+import type { BlogPost, BlogSearch } from '@lib/utils/types.ts';
 import { sessionStore } from '@lib/utils/store';
 
 export async function postFetchMethod() {
@@ -17,7 +17,7 @@ export async function importPosts() {
 		let filename = path.split('/').at(-1).split('.')[0];
 		const post = blogImports[path] as any;
 		if (post) {
-			console.log('Parsing: ', post, post.default);
+			// console.log('Parsing: ', post, post.default);
 			posts.push({
 				...post.metadata,
 				slug: filename,

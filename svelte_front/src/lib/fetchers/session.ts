@@ -1,4 +1,4 @@
-import { type Session } from '@lib/utils/types';
+import { type Session } from '@lib/utils/types.ts';
 let check_backend = false;
 export async function fetchSession(): Promise<Session> {
 	if (!check_backend) {

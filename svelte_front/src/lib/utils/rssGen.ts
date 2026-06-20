@@ -1,5 +1,5 @@
 import { description, siteBaseUrl, title } from '@lib/utils/meta';
-import type { BlogPost } from '@lib/utils/types';
+import type { BlogPost } from '@lib/utils/types.ts';
 import dateformat from 'dateformat';
 import { postStores } from '@lib/utils/store';
 

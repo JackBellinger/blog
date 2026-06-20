@@ -3,7 +3,7 @@
 	import dateformat from 'dateformat';
 
 	import { keywords, siteBaseUrl, title } from '@lib/utils/meta';
-	import { CommentSource, type BlogPost, defaultBlogPost } from '@lib/utils/types';
+	import { CommentSource, type BlogPost, defaultBlogPost } from '@lib/utils/types.ts';
 	import Image from '@lib/components/atoms/Image.svelte';
 	import BlogCardGrid from './BlogCardGrid.svelte';
 	import CommentSection from './CommentSection.svelte';

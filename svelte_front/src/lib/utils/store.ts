@@ -1,7 +1,7 @@
 import { derived, get, readable, writable } from 'svelte/store';
 import { asyncDerived, asyncReadable } from '@square/svelte-store';
 import type { BlogPost, BlogSearch, SyncReadable, QueryStore, FilterableAsyncStore } from './types';
-import { type Page } from '@lib/utils/types';
+import { type Page } from '@lib/utils/types.ts';
 import { postFetchMethod, blogApiParamsFromFilterAndPage, searchArticles } from '@lib/fetchers/posts';
 import { importPages } from '../fetchers/pages';
 import { importProjects } from '../fetchers/projects';

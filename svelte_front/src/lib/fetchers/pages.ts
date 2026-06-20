@@ -1,4 +1,4 @@
-import type { Page } from '@lib/utils/types';
+import type { Page } from '@lib/utils/types.ts';
 import type { SvelteComponent } from 'svelte';
 export const stringIsNumber = (value) => isNaN(Number(value)) === false;
 

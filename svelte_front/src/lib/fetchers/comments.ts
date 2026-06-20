@@ -1,4 +1,4 @@
-import { CommentSource, type Comment, defComment } from '@lib/utils/types';
+import { CommentSource, type Comment, defComment } from '@lib/utils/types.ts';
 
 export async function queryComments(source: CommentSource, identifier: string) {
 	switch (source) {

@@ -2,13 +2,13 @@
 	import Card from '@lib/components/inf-scroller/Card.svelte';
 	import Tag from '@lib/components/inf-scroller/Tag.svelte';
 	import Image from '../atoms/Image.svelte';
-	import type { BlogPost } from '@lib/utils/types';
+	import type { BlogPost } from '@lib/utils/types.ts';
 	export let item: BlogPost;
 	export let displayProps: { href_prefix: string };
 	//	target="_self"
 </script>
 
-{@debug item}
+<!-- {@debug item} -->
 
 <Card
 	href={displayProps.href_prefix + '/' + item.slug}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BlogPostCard from '@lib/components/inf-scroller/BlogPostCard.svelte';
 	import ContentSection from '@lib/components/organisms/ContentSection.svelte';
-	import type { BlogPost } from '@lib/utils/types';
+	import type { BlogPost } from '@lib/utils/types.ts';
 	import Button from '../atoms/Button.svelte';
 
 	export let posts: BlogPost[] = [];

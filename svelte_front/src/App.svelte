@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta';
+	import { description, image, keywords, title, siteBaseUrl } from '@lib/utils/meta.ts';
 	import Navaid from 'navaid';
 	import { onDestroy } from 'svelte';
-	import { getSession } from '@lib/fetchers/auth';
+	import { getSession } from '@lib/fetchers/auth.ts';
 	import { onMount } from 'svelte';
 	import '@lib/scss/global.scss';
-	import type { Page, SyncReadable } from '@lib/utils/types';
-	import { pageStore } from '@lib/utils/store';
-	import { theme } from '@lib/utils/store';
+	import type { Page, SyncReadable } from '@lib/utils/types.ts';
+	import { pageStore } from '@lib/utils/store.ts';
+	import { theme } from '@lib/utils/store.ts';
 
 	let savestore = false;
 	$: if (savestore && $theme) {

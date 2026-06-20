@@ -1,4 +1,4 @@
-import type { BlogPost } from '@lib/utils/types';
+import type { BlogPost } from '@lib/utils/types.ts';
 
 export async function importProjects(render = true) {
 	//https://vitejs.dev/guide/projects.html#glob-import

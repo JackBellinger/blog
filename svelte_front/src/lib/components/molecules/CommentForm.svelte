@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { postComment } from '@lib/fetchers/comments';
-	import type { Comment, Session } from '@lib/utils/types';
+	import type { Comment, Session } from '@lib/utils/types.ts';
 	import { sessionStore } from '@lib/utils/store';
 	import { createEventDispatcher } from 'svelte';
 	export let identifier = '';

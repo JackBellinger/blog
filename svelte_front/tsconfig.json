@@ -1,8 +1,9 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "bundler",
+		"moduleResolution": "nodenext",
 		"target": "ESNext",
-		"module": "ESNext",
+		"module": "nodenext",
+		"allowImportingTsExtensions": true,
 		/**
 		 * svelte-preprocess cannot figure out whether you have
 		 * a value or a type, so tell TypeScript to enforce using
@@ -28,7 +29,8 @@
 		"paths": {
 			"@lib/*": ["./src/lib/*"],
 			"@assets/*": ["./assets/*"]
-		}
+		},
+		"types": ["@types/three"]
 	},
 	//"types": ["vite/client"],
 	/**

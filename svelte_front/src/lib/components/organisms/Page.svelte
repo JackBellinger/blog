@@ -4,7 +4,7 @@
 	import Toast from '@lib/components/molecules/Toast.svelte';
 	import Footer from '@lib/components/organisms/Footer.svelte';
 
-	let showBackground = true;
+	export let showBackground = true;
 	$: logoText = 'Menu';
 </script>
 

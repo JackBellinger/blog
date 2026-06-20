@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Comment } from '@lib/utils/types';
+	import { type Comment } from '@lib/utils/types.ts';
 	import { getDurationSince } from '@lib/utils/time';
 	import Callout from '../atoms/Callout.svelte';
 	import Chip from '../inf-scroller/Chip.svelte';

@@ -6,12 +6,12 @@
 </script>
 
 <script lang="ts">
-	import { postStores } from '@lib/utils/store';
+	import { postStores } from '@lib/utils/store.ts';
 	import MarkdownPage from '@lib/components/organisms/MarkdownPage.svelte';
 	import BlogCardScroller from '@lib/components/inf-scroller/BlogCardScroller.svelte';
 	import Page from '@lib/components/organisms/Page.svelte';
 	import BlogPostCard from '@lib/components/inf-scroller/BlogPostCard.svelte';
-	import type { BlogPost } from '@lib/utils/types';
+	import type { BlogPost } from '@lib/utils/types.ts';
 
 	export let blogid: string = '';
 	let posts: BlogPost[] = [];
@@ -19,7 +19,7 @@
 	postStores.then((store) =>
 		store.items.subscribe((sub_posts) => {
 			posts = sub_posts;
-			console.log("posts", posts)
+			console.log('posts', posts);
 		})
 	);
 </script>

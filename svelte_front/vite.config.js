@@ -44,5 +44,8 @@ export default {
 			}
 		}
 	},
-	plugins: [outputPluginStats(), hotUpdateReport(), svelte({ configFile: 'svelte.config.js' })]
+	plugins: [outputPluginStats(), hotUpdateReport(), svelte({ configFile: 'svelte.config.js' })],
+	optimizeDeps: {
+		exclude: ['three/examples/jsm/controls/OrbitControls'],
+	}
 };

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Page } from '@lib/utils/types';
+	import { type Page } from '@lib/utils/types.ts';
 	import Logo from '../atoms/Logo.svelte';
 
 	export let menuItems: Page[];

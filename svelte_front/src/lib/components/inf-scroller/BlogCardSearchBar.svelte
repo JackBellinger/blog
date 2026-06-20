@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isQueryStore, type BlogPost, type FilterableAsyncStore, type QueryStore } from '@lib/utils/types';
+	import { isQueryStore, type BlogPost, type FilterableAsyncStore, type QueryStore } from '@lib/utils/types.ts';
 	import SearchTags from '../inf-scroller/SearchTags.svelte';
 	import SearchTerm from '../inf-scroller/SearchTerm.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
