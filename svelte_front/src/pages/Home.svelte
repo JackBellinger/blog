@@ -31,7 +31,8 @@
 		<div>
 			<Hero>
 				<h1 class="hello">Hello, I'm Jack Bellinger</h1>
-				<p>I'm an Software Engineer @ Wells Fargo. I'm also working on a startup!</p>
+				<p>I'm a Senior Software Engineer at Wells Fargo with 6 years of experience in Java, Rust, Python, C, and TypeScript/JavaScript.</p>
+				<p>I build observability automation, distributed systems, and full-stack applications for cloud and realtime systems.</p>
 				<div class="intro">
 					Send me a message!
 					<Socials />

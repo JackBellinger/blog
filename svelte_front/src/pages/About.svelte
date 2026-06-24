@@ -52,48 +52,42 @@
 		<div id="info">
 			<h1>Background</h1>
 			<p>
-				I enjoy working at many levels of computation, from optimizing thread-safety & memory usage to creating clear
-				abstractions & consise business logic. I always implement automated testing, CI/CD pipelines for my services,
-				and take pride in detailed documentation. I strive to develop a deep understanding of my codebases and share my
-				knowledge. I ensure my team's change requests are similarly eloquent through collaborative and meticulous code
-				reviews.
+				I enjoy working at many levels of computation, from optimizing thread-safety and memory usage to creating clear
+				abstractions and concise business logic. I focus on automated testing, CI/CD pipelines, observability, and
+			
+detailed documentation. I strive to understand my codebases deeply and to share that knowledge through collaborative
+				code reviews and process improvements.
 			</p>
-			<h2>School</h2>
-			<p>In school, some of the courses I most enjoyed are:</p>
+			<h2>Notable Projects</h2>
+			<p>These projects highlight my experience in backend engineering, observability, data analytics, and full-stack development:</p>
 			<ul style="margin-left: 4ch;">
-				<li>High Performance Computing (paralellism & distributed cluster computing, github.com/jackbellinger/420)</li>
-				<li>
-					Numerical Linear Algebra (Numerical approaches to efficiently solving matrix maths,
-					github.com/jackbellinger/420/matrix.py)
-				</li>
-				<li>
-					Systems Software & Operating Systems (C programming & The inner workings of Operating Systems,
-					github.com/jackbellinger/350 & ...450 )
-				</li>
-				<li>
-					Datastructures and Algorithms (C++ programming of DS & Algos, soon to be moved to
-					github.com/jackbellinger/cpp-structs & github.com/JackBellinger/Fast-and-Furious-Transformers)
-				</li>
-				<li>
-					Computer vision research (github.com/jtanderson/wetland-object-detection,
-					github.com/nilay036/DOG-Breed-Identifier)
-				</li>
-				<li>Hololens AR Matrix Math Visualizations (github.com/JackBellinger/Solids-of-Revolution-Visualizer)</li>
+				<li><a href="https://sbx.connectingforbetterhealth.com/" target="_blank" rel="noreferrer">EMI Advisor deliverable</a> — healthcare connectivity testing with React, Smile CDR, Neo4j, and AWS analytics.</li>
+				<li><a href="https://www.amazon.com/gp/video/sports" target="_blank" rel="noreferrer">Amazon Sports Rapid Recap</a> — live recap and highlight feature for Prime Video.</li>
+				<li><a href="https://jackbellinger.github.io/blog/articles/qmk-dynamic-macros" target="_blank" rel="noreferrer">Keyboard firmware macro system</a> — custom QMK macro tooling and technical documentation.</li>
+				<li><a href="https://github.com/JackBellinger/420/tree/master/project2" target="_blank" rel="noreferrer">Arxiv Search Engine</a> — MPI keyword index and PageRank-powered research search.</li>
 			</ul>
 			<h2>Work</h2>
 			<p>
-				I have 4 years of experience working on production backend systems. I have contributed designs and
-				implementations to a computer vision platform for live sports, a distributed data pipeline for backbone network
-				security, GIS webapps and tools for the army, and I'm currently working on this .
+				I have 6 years of experience working on production backend and full-stack systems. I currently build reliability
+				and observability automation at Wells Fargo. My recent work includes enterprise-level dashboarding, standards
+				compliance tracking, and process improvements across gitops, DevOps, and CI/CD.
 			</p>
 
 			<h3>Amazon</h3>
 			<p>
 				On Prime Video you can find my work detecting stream liveliness and providing highlight clips for live sports
-				with Rapid Recap & Key Moments
+				with Rapid Recap & Key Moments.
 			</p>
+
+			<h2>Projects</h2>
+			<ul style="margin-left: 4ch;">
+				<li><a href="https://sbx.connectingforbetterhealth.com/" target="_blank" rel="noreferrer">EMI Advisor deliverable</a> — healthcare org connectivity testing with React, Smile CDR, Neo4j, and AWS analytics.</li>
+
+				<li><a href="https://www.amazon.com/gp/video/sports" target="_blank" rel="noreferrer">Amazon Sports Rapid Recap</a> — live sports recap and highlight feature for Prime Video.</li>
+				<li><a href="https://github.com/JackBellinger/420/tree/master/project2" target="_blank" rel="noreferrer">Arxiv Search Engine</a> — MPI keyword index and PageRank-powered research search.</li>
+			</ul>
 			<br />
-			For More details, check my blog articles, (resume)[https://docs.google.com/document/d/1h_74e5nV6S24-XasDMH4FX9NCzJX_4DI/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true],
+			For more details, check my blog articles, <a href="https://docs.google.com/document/d/1h_74e5nV6S24-XasDMH4FX9NCzJX_4DI/edit?usp=sharing&ouid=102482165353778313731&rtpof=true&sd=true" target="_blank" rel="noreferrer">resume</a>,
 			or contact me with any questions.
 		</div>
 	</main>
